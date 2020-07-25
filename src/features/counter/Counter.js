@@ -1,58 +1,53 @@
 import React, { useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import {
-  decrement,
-  increment,
-  incrementByAmount,
-  incrementAsync,
-  selectCount,
+  parseKLE,
+  highlightColor,
+  selectLayout,
+  selectHighlight,
 } from './counterSlice';
 import styles from './Counter.module.css';
 
 export function Counter() {
-  const count = useSelector(selectCount);
+  const layout = useSelector(selectLayout);
+  const highlight = useSelector(selectHighlight);
   const dispatch = useDispatch();
-  const [incrementAmount, setIncrementAmount] = useState('2');
+  const [kleValue, setKleValue] = useState();
+  const [highlightType, setHighlight] = useState();
+
+  // <button
+  // className={styles.button}
+  // aria-label="Increment value"
+  // onClick={() => dispatch(increment())}
+  // >
+  // +
+  // </button>
+  // onChange={e => setIncrementAmount(e.target.value)}
 
   return (
     <div>
       <div className={styles.row}>
-        <button
-          className={styles.button}
-          aria-label="Increment value"
-          onClick={() => dispatch(increment())}
-        >
-          +
-        </button>
-        <span className={styles.value}>{count}</span>
-        <button
-          className={styles.button}
-          aria-label="Decrement value"
-          onClick={() => dispatch(decrement())}
-        >
-          -
-        </button>
+        <span className={styles.value}>{layout}</span>
       </div>
       <div className={styles.row}>
-        <input
-          className={styles.textbox}
+        <span className={styles.value}>{highlight}</span>
+      </div>
+      <div className={styles.row}>
+        <textarea
+          className={styles.textarea}
           aria-label="Set increment amount"
-          value={incrementAmount}
-          onChange={e => setIncrementAmount(e.target.value)}
+          onChange={e => setKleValue(e.target.value)}
         />
+      </div>
+      <div className={styles.row}>
         <button
           className={styles.button}
           onClick={() =>
-            dispatch(incrementByAmount(Number(incrementAmount) || 0))
+            dispatch(parseKLE(kleValue))
           }
+          aria-label="Input KLE raw data"
         >
-          Add Amount
-        </button>
-        <button
-          className={styles.asyncButton}
-          onClick={() => dispatch(incrementAsync(Number(incrementAmount) || 0))}
-        >
-          Add Async
+          Parse Raw KLE
         </button>
       </div>
     </div>

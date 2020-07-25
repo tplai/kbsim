@@ -1,3 +1,7 @@
+.container {
+  
+}
+
 .row {
   display: flex;
   align-items: center;
@@ -32,12 +36,14 @@
   transition: all 0.15s;
 }
 
-.textbox {
-  font-size: 32px;
+.textarea {
+  font-size: 16px;
   padding: 2px;
-  width: 64px;
-  text-align: center;
+  width: 1440px;
+  height: 256px;
+  /* text-align: center; */
   margin-right: 8px;
+  resize: none;
 }
 
 .button:hover, .button:focus {
