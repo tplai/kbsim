@@ -27,7 +27,7 @@ export const counterSlice = createSlice({
         // split the rows into an array by values in "" and {}
         for (let i in state.array) {
           // console.log(state.array[i]);
-          state.array[i] = state.array[i].match(/"(.*?[^\\])"|{(.*?[^\\])}/g);
+          state.array[i] = state.array[i].match(/(["'])(?:(?=(\\?))\2.)*?\1|([{])(?:(?=(\\?))\2.)*?([}])/g);
           for (let j in state.array[i]) {
             console.log(state.array[i][j]);
           }
