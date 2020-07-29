@@ -9,8 +9,12 @@ const Key = ({legend, sublegend, width, height, x, y}) => {
 }
 
 Todo.propTypes = {
-  text: PropTypes.func.isRequired,
-  dimensions: PropTypes.func.isRequired
+  legend: PropTypes.func.isRequired,
+  sublegend: PropTypes.func.isRequired,
+  width: PropTypes.func.isRequired,
+  height: PropTypes.func.isRequired,
+  x: PropTypes.func.isRequired,
+  y: PropTypes.func.isRequired
 }
 
 export default Key
