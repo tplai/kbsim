@@ -11,8 +11,6 @@ export const counterSlice = createSlice({
     input: 0,
     layout: "Input KLE Raw Data",
     array: [],
-    rows: 0,
-    columns: 0,
     highlight: "none",
   },
   reducers: {
@@ -20,19 +18,30 @@ export const counterSlice = createSlice({
       state.input = action.payload;
       if (!state.input) {
         state.highlight = "red";
+        return;
       }
-      else {
-        // split the input into rows by newline
-        state.array = state.input.split(/\r\n|\r|\n/);
-        // split the rows into an array by values in "" and {}
-        for (let i in state.array) {
-          // console.log(state.array[i]);
-          state.array[i] = state.array[i].match(/(["'])(?:(?=(\\?))\2.)*?\1|([{])(?:(?=(\\?))\2.)*?([}])/g);
-          for (let j in state.array[i]) {
-            console.log(state.array[i][j]);
-          }
+      // split the input into rows by newline
+      state.array = state.input.split(/\r\n|\r|\n/);
+      if (state.array.length == 0) {
+        state.highlight = "red";
+        return;
+      }
+      // split the rows into an array
+      for (let i in state.array) {
+        // regex match text within "" and {}
+        state.array[i] = state.array[i].match(/(["'])(?:(?=(\\?))\2.)*?\1|([{])(?:(?=(\\?))\2.)*?([}])/g);
+        if (!state.array[i]) {
+          state.highlight = "red";
+          return;
         }
       }
+      state.highlight = "green";
+    },
+    createKeys: () => {
+      console.log("made it");
+    },
+    setHighlight: state => {
+
     },
     clearField: state => {
       state.input = "";
@@ -55,11 +64,19 @@ export const { parseKLE, clearField, incrementByAmount, highlightColor } = count
 //   }, 1000);
 // };
 
+// export const createKeys = payload => dispatch => {
+//   dispatch(parseKLE(payload.payload));
+// };
+
+// export function renderKeys() {
+//
+// }
+
 // The function below is called a selector and allows us to select a value from
 // the state. Selectors can also be defined inline where they're used instead of
 // in the slice file. For example: `useSelector((state) => state.counter.value)`
 // export const selectCount = state => state.counter.input;
-export const selectLayout = state => state.counter.layout;
+export const selectLayout = state => state.counter.array;
 export const selectHighlight = state => state.counter.highlight;
 
 export default counterSlice.reducer;

@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import {
   parseKLE,
+  renderKeys,
   highlightColor,
   selectLayout,
   selectHighlight,
@@ -26,8 +27,18 @@ export function Counter() {
 
   return (
     <div>
-      <div className={styles.row}>
-        <span className={styles.value}>{layout}</span>
+      <div>
+      {
+        layout.map((row) => {
+          return(<div className={styles.keyrow}>
+            {
+              row.map((key) => {
+                return(key + " ")
+              })
+            }
+            </div>)
+          })
+        }
       </div>
       <div className={styles.row}>
         <span className={styles.value}>{highlight}</span>

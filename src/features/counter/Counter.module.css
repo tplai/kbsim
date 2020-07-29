@@ -1,5 +1,5 @@
 .container {
-  
+
 }
 
 .row {
@@ -7,6 +7,15 @@
   align-items: center;
   justify-content: center;
 }
+
+.keyrow {
+  display: flex;
+  align-items: center;
+  font-size: 12px;
+  justify-content: center;
+  margin-bottom: 2px;
+}
+
 
 .row:not(:last-child) {
   margin-bottom: 16px;
