@@ -1,6 +1,6 @@
 import React from 'react';
 import logo from './logo.svg';
-import { Counter } from './features/counter/Counter';
+import { KeyGenerator } from './features/keyGenerator/KeyGenerator';
 import './App.css';
 
 function App() {
@@ -8,7 +8,7 @@ function App() {
     <div className="App">
       <header className="App-header">
         <img src={logo} className="App-logo" alt="logo" />
-        <Counter />
+        <KeyGenerator />
         <p>
           Edit <code>src/App.js</code> and save to reload.
         </p>

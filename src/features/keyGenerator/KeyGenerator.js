@@ -6,10 +6,10 @@ import {
   highlightColor,
   selectLayout,
   selectHighlight,
-} from './counterSlice';
-import styles from './Counter.module.css';
+} from './keyGeneratorSlice';
+import styles from './KeyGenerator.module.css';
 
-export function Counter() {
+export function KeyGenerator() {
   const layout = useSelector(selectLayout);
   const highlight = useSelector(selectHighlight);
   const dispatch = useDispatch();
@@ -29,7 +29,7 @@ export function Counter() {
     <div>
       <div>
       {
-        layout.map((row) => {
+        layout.map((row, index) => {
           return(<div className={styles.keyrow}>
             {
               row.map((key) => {

@@ -1,8 +1,8 @@
 import { configureStore } from '@reduxjs/toolkit';
-import counterReducer from '../features/counter/counterSlice';
+import keyGeneratorReducer from '../features/keyGenerator/keyGeneratorSlice';
 
 export default configureStore({
   reducer: {
-    counter: counterReducer,
+    keyGenerator: keyGeneratorReducer,
   },
 });

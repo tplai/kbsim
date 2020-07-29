@@ -5,8 +5,8 @@ import { createSlice } from '@reduxjs/toolkit';
 // which detects changes to a "draft state" and produces a brand new
 // immutable state based off those changes
 
-export const counterSlice = createSlice({
-  name: 'counter',
+export const keyGeneratorSlice = createSlice({
+  name: 'keyGenerator',
   initialState: {
     input: 0,
     layout: "Input KLE Raw Data",
@@ -52,7 +52,7 @@ export const counterSlice = createSlice({
   },
 });
 
-export const { parseKLE, clearField, incrementByAmount, highlightColor } = counterSlice.actions;
+export const { parseKLE, clearField, incrementByAmount, highlightColor } = keyGeneratorSlice.actions;
 
 // The function below is called a thunk and allows us to perform async logic. It
 // can be dispatched like a regular action: `dispatch(incrementAsync(10))`. This
@@ -74,12 +74,12 @@ export const { parseKLE, clearField, incrementByAmount, highlightColor } = count
 
 // The function below is called a selector and allows us to select a value from
 // the state. Selectors can also be defined inline where they're used instead of
-// in the slice file. For example: `useSelector((state) => state.counter.value)`
-// export const selectCount = state => state.counter.input;
-export const selectLayout = state => state.counter.array;
-export const selectHighlight = state => state.counter.highlight;
+// in the slice file. For example: `useSelector((state) => state.keyGenerator.value)`
+// export const selectCount = state => state.keyGenerator.input;
+export const selectLayout = state => state.keyGenerator.array;
+export const selectHighlight = state => state.keyGenerator.highlight;
 
-export default counterSlice.reducer;
+export default keyGeneratorSlice.reducer;
 
 /*
 ["Esc",{x:1},"F1","F2","F3","F4",{x:0.5},"F5","F6","F7","F8",{x:0.5},"F9","F10","F11","F12",{x:0.25},"PrtSc","Scroll Lock","Pause\nBreak"],
