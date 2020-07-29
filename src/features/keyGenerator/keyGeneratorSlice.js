@@ -35,6 +35,98 @@ export const keyGeneratorSlice = createSlice({
           return;
         }
       }
+      // format array into key rendering state
+      // let rowHeight = 0
+      let keyInfo = {
+        legend: "",
+        sublegend: "",
+        x: 0.0,
+        y: 0.0,
+        width: 1.0,
+        height: 1.0,
+      }
+      for (let x = 0; x < state.array.length; x++) {
+        // reset formatting and increment y coordinate
+        if (x != 0) {
+          keyInfo = {
+            legend: "",
+            sublegend: "",
+            x: 0.0,
+            y: keyInfo.y + 1,
+            width: 1.0,
+            height: 1.0,
+          }
+        }
+        let formatNextKey = false;
+        for (let y = 0; y < state.array[x].length; y++) {
+          // if no special formatting, reset key formatting and increment x coordinate
+          if (!formatNextKey && y != 0) {
+            keyInfo = {
+              legend: "",
+              sublegend: "",
+              x: keyInfo.x + keyInfo.width,
+              y: keyInfo.y,
+              width: 1.0,
+              height: 1.0,
+            }
+          }
+          if (state.array[x][y].charAt(0) == "{" && state.array[x][y].charAt(state.array[x][y].length - 1) == "}") {
+            // remove whitespace and trim the brackets
+            let keyFormat = state.array[x][y].substring(1, state.array[x][y].length - 1).replace(/\s/g, '');
+            // console.log(state.array[x][y]);
+            // split multiple formatting information into an array
+            let formatInfo = keyFormat.split(",");
+            for (let format in formatInfo) {
+              let formatTuple = formatInfo[format].split(":");
+              if (formatTuple.length == 2) {
+                switch (formatTuple[0]) {
+                  case 'w':
+                    keyInfo.width = parseFloat(formatTuple[1]);
+                    break;
+                  case 'h':
+                    keyInfo.height = parseFloat(formatTuple[1]);
+                    break;
+                  case 'x':
+                    keyInfo.x += parseFloat(formatTuple[1]);
+                    break;
+                  case 'y':
+                    keyInfo.y += parseFloat(formatTuple[1]);
+                    break;
+                }
+              }
+              else {
+                state.highlight = "red";
+                return;
+              }
+            }
+            formatNextKey = true;
+          }
+          else if (state.array[x][y].charAt(0) == '"' && state.array[x][y].charAt(state.array[x][y].length - 1) == '"') {
+            let legends = state.array[x][y].split("\n");
+            // there is a new line character indicating that there is a sublegend
+            if (legends.length == 2) {
+              keyInfo.sublegend = legends[1];
+            }
+            keyInfo.legend = legends[0];
+            formatNextKey = false;
+            state.array[x][y] = keyInfo;
+          }
+          else {
+            state.highlight = "red";
+            return;
+          }
+        }
+      }
+
+      // remove formatting data from layout array
+      for (let x in state.array) {
+        for (let y in state.array[x]) {
+          if (typeof(state.array[x][y]) === 'string' && state.array[x][y].charAt(0) == "{" && state.array[x][y].charAt(state.array[x][y].length - 1) == "}") {
+            state.array[x].splice(y, 1);
+          }
+        }
+      }
+
       state.highlight = "green";
     },
     createKeys: () => {
