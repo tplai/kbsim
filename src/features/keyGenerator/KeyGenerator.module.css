@@ -1,5 +1,12 @@
-.container {
-
+.keyboard {
+  position: inherit;
+  height: 10vh;
+  border: solid 1px;
+  border-color: #000;
+  box-sizing: border-box;
+  background-clip: padding-box;
+  min-width: 56px;
+  min-height: 56px;
 }
 
 .row {

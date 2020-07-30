@@ -11,19 +11,19 @@ export const keyGeneratorSlice = createSlice({
     input: 0,
     layout: "Input KLE Raw Data",
     array: [],
-    highlight: "none",
+    highlight: {},
   },
   reducers: {
     parseKLE: (state, action) => {
       state.input = action.payload;
       if (!state.input) {
-        state.highlight = "red";
+        state.highlight = {borderColor:"#ff0033"};
         return;
       }
       // split the input into rows by newline
       state.array = state.input.split(/\r\n|\r|\n/);
       if (state.array.length == 0) {
-        state.highlight = "red";
+        state.highlight = {borderColor:"#ff0033"};
         return;
       }
       // split the rows into an array
@@ -31,11 +31,11 @@ export const keyGeneratorSlice = createSlice({
         // regex match text within "" and {}
         state.array[i] = state.array[i].match(/(["'])(?:(?=(\\?))\2.)*?\1|([{])(?:(?=(\\?))\2.)*?([}])/g);
         if (!state.array[i]) {
-          state.highlight = "red";
+          state.highlight = {borderColor:"#ff0033"};
           return;
         }
       }
-      // format array into key rendering state
+      // format array into key rendering dictionary
       // let rowHeight = 0
       let keyInfo = {
         legend: "",
@@ -45,7 +45,13 @@ export const keyGeneratorSlice = createSlice({
         width: 1.0,
         height: 1.0,
       }
+      let keyboardWidth = 0.0;
+      let keyboardHeight = 0.0
       for (let x = 0; x < state.array.length; x++) {
+        let rowWidth = 0.0;
+        let rowHeight = 0.0;
+        let formatNextKey = false;
+
         // reset formatting and increment y coordinate
         if (x != 0) {
           keyInfo = {
@@ -57,7 +63,7 @@ export const keyGeneratorSlice = createSlice({
             height: 1.0,
           }
         }
-        let formatNextKey = false;
+
         for (let y = 0; y < state.array[x].length; y++) {
           // if no special formatting, reset key formatting and increment x coordinate
           if (!formatNextKey && y != 0) {
@@ -73,7 +79,6 @@ export const keyGeneratorSlice = createSlice({
           if (state.array[x][y].charAt(0) == "{" && state.array[x][y].charAt(state.array[x][y].length - 1) == "}") {
             // remove whitespace and trim the brackets
             let keyFormat = state.array[x][y].substring(1, state.array[x][y].length - 1).replace(/\s/g, '');
-            // console.log(state.array[x][y]);
             // split multiple formatting information into an array
             let formatInfo = keyFormat.split(",");
             for (let format in formatInfo) {
@@ -95,24 +100,28 @@ export const keyGeneratorSlice = createSlice({
                 }
               }
               else {
-                state.highlight = "red";
+                state.highlight = {borderColor:"#ff0033"};
                 return;
               }
             }
             formatNextKey = true;
           }
           else if (state.array[x][y].charAt(0) == '"' && state.array[x][y].charAt(state.array[x][y].length - 1) == '"') {
-            let legends = state.array[x][y].split("\n");
+            // trim quotes
+            let legends = state.array[x][y].substring(1, state.array[x][y].length - 1)
+            // split into by newline
+            legends = legends.split("\\n");
             // there is a new line character indicating that there is a sublegend
             if (legends.length == 2) {
-              keyInfo.sublegend = legends[1];
+              keyInfo.sublegend = parseEscapedChars(legends[1]);
             }
-            keyInfo.legend = legends[0];
+            keyInfo.legend = parseEscapedChars(legends[0]);
+
             formatNextKey = false;
             state.array[x][y] = keyInfo;
           }
           else {
-            state.highlight = "red";
+            state.highlight = {borderColor:"#ff0033"};
             return;
           }
         }
@@ -126,17 +135,7 @@ export const keyGeneratorSlice = createSlice({
           }
         }
       }
-
-      state.highlight = "green";
-    },
-    createKeys: () => {
-      console.log("made it");
-    },
-    setHighlight: state => {
-
-    },
-    clearField: state => {
-      state.input = "";
+      state.highlight = {borderColor:"#ff0033"};
     },
     highlightColor: (state, action) => {
       state.highlight = action.payload;
@@ -144,25 +143,19 @@ export const keyGeneratorSlice = createSlice({
   },
 });
 
+function parseEscapedChars(str) {
+  let parsedStr = "";
+  for (let i = 0; i < str.length; i++) {
+    // if escaped character is found, skip over the escape character and add the escaped character
+    if(str.charAt(i) == '\\' && i != str.length - 1) {
+      i++;
+    }
+    parsedStr += str.charAt(i);
+  }
+  return parsedStr;
+}
+
 export const { parseKLE, clearField, incrementByAmount, highlightColor } = keyGeneratorSlice.actions;
-
-// The function below is called a thunk and allows us to perform async logic. It
-// can be dispatched like a regular action: `dispatch(incrementAsync(10))`. This
-// will call the thunk with the `dispatch` function as the first argument. Async
-// code can then be executed and other actions can be dispatched
-// export const incrementAsync = amount => dispatch => {
-//   setTimeout(() => {
-//     dispatch(incrementByAmount(amount));
-//   }, 1000);
-// };
-
-// export const createKeys = payload => dispatch => {
-//   dispatch(parseKLE(payload.payload));
-// };
-
-// export function renderKeys() {
-//
-// }
 
 // The function below is called a selector and allows us to select a value from
 // the state. Selectors can also be defined inline where they're used instead of

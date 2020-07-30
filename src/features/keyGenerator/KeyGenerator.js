@@ -7,6 +7,7 @@ import {
   selectLayout,
   selectHighlight,
 } from './keyGeneratorSlice';
+import Key from './../key/Key.js'
 import styles from './KeyGenerator.module.css';
 
 export function KeyGenerator() {
@@ -16,32 +17,29 @@ export function KeyGenerator() {
   const [kleValue, setKleValue] = useState();
   const [highlightType, setHighlight] = useState();
 
-  // <button
-  // className={styles.button}
-  // aria-label="Increment value"
-  // onClick={() => dispatch(increment())}
-  // >
-  // +
-  // </button>
-  // onChange={e => setIncrementAmount(e.target.value)}
-
   return (
     <div>
-      <div>
-      {
-        layout.map((row, index) => {
-          return(<div className={styles.keyrow}>
-            {
-              row.map((key) => {
-                return(key + " ")
-              })
-            }
-            </div>)
-          })
-        }
-      </div>
-      <div className={styles.row}>
-        <span className={styles.value}>{highlight}</span>
+      <div className={styles.keyboard}>
+        {
+          layout.map((row, index) => {
+            return(<div className={styles.keyrow}>
+              {
+                row.map((key) => {
+                  return(
+                    <Key
+                      legend={key.legend}
+                      sublegend={key.sublegend}
+                      width={key.width}
+                      height={key.height}
+                      x={key.x}
+                      y={key.y}
+                    />
+                  )
+                })
+              }
+              </div>)
+            })
+          }
       </div>
       <div className={styles.row}>
         <textarea
