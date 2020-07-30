@@ -48,10 +48,8 @@ export const keyGeneratorSlice = createSlice({
         width: 1.0,
         height: 1.0,
       }
-
       for (let x = 0; x < state.array.length; x++) {
         let formatNextKey = false;
-
         // reset formatting and increment y coordinate
         if (x != 0) {
           keyInfo = {
@@ -63,7 +61,6 @@ export const keyGeneratorSlice = createSlice({
             height: 1.0,
           }
         }
-
         for (let y = 0; y < state.array[x].length; y++) {
           // if no special formatting, reset key formatting and increment x coordinate
           if (!formatNextKey && y != 0) {

@@ -31,21 +31,19 @@ export function KeyGenerator() {
   const [kleValue, setKleValue] = useState();
   const [highlightType, setHighlight] = useState();
 
-  let keyboardStyles = {
-    width: (keyboardWidth + borderWidth * 2) * keySize,
-    height: (keyboardHeight + borderHeight * 2) * keySize,
-    paddingTop: borderHeight * keySize,
-    paddingBottom: borderHeight * keySize,
-    paddingLeft: borderWidth * keySize,
-    paddingRight: borderWidth * keySize,
-  };
-
   return (
     <div>
       <div className={styles.keyboardcontainer}>
         <div
           className={styles.keyboard}
-          style={keyboardStyles}
+          style={{
+            width: (keyboardWidth + borderWidth * 2) * keySize,
+            height: (keyboardHeight + borderHeight * 2) * keySize,
+            paddingTop: borderHeight * keySize,
+            paddingBottom: borderHeight * keySize,
+            paddingLeft: borderWidth * keySize,
+            paddingRight: borderWidth * keySize,
+          }}
         >
           {
             layout.map((row, index) => {
