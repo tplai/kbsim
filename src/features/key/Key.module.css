@@ -1,9 +1,13 @@
-.keycap {
-
+.keycap, .keycap div {
+  position: absolute;
+  box-sizing: border-box;
+  background-clip: border-box;
 }
 
 .keyborder {
   border-width: 1px;
+  border-style: solid;
+  border-color: #000;
   border-radius: 5px;
   background-color: #cccccc;
 }
@@ -16,12 +20,32 @@
   border-radius: 3px;
 }
 
-.keylegends {
+.keylegends{
  padding: 3px;
+ font-size: 12px !important;
+ line-height: 1em;
 }
+
+/* .keylegends div {
+  display: table-cell;
+  position: static !important;
+  line-height: 1em;
+} */
 
 .keylegend {
   color: #080808;
-  font-size: 12px;
-  line-height: 1em;
+}
+
+.keylegend > div {
+  text-align: left;
+  vertical-align: top;
+  display: table-cell;
+  position: static !important;
+}
+
+.keysublegend > div{
+  text-align: left;
+  vertical-align: bottom;
+  display: table-cell;
+  position: static !important;
 }
