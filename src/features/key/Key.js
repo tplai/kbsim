@@ -3,10 +3,10 @@ import PropTypes from 'prop-types'
 import styles from './Key.module.css';
 
 // keysize must be divisble by 9
-let keysize = 54;
+const keysize = 54;
 
 // function for lightening/darkening keycap tops
-function LightenDarkenColor(color, amt) {
+function shadeColor(color, amt) {
   if (color.charAt(0) == "#") {
     color = color.substring(1, color.length);
   }
@@ -37,7 +37,7 @@ const Key = ({legend, sublegend, width, height, x, y, keycolor, textcolor}) => (
         top: y * keysize + keysize / 18,
         width: keysize * width - keysize * 2 / 9,
         height: keysize * height - keysize * 2 / 9,
-        backgroundColor: LightenDarkenColor(keycolor, 10),
+        backgroundColor: shadeColor(keycolor, 10),
       }}
     />
     <div
