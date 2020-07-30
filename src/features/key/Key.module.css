@@ -1,3 +1,7 @@
+.keycap {
+
+}
+
 .keyborder {
   border-width: 1px;
   border-radius: 5px;
@@ -12,6 +16,12 @@
   border-radius: 3px;
 }
 
-.keylabels {
+.keylegends {
+ padding: 3px;
+}
+
+.keylegend {
   color: #080808;
+  font-size: 12px;
+  line-height: 1em;
 }
