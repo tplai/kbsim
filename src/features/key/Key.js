@@ -5,7 +5,20 @@ import styles from './Key.module.css';
 // keysize must be divisble by 9
 let keysize = 54;
 
-const Key = ({legend, sublegend, width, height, x, y}) => (
+// function for lightening/darkening keycap tops
+function LightenDarkenColor(color, amt) {
+  if (color.charAt(0) == "#") {
+    color = color.substring(1, color.length);
+  }
+  let num = parseInt(color, 16);
+  let r = (num >> 16) + amt;
+  let b = ((num >> 8) & 0x00FF) + amt;
+  let g = (num & 0x0000FF) + amt;
+  let newColor = g | (b << 8) | (r << 16);
+  return "#" + newColor.toString(16);
+}
+
+const Key = ({legend, sublegend, width, height, x, y, keycolor, textcolor}) => (
   <div className={styles.keycap}>
     <div
       className={styles.keyborder}
@@ -14,6 +27,7 @@ const Key = ({legend, sublegend, width, height, x, y}) => (
         top: y * keysize,
         width: keysize * width,
         height: keysize * height,
+        backgroundColor: keycolor,
       }}
     />
     <div
@@ -23,6 +37,7 @@ const Key = ({legend, sublegend, width, height, x, y}) => (
         top: y * keysize + keysize / 18,
         width: keysize * width - keysize * 2 / 9,
         height: keysize * height - keysize * 2 / 9,
+        backgroundColor: LightenDarkenColor(keycolor, 10),
       }}
     />
     <div
@@ -46,6 +61,7 @@ const Key = ({legend, sublegend, width, height, x, y}) => (
           style={{
             width: keysize * width - keysize * 3 / 9,
             height: keysize * height - keysize * 3 / 9,
+            color: textcolor,
           }}>
           {legend}
         </div>
@@ -55,6 +71,7 @@ const Key = ({legend, sublegend, width, height, x, y}) => (
         style={{
           width: keysize * width - keysize * 3 / 9,
           height: keysize * height - keysize * 3 / 9,
+          color: textcolor,
         }}
       >
         <div
@@ -77,6 +94,8 @@ Key.propTypes = {
   y: PropTypes.number.isRequired,
   width: PropTypes.number.isRequired,
   height: PropTypes.number.isRequired,
+  keycolor: PropTypes.string.isRequired,
+  textcolor: PropTypes.string.isRequired,
 }
 
 export default Key

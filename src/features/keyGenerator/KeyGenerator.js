@@ -58,6 +58,8 @@ export function KeyGenerator() {
                         height={key.height}
                         x={key.x}
                         y={key.y}
+                        keycolor={key.keycolor}
+                        textcolor={key.textcolor}
                       />
                     )
                   })
