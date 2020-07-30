@@ -11,6 +11,10 @@ export const keyGeneratorSlice = createSlice({
     input: 0,
     layout: "Input KLE Raw Data",
     array: [],
+    keyboardWidth: 0.0,
+    keyboardHeight: 0.0,
+    borderWidth: 0.25,
+    borderHeight: 0.25,
     highlight: {},
   },
   reducers: {
@@ -36,7 +40,6 @@ export const keyGeneratorSlice = createSlice({
         }
       }
       // format array into key rendering dictionary
-      // let rowHeight = 0
       let keyInfo = {
         legend: "",
         sublegend: "",
@@ -45,11 +48,8 @@ export const keyGeneratorSlice = createSlice({
         width: 1.0,
         height: 1.0,
       }
-      let keyboardWidth = 0.0;
-      let keyboardHeight = 0.0
+
       for (let x = 0; x < state.array.length; x++) {
-        let rowWidth = 0.0;
-        let rowHeight = 0.0;
         let formatNextKey = false;
 
         // reset formatting and increment y coordinate
@@ -126,7 +126,6 @@ export const keyGeneratorSlice = createSlice({
           }
         }
       }
-
       // remove formatting data from layout array
       for (let x in state.array) {
         for (let y in state.array[x]) {
@@ -135,6 +134,21 @@ export const keyGeneratorSlice = createSlice({
           }
         }
       }
+
+      // get the dimensions of the keyboard
+      for (let x in state.array) {
+        for (let y in state.array[x]) {
+          let keyX = state.array[x][y].x + state.array[x][y].width;
+          if (state.keyboardWidth < keyX) {
+            state.keyboardWidth = keyX;
+          }
+          let keyY = state.array[x][y].y + state.array[x][y].height;
+          if (state.keyboardHeight < keyY) {
+            state.keyboardHeight = keyY;
+          }
+        }
+      }
+      // console.log("W:"+state.keyboardWidth+" H:"+state.keyboardHeight);
       state.highlight = {borderColor:"#ff0033"};
     },
     highlightColor: (state, action) => {
@@ -162,15 +176,29 @@ export const { parseKLE, clearField, incrementByAmount, highlightColor } = keyGe
 // in the slice file. For example: `useSelector((state) => state.keyGenerator.value)`
 // export const selectCount = state => state.keyGenerator.input;
 export const selectLayout = state => state.keyGenerator.array;
+export const selectKeyboardWidth = state => state.keyGenerator.keyboardWidth;
+export const selectKeyboardHeight = state => state.keyGenerator.keyboardHeight;
+export const selectBorderWidth = state => state.keyGenerator.borderWidth;
+export const selectBorderHeight = state => state.keyGenerator.borderHeight;
 export const selectHighlight = state => state.keyGenerator.highlight;
 
 export default keyGeneratorSlice.reducer;
 
 /*
+
+["Esc",{x:0.5},"F1","F2","F3","F4",{x:0.5},"F5","F6","F7","F8",{x:0.5},"F9","F10","F11","F12",{x:0.5},"Delete"],
+[{y:0.25},"~\n`","!\n1","@\n2","#\n3","$\n4","%\n5","^\n6","&\n7","*\n8","(\n9",")\n0","_\n-","+\n=",{w:2},"Backspace","End"],
+[{w:1.5},"Tab","Q","W","E","R","T","Y","U","I","O","P","{\n[","}\n]",{w:1.5},"|\n\\","PgUp"],
+[{w:1.25,w2:1.75,l:true},"Caps Lock",{x:0.5},"A","S","D","F","G","H","J","K","L",":\n;","\"\n'",{w:2.25},"Enter","PgDn"],
+[{w:2.25},"Shift","Z","X","C","V","B","N","M","<\n,",">\n.","?\n/",{w:1.75},"Shift","↑","Fn"],
+[{w:1.5},"Ctrl",{x:0.75,w:1.5},"Alt",{a:7,w:7},"",{a:4,w:1.5},"Win",{x:0.75},"←","↓","→"]
+
 ["Esc",{x:1},"F1","F2","F3","F4",{x:0.5},"F5","F6","F7","F8",{x:0.5},"F9","F10","F11","F12",{x:0.25},"PrtSc","Scroll Lock","Pause\nBreak"],
 [{y:0.5},"~\n`","!\n1","@\n2","#\n3","$\n4","%\n5","^\n6","&\n7","*\n8","(\n9",")\n0","_\n-","+\n=",{w:2},"Backspace",{x:0.25},"Insert","Home","PgUp",{x:0.25},"Num Lock","/","*","-"],
 [{w:1.5},"Tab","Q","W","E","R","T","Y","U","I","O","P","{\n[","}\n]",{w:1.5},"|\n\\",{x:0.25},"Delete","End","PgDn",{x:0.25},"7\nHome","8\n↑","9\nPgUp",{h:2},"+"],
 [{w:1.75},"Caps Lock","A","S","D","F","G","H","J","K","L",":\n;","\"\n'",{w:2.25},"Enter",{x:3.5},"4\n←","5","6\n→"],
 [{w:2.25},"Shift","Z","X","C","V","B","N","M","<\n,",">\n.","?\n/",{w:2.75},"Shift",{x:1.25},"↑",{x:1.25},"1\nEnd","2\n↓","3\nPgDn",{h:2},"Enter"],
 [{w:1.25},"Ctrl",{w:1.25},"Win",{w:1.25},"Alt",{a:7,w:6.25},"",{a:4,w:1.25},"Alt",{w:1.25},"Win",{w:1.25},"Menu",{w:1.25},"Ctrl",{x:0.25},"←","↓","→",{x:0.25,w:2},"0\nIns",".\nDel"]
+
+
 */

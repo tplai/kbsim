@@ -1,12 +1,21 @@
+.keyboardcontainer {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding-bottom: 10px;
+}
+
 .keyboard {
-  position: inherit;
-  height: 10vh;
+  /* position: inherit; */
   border: solid 1px;
   border-color: #000;
+  border-radius: 6px;
   box-sizing: border-box;
   background-clip: padding-box;
   min-width: 56px;
   min-height: 56px;
+  align-items: left;
+  display: flex;
 }
 
 .row {
@@ -17,10 +26,7 @@
 
 .keyrow {
   display: flex;
-  align-items: center;
   font-size: 12px;
-  justify-content: center;
-  margin-bottom: 2px;
 }
 
 
