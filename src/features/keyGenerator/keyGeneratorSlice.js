@@ -138,7 +138,7 @@ export const keyGeneratorSlice = createSlice({
             keyInfo.legend = parseEscapedChars(legends[0]);
 
             formatNextKey = false;
-            console.log(keyInfo.keycolor);
+            // console.log(keyInfo.keycolor);
             state.array[x][y] = keyInfo;
           }
           else {
