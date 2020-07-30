@@ -10,7 +10,8 @@ import {
   selectBorderHeight,
   selectHighlight,
 } from './keyGeneratorSlice';
-import Key from './../key/Key.js'
+import Key from './../key/Key.js';
+import KeyContainer from './../keyContainer/KeyContainer.js';
 import styles from './KeyGenerator.module.css';
 
 let keySize = 54;
@@ -33,7 +34,7 @@ export function KeyGenerator() {
 
   return (
     <div>
-      <div className={styles.keyboardcontainer}>
+      <KeyContainer>
         <div
           className={styles.keyboard}
           style={{
@@ -68,7 +69,7 @@ export function KeyGenerator() {
               })
             }
         </div>
-      </div>
+      </KeyContainer>
       <div className={styles.row}>
         <textarea
           className={styles.textarea}
