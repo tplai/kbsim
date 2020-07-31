@@ -7,7 +7,7 @@ const keysize = 54;
 
 // function for lightening/darkening keycap tops
 function shadeColor(color, amt) {
-  if (color.charAt(0) == "#") {
+  if (color.charAt(0) === "#") {
     color = color.substring(1, color.length);
   }
   let num = parseInt(color, 16);

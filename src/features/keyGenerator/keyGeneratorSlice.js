@@ -26,7 +26,7 @@ export const keyGeneratorSlice = createSlice({
       }
       // split the input into rows by newline
       state.array = state.input.split(/\r\n|\r|\n/);
-      if (state.array.length == 0) {
+      if (state.array.length === 0) {
         state.highlight = {borderColor:"#ff0033"};
         return;
       }
@@ -53,7 +53,7 @@ export const keyGeneratorSlice = createSlice({
       for (let x = 0; x < state.array.length; x++) {
         let formatNextKey = false;
         // reset formatting and increment y coordinate
-        if (x != 0) {
+        if (x !== 0) {
           keyInfo = {
             legend: "",
             sublegend: "",
@@ -68,7 +68,7 @@ export const keyGeneratorSlice = createSlice({
         }
         for (let y = 0; y < state.array[x].length; y++) {
           // if no special formatting, reset key formatting and increment x coordinate
-          if (!formatNextKey && y != 0) {
+          if (!formatNextKey && y !== 0) {
             // console.log(keyInfo.keycolor);
             keyInfo = {
               legend: "",
@@ -82,14 +82,14 @@ export const keyGeneratorSlice = createSlice({
             }
             // console.log("after"+keyInfo.keycolor);
           }
-          if (state.array[x][y].charAt(0) == "{" && state.array[x][y].charAt(state.array[x][y].length - 1) == "}") {
+          if (state.array[x][y].charAt(0) === "{" && state.array[x][y].charAt(state.array[x][y].length - 1) === "}") {
             // remove whitespace and trim the brackets
             let keyFormat = state.array[x][y].substring(1, state.array[x][y].length - 1).replace(/\s/g, '');
             // split multiple formatting information into an array
             let formatInfo = keyFormat.split(",");
             for (let format in formatInfo) {
               let formatTuple = formatInfo[format].split(":");
-              if (formatTuple.length == 2) {
+              if (formatTuple.length === 2) {
                 switch (formatTuple[0]) {
                   case 'w':
                     keyInfo.width = parseFloat(formatTuple[1]);
@@ -105,14 +105,14 @@ export const keyGeneratorSlice = createSlice({
                     break;
                   case 'c':
                     // trim quotes
-                    if (formatTuple[1].charAt(0) == '"' && formatTuple[1].charAt(formatTuple[1].length - 1) == '"') {
+                    if (formatTuple[1].charAt(0) === '"' && formatTuple[1].charAt(formatTuple[1].length - 1) === '"') {
                       formatTuple[1] = formatTuple[1].substring(1, formatTuple[1].length - 1);
                     }
                     keyInfo.keycolor = formatTuple[1];
                     break;
                   case 't':
                     // trim quotes
-                    if (formatTuple[1].charAt(0) == '"' && formatTuple[1].charAt(formatTuple[1].length - 1) == '"') {
+                    if (formatTuple[1].charAt(0) === '"' && formatTuple[1].charAt(formatTuple[1].length - 1) === '"') {
                       formatTuple[1] = formatTuple[1].substring(1, formatTuple[1].length - 1);
                     }
                     keyInfo.textcolor = formatTuple[1];
@@ -126,13 +126,13 @@ export const keyGeneratorSlice = createSlice({
             }
             formatNextKey = true;
           }
-          else if (state.array[x][y].charAt(0) == '"' && state.array[x][y].charAt(state.array[x][y].length - 1) == '"') {
+          else if (state.array[x][y].charAt(0) === '"' && state.array[x][y].charAt(state.array[x][y].length - 1) === '"') {
             // trim quotes
             let legends = state.array[x][y].substring(1, state.array[x][y].length - 1)
             // split into by newline
             legends = legends.split("\\n");
             // there is a new line character indicating that there is a sublegend
-            if (legends.length == 2) {
+            if (legends.length === 2) {
               keyInfo.sublegend = parseEscapedChars(legends[1]);
             }
             keyInfo.legend = parseEscapedChars(legends[0]);
@@ -150,7 +150,7 @@ export const keyGeneratorSlice = createSlice({
       // remove formatting data from layout array
       for (let x in state.array) {
         for (let y in state.array[x]) {
-          if (typeof(state.array[x][y]) === 'string' && state.array[x][y].charAt(0) == "{" && state.array[x][y].charAt(state.array[x][y].length - 1) == "}") {
+          if (typeof(state.array[x][y]) === 'string' && state.array[x][y].charAt(0) === "{" && state.array[x][y].charAt(state.array[x][y].length - 1) === "}") {
             state.array[x].splice(y, 1);
           }
         }
@@ -182,7 +182,7 @@ function parseEscapedChars(str) {
   let parsedStr = "";
   for (let i = 0; i < str.length; i++) {
     // if escaped character is found, skip over the escape character and add the escaped character
-    if(str.charAt(i) == '\\' && i != str.length - 1) {
+    if(str.charAt(i) === '\\' && i !== str.length - 1) {
       i++;
     }
     parsedStr += str.charAt(i);
