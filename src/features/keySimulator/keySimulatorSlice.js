@@ -1,8 +1,9 @@
 import { createSlice } from '@reduxjs/toolkit';
-import { keycodes } from './keycodes.js';
-import { ansiMap } from './ansiMap.js';
+import { ansiMap, keycodes } from './keycodeMaps.js';
 
 const keySize = 54;
+const defaultKeyColor = "#ffffff";
+const defaultTextColor = "#000"
 
 export const keySimulatorSlice = createSlice({
   name: 'keySimulator',
@@ -43,8 +44,9 @@ export const keySimulatorSlice = createSlice({
         y: 0.0,
         width: 1.0,
         height: 1.0,
-        keycolor: "#fff",
-        textcolor: "#000",
+        keytopcolor: shadeColor(defaultKeyColor, 10),
+        keybordercolor: defaultKeyColor,
+        textcolor: defaultTextColor,
       }
       for (let x = 0; x < state.array.length; x++) {
         let formatNextKey = false;
@@ -57,7 +59,8 @@ export const keySimulatorSlice = createSlice({
             y: keyInfo.y + 1,
             width: 1.0,
             height: 1.0,
-            keycolor: keyInfo.keycolor,
+            keytopcolor: keyInfo.keytopcolor,
+            keybordercolor: keyInfo.keybordercolor,
             textcolor: keyInfo.textcolor,
           }
           // console.log(keyInfo.keycolor);
@@ -73,7 +76,8 @@ export const keySimulatorSlice = createSlice({
               y: keyInfo.y,
               width: 1.0,
               height: 1.0,
-              keycolor: keyInfo.keycolor,
+              keytopcolor: keyInfo.keytopcolor,
+              keybordercolor: keyInfo.keybordercolor,
               textcolor: keyInfo.textcolor,
             }
             // console.log("after"+keyInfo.keycolor);
@@ -106,7 +110,8 @@ export const keySimulatorSlice = createSlice({
                         formatTuple[1].charAt(formatTuple[1].length - 1) === '"') {
                       formatTuple[1] = formatTuple[1].substring(1, formatTuple[1].length - 1);
                     }
-                    keyInfo.keycolor = formatTuple[1];
+                    keyInfo.keybordercolor = formatTuple[1];
+                    keyInfo.keytopcolor = shadeColor(formatTuple[1], 10);
                     break;
                   case 't':
                     // trim quotes
@@ -309,13 +314,33 @@ function parseLegends(toplegend, bottomlegend) {
   }
 
   let ansiKey = [formatTopLegend, formatBottomLegend];
-  // console.log(ansiKey);
   if (ansiKey in ansiMap) {
     // console.log("Successfully mapped " + ansiKey + " to " +ansiMap[ansiKey]);
     return ansiMap[ansiKey];
   }
   // console.log("Failed: "+ toplegend + " " + bottomlegend + "\n ansiKey: "+ansiKey);
   return;
+}
+
+function shadeColor(color, percent) {
+
+    let R = parseInt(color.substring(1,3),16);
+    let G = parseInt(color.substring(3,5),16);
+    let B = parseInt(color.substring(5,7),16);
+
+    R = parseInt(R * (100 + percent) / 100);
+    G = parseInt(G * (100 + percent) / 100);
+    B = parseInt(B * (100 + percent) / 100);
+
+    R = (R<255)?R:255;
+    G = (G<255)?G:255;
+    B = (B<255)?B:255;
+
+    var RR = ((R.toString(16).length==1)?"0"+R.toString(16):R.toString(16));
+    var GG = ((G.toString(16).length==1)?"0"+G.toString(16):G.toString(16));
+    var BB = ((B.toString(16).length==1)?"0"+B.toString(16):B.toString(16));
+
+    return "#"+RR+GG+BB;
 }
 
 export const { parseKLE, highlightColor } = keySimulatorSlice.actions;

@@ -5,10 +5,9 @@ import {
   highlightColor,
   selectLayout,
   selectKeyboardStyle,
-  selectBorderHeight,
   selectHighlight,
 } from './keySimulatorSlice';
-import { keynames } from './keynames.js';
+import { keynames } from './keycodeMaps.js';
 import Key from './../key/Key.js';
 import store from './../../app/store';
 import styles from './KeySimulator.module.css';
@@ -38,7 +37,8 @@ export function KeySimulator() {
               height={key.height}
               x={key.x}
               y={key.y}
-              keycolor={key.keycolor}
+              keytopcolor={key.keytopcolor}
+              keybordercolor={key.keybordercolor}
               textcolor={key.textcolor}
             />
           )
