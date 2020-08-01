@@ -1,5 +1,6 @@
 import { createSlice } from '@reduxjs/toolkit';
 import { keycodes } from './keycodes.js';
+import { ansiMap } from './ansiMap.js';
 
 const keySize = 54;
 
@@ -176,79 +177,10 @@ export const keySimulatorSlice = createSlice({
 
           // get the keycode of the specific key
           // if spacebar
-          if (state.array[x][y].legend.length === 0) {
 
-          }
-          // if special symbol
-          else if (state.array[x][y].legend.length === 1 && !state.array[x][y].legend.match(/^[a-z0-9]+$/i)) {
-            // console.log(state.array[x][y].legend);
-            switch(state.array[x][y].legend) {
-              case '~' :
-                break;
-              case '!' :
-                break;
-              case '@' :
-                break;
-              case '#' :
-                break;
-              case '#' :
-                break;
-              case '$' :
-                break;
-              case '%' :
-                break;
-              case '^' :
-                break;
-              case '&' :
-                break;
-              case '*' :
-                break;
-              case '(' :
-                break;
-              case ')' :
-                break;
-              case '-' :
-                break;
-              case '_' :
-                break;
-              case '+' :
-                break;
-              case '/' :
-                break;
-              case '-' :
-                break;
-              case '{' :
-                break;
-              case '}' :
-                break;
-              case '|' :
-                break;
-              case '+' :
-                break;
-              case ':' :
-                break;
-              case '"' :
-                break;
-              case '<' :
-                break;
-              case '>' :
-                break;
-              case '?' :
-                break;
-              case '↑' :
-                break;
-              case '←' :
-                break;
-              case '↓' :
-                break;
-              case '→' :
-                break;
-              case '.' :
-                break;
-            }
-          }
           // word
-          let parseLegend = state.array[x][y].legend.replace(/\s/g, '').toUpperCase();
+          let primaryLegend = parseLegends(state.array[x][y].legend, state.array[x][y].sublegend);
+          // console.log(primaryLegend);
         }
       }
 
@@ -281,6 +213,109 @@ function parseEscapedChars(str) {
     parsedStr += str.charAt(i);
   }
   return parsedStr;
+}
+
+// convert special symbol into a readable string
+function parseSpecialSymbol(char) {
+  switch(char) {
+    case '~':
+      return "TILDE";
+    case '`':
+      return "BACK_QUOTE"
+    case '!':
+      return "EXCLAMATION";
+    case '@':
+      return "AT";
+    case '#':
+      return "HASH";
+    case '$':
+      return "DOLLAR";
+    case '%':
+      return "PERCENT";
+    case '^':
+      return "CIRCUMFLEX";
+    case '&':
+      return "AMPERSAND";
+    case '*':
+      return "ASTERISK";
+    case '(':
+      return "OPEN_PAREN";
+    case ')':
+      return "CLOSE_PAREN";
+    case '-':
+      return "HYPHEN";
+    case '_':
+      return "UNDERSCORE";
+    case '=':
+      return "EQUALS"
+    case '+':
+      return "ADD";
+    case '\\':
+      return "BACK_SLASH";
+    case '{':
+      return "OPEN_CURLY_BRACKET";
+    case '[':
+      return "OPEN_BRACKET";
+    case '}':
+      return "CLOSE_CURLY_BRACKET";
+    case ']':
+      return "CLOSE_BRACKET";
+    case '|':
+      return "PIPE";
+    case ':':
+      return "COLON";
+    case ';':
+      return "SEMICOLON";
+    case '"':
+      return "DOUBLE_QUOTE";
+    case '\'':
+      return "QUOTE";
+    case '<':
+      return "LESS_THAN";
+    case ',':
+      return "COMMA";
+    case '>':
+      return "GREATER_THAN";
+    case '.':
+      return "PERIOD";
+    case '?':
+      return "QUESTION";
+    case '/':
+      return "SLASH"
+    case '↑':
+      return "UP";
+    case '←':
+      return "LEFT";
+    case '↓':
+      return "DOWN";
+    case '→':
+      return "RIGHT";
+    default:
+      return;
+  }
+}
+
+// usually the bottom legend contains the "non-shift" key
+function parseLegends(toplegend, bottomlegend) {
+  // if the legend is not alphanumeric and is 1 character, get the alphanumeric description
+  let formatTopLegend = toplegend.replace(/\s/g, '').toUpperCase();
+  if (formatTopLegend.length === 1 && !formatTopLegend.match(/^[a-z0-9]+$/i)) {
+    formatTopLegend = parseSpecialSymbol(formatTopLegend);
+  }
+  // do same with bottom legend
+  let formatBottomLegend = bottomlegend.replace(/\s/g, '').toUpperCase();
+  if (formatBottomLegend.length === 1 && !formatBottomLegend.match(/^[a-z0-9]+$/i)) {
+    formatBottomLegend = parseSpecialSymbol(formatBottomLegend);
+  }
+
+  let ansiKey = [formatTopLegend, formatBottomLegend];
+  // console.log(ansiKey);
+  if (ansiKey in ansiMap) {
+    // console.log("Successfully mapped " + ansiKey + " to " +ansiMap[ansiKey]);
+    return ansiMap[ansiKey];
+  }
+  // console.log("Failed: "+ toplegend + " " + bottomlegend + "\n ansiKey: "+ansiKey);
+  return;
 }
 
 export const { parseKLE, highlightColor } = keySimulatorSlice.actions;

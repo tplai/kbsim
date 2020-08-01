@@ -51,8 +51,8 @@ export function KeySimulator() {
 
   const handleKeyDown = (e) => {
     // setKeyDown(e.keyCode);
-    // console.log(keynames[e.keyCode]);
-    console.log(keyObject[0].props.children);
+    console.log(keynames[e.keyCode]);
+    // console.log(keyObject[0].props.children);
     // console.log(store.getState());
     // dispatch(handleKeyDown(keyDown));
   }
