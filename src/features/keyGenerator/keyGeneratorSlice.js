@@ -178,7 +178,7 @@ export const keyGeneratorSlice = createSlice({
           }
           // if special symbol
           else if (state.array[x][y].legend.length === 1 && !state.array[x][y].legend.match(/^[a-z0-9]+$/i)) {
-            console.log(state.array[x][y].legend);
+            // console.log(state.array[x][y].legend);
             switch(state.array[x][y].legend) {
               case '~' :
                 break;

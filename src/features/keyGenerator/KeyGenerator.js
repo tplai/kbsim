@@ -10,8 +10,8 @@ import {
   selectBorderHeight,
   selectHighlight,
 } from './keyGeneratorSlice';
+import { keynames } from './keynames.js';
 import Key from './../key/Key.js';
-import KeyContainer from './../keyContainer/KeyContainer.js';
 import styles from './KeyGenerator.module.css';
 
 let keySize = 54;
@@ -32,9 +32,25 @@ export function KeyGenerator() {
   const [kleValue, setKleValue] = useState();
   const [highlightType, setHighlight] = useState();
 
+  let keyPresses = [];
+
+  const handleKeyDown = (e) => {
+    // setKeyDown(e.keyCode);
+    console.log(keynames[e.keyCode]);
+    // dispatch(handleKeyDown(keyDown));
+  }
+  const handleKeyUp = (e) => {
+    // console.log(e.keyCode);
+  }
+
   return (
     <div>
-      <KeyContainer>
+      <div
+        className={styles.keycontainer}
+        onKeyDown={e => handleKeyDown(e)}
+        onKeyUp={e => handleKeyUp(e)}
+        tabIndex="0"
+      >
         <div
           className={styles.keyboard}
           style={{
@@ -69,7 +85,7 @@ export function KeyGenerator() {
               })
             }
         </div>
-      </KeyContainer>
+      </div>
       <div className={styles.row}>
         <textarea
           className={styles.textarea}
