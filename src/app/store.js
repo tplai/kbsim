@@ -1,8 +1,8 @@
 import { configureStore } from '@reduxjs/toolkit';
-import keyGeneratorReducer from '../features/keyGenerator/keyGeneratorSlice';
+import keySimulatorReducer from '../features/keySimulator/keySimulatorSlice';
 
 export default configureStore({
   reducer: {
-    keyGenerator: keyGeneratorReducer,
+    keySimulator: keySimulatorReducer,
   },
 });

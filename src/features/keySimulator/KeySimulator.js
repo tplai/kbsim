@@ -7,12 +7,13 @@ import {
   selectKeyboardStyle,
   selectBorderHeight,
   selectHighlight,
-} from './keyGeneratorSlice';
+} from './keySimulatorSlice';
 import { keynames } from './keynames.js';
 import Key from './../key/Key.js';
-import styles from './KeyGenerator.module.css';
+import store from './../../app/store';
+import styles from './KeySimulator.module.css';
 
-export function KeyGenerator() {
+export function KeySimulator() {
   // Layout array of keyboard
   const layout = useSelector(selectLayout);
 
@@ -25,11 +26,34 @@ export function KeyGenerator() {
   const [kleValue, setKleValue] = useState();
   const [highlightType, setHighlight] = useState();
 
+  const keyObject = layout.map((row, index) => {
+    return(<div className={styles.keyrow}>
+      {
+        row.map((key) => {
+          return(
+            <Key
+              legend={key.legend}
+              sublegend={key.sublegend}
+              width={key.width}
+              height={key.height}
+              x={key.x}
+              y={key.y}
+              keycolor={key.keycolor}
+              textcolor={key.textcolor}
+            />
+          )
+        })
+      }
+      </div>)
+    });
+
   let keyPresses = [];
 
   const handleKeyDown = (e) => {
     // setKeyDown(e.keyCode);
-    console.log(keynames[e.keyCode]);
+    // console.log(keynames[e.keyCode]);
+    console.log(keyObject[0].props.children);
+    // console.log(store.getState());
     // dispatch(handleKeyDown(keyDown));
   }
   const handleKeyUp = (e) => {
@@ -48,28 +72,7 @@ export function KeyGenerator() {
           className={styles.keyboard}
           style={keyboardStyle}
         >
-          {
-            layout.map((row, index) => {
-              return(<div className={styles.keyrow}>
-                {
-                  row.map((key) => {
-                    return(
-                      <Key
-                        legend={key.legend}
-                        sublegend={key.sublegend}
-                        width={key.width}
-                        height={key.height}
-                        x={key.x}
-                        y={key.y}
-                        keycolor={key.keycolor}
-                        textcolor={key.textcolor}
-                      />
-                    )
-                  })
-                }
-                </div>)
-              })
-            }
+          {keyObject}
         </div>
       </div>
       <div className={styles.row}>

@@ -1,13 +1,14 @@
 import { createSlice } from '@reduxjs/toolkit';
-import { keycodes } from './keycodes.js'
+import { keycodes } from './keycodes.js';
 
 const keySize = 54;
 
-export const keyGeneratorSlice = createSlice({
-  name: 'keyGenerator',
+export const keySimulatorSlice = createSlice({
+  name: 'keySimulator',
   initialState: {
     input: 0,
     array: [],
+    keyLocations: {},
     keyboardStyle: {},
     highlight: {},
   },
@@ -156,7 +157,9 @@ export const keyGeneratorSlice = createSlice({
         }
       }
 
-      let createdKeys = [];
+      let supportedKeys = [];
+      let unsupportedKeys = [];
+
       let keyboardWidth = 0;
       let keyboardHeight = 0;
       for (let x in state.array) {
@@ -280,14 +283,14 @@ function parseEscapedChars(str) {
   return parsedStr;
 }
 
-export const { parseKLE, highlightColor } = keyGeneratorSlice.actions;
+export const { parseKLE, highlightColor } = keySimulatorSlice.actions;
 
 // state exports
-export const selectLayout = state => state.keyGenerator.array;
-export const selectKeyboardStyle = state => state.keyGenerator.keyboardStyle;
-export const selectHighlight = state => state.keyGenerator.highlight;
+export const selectLayout = state => state.keySimulator.array;
+export const selectKeyboardStyle = state => state.keySimulator.keyboardStyle;
+export const selectHighlight = state => state.keySimulator.highlight;
 
-export default keyGeneratorSlice.reducer;
+export default keySimulatorSlice.reducer;
 
 /*
 
