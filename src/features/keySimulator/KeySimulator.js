@@ -8,6 +8,7 @@ import {
   selectHighlight,
 } from './keySimulatorSlice';
 import { keynames } from './keycodeMaps.js';
+import { keyPresets } from './keyPresets.js'
 import Key from './../key/Key.js';
 import store from './../../app/store';
 import styles from './KeySimulator.module.css';
@@ -23,6 +24,7 @@ export function KeySimulator() {
   const highlight = useSelector(selectHighlight);
   const dispatch = useDispatch();
   const [kleValue, setKleValue] = useState();
+  // const [inputValue, setInputValue] = useState()
   const [highlightType, setHighlight] = useState();
 
   const keyObject = layout.map((row, index) => {
