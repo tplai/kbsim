@@ -1,16 +1,15 @@
 import { createSlice } from '@reduxjs/toolkit';
 import { keycodes } from './keycodes.js'
 
+const keySize = 54;
+
 export const keyGeneratorSlice = createSlice({
   name: 'keyGenerator',
   initialState: {
     input: 0,
     layout: "Input KLE Raw Data",
     array: [],
-    keyboardWidth: 0.0,
-    keyboardHeight: 0.0,
-    borderWidth: 0.25,
-    borderHeight: 0.25,
+    keyboardStyle: {},
     highlight: {},
   },
   reducers: {
@@ -159,16 +158,18 @@ export const keyGeneratorSlice = createSlice({
       }
 
       let createdKeys = [];
+      let keyboardWidth = 0;
+      let keyboardHeight = 0;
       for (let x in state.array) {
         for (let y in state.array[x]) {
           // get dimensions of keyboard
           let keyX = state.array[x][y].x + state.array[x][y].width;
-          if (state.keyboardWidth < keyX) {
-            state.keyboardWidth = keyX;
+          if (keyboardWidth < keyX) {
+            keyboardWidth = keyX;
           }
           let keyY = state.array[x][y].y + state.array[x][y].height;
-          if (state.keyboardHeight < keyY) {
-            state.keyboardHeight = keyY;
+          if (keyboardHeight < keyY) {
+            keyboardHeight = keyY;
           }
 
           // get the keycode of the specific key
@@ -248,6 +249,17 @@ export const keyGeneratorSlice = createSlice({
           let parseLegend = state.array[x][y].legend.replace(/\s/g, '').toUpperCase();
         }
       }
+
+      let borderWidth = 0.25;
+      let borderHeight = 0.25;
+      state.keyboardStyle = {
+        width: (keyboardWidth + borderWidth * 2) * keySize,
+        height: (keyboardHeight + borderHeight * 2) * keySize,
+        paddingTop: borderHeight * keySize,
+        paddingBottom: borderHeight * keySize,
+        paddingLeft: borderWidth * keySize,
+        paddingRight: borderWidth * keySize,
+      }
       state.highlight = {borderColor:"#ff0033"};
     },
     highlightColor: (state, action) => {
@@ -269,14 +281,11 @@ function parseEscapedChars(str) {
   return parsedStr;
 }
 
-export const { parseKLE, clearField, incrementByAmount, highlightColor } = keyGeneratorSlice.actions;
+export const { parseKLE, highlightColor } = keyGeneratorSlice.actions;
 
 // state exports
 export const selectLayout = state => state.keyGenerator.array;
-export const selectKeyboardWidth = state => state.keyGenerator.keyboardWidth;
-export const selectKeyboardHeight = state => state.keyGenerator.keyboardHeight;
-export const selectBorderWidth = state => state.keyGenerator.borderWidth;
-export const selectBorderHeight = state => state.keyGenerator.borderHeight;
+export const selectKeyboardStyle = state => state.keyGenerator.keyboardStyle;
 export const selectHighlight = state => state.keyGenerator.highlight;
 
 export default keyGeneratorSlice.reducer;

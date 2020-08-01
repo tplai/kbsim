@@ -4,9 +4,7 @@ import {
   parseKLE,
   highlightColor,
   selectLayout,
-  selectKeyboardWidth,
-  selectKeyboardHeight,
-  selectBorderWidth,
+  selectKeyboardStyle,
   selectBorderHeight,
   selectHighlight,
 } from './keyGeneratorSlice';
@@ -14,17 +12,12 @@ import { keynames } from './keynames.js';
 import Key from './../key/Key.js';
 import styles from './KeyGenerator.module.css';
 
-let keySize = 54;
-
 export function KeyGenerator() {
   // Layout array of keyboard
   const layout = useSelector(selectLayout);
 
   // dimensions of keyboard and border
-  const keyboardWidth = useSelector(selectKeyboardWidth);
-  const keyboardHeight = useSelector(selectKeyboardHeight);
-  const borderWidth = useSelector(selectBorderWidth);
-  const borderHeight = useSelector(selectBorderHeight);
+  const keyboardStyle = useSelector(selectKeyboardStyle);
 
   // highlight for indicating if KLE was formatted correctly
   const highlight = useSelector(selectHighlight);
@@ -53,14 +46,7 @@ export function KeyGenerator() {
       >
         <div
           className={styles.keyboard}
-          style={{
-            width: (keyboardWidth + borderWidth * 2) * keySize,
-            height: (keyboardHeight + borderHeight * 2) * keySize,
-            paddingTop: borderHeight * keySize,
-            paddingBottom: borderHeight * keySize,
-            paddingLeft: borderWidth * keySize,
-            paddingRight: borderWidth * keySize,
-          }}
+          style={keyboardStyle}
         >
           {
             layout.map((row, index) => {
