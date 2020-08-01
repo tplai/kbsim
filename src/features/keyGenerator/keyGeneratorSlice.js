@@ -1,9 +1,5 @@
 import { createSlice } from '@reduxjs/toolkit';
-
-// Redux Toolkit allows us to write "mutating" logic in reducers. It
-// doesn't actually mutate the state because it uses the Immer library,
-// which detects changes to a "draft state" and produces a brand new
-// immutable state based off those changes
+import { keycodes } from './keycodes.js'
 
 export const keyGeneratorSlice = createSlice({
   name: 'keyGenerator',
@@ -82,7 +78,8 @@ export const keyGeneratorSlice = createSlice({
             }
             // console.log("after"+keyInfo.keycolor);
           }
-          if (state.array[x][y].charAt(0) === "{" && state.array[x][y].charAt(state.array[x][y].length - 1) === "}") {
+          if (state.array[x][y].charAt(0) === "{" &&
+              state.array[x][y].charAt(state.array[x][y].length - 1) === "}") {
             // remove whitespace and trim the brackets
             let keyFormat = state.array[x][y].substring(1, state.array[x][y].length - 1).replace(/\s/g, '');
             // split multiple formatting information into an array
@@ -105,14 +102,16 @@ export const keyGeneratorSlice = createSlice({
                     break;
                   case 'c':
                     // trim quotes
-                    if (formatTuple[1].charAt(0) === '"' && formatTuple[1].charAt(formatTuple[1].length - 1) === '"') {
+                    if (formatTuple[1].charAt(0) === '"' &&
+                        formatTuple[1].charAt(formatTuple[1].length - 1) === '"') {
                       formatTuple[1] = formatTuple[1].substring(1, formatTuple[1].length - 1);
                     }
                     keyInfo.keycolor = formatTuple[1];
                     break;
                   case 't':
                     // trim quotes
-                    if (formatTuple[1].charAt(0) === '"' && formatTuple[1].charAt(formatTuple[1].length - 1) === '"') {
+                    if (formatTuple[1].charAt(0) === '"' &&
+                        formatTuple[1].charAt(formatTuple[1].length - 1) === '"') {
                       formatTuple[1] = formatTuple[1].substring(1, formatTuple[1].length - 1);
                     }
                     keyInfo.textcolor = formatTuple[1];
@@ -126,7 +125,8 @@ export const keyGeneratorSlice = createSlice({
             }
             formatNextKey = true;
           }
-          else if (state.array[x][y].charAt(0) === '"' && state.array[x][y].charAt(state.array[x][y].length - 1) === '"') {
+          else if (state.array[x][y].charAt(0) === '"' &&
+                   state.array[x][y].charAt(state.array[x][y].length - 1) === '"') {
             // trim quotes
             let legends = state.array[x][y].substring(1, state.array[x][y].length - 1)
             // split into by newline
@@ -150,15 +150,18 @@ export const keyGeneratorSlice = createSlice({
       // remove formatting data from layout array
       for (let x in state.array) {
         for (let y in state.array[x]) {
-          if (typeof(state.array[x][y]) === 'string' && state.array[x][y].charAt(0) === "{" && state.array[x][y].charAt(state.array[x][y].length - 1) === "}") {
+          if (typeof(state.array[x][y]) === 'string' &&
+              state.array[x][y].charAt(0) === "{" &&
+              state.array[x][y].charAt(state.array[x][y].length - 1) === "}") {
             state.array[x].splice(y, 1);
           }
         }
       }
 
-      // get the dimensions of the keyboard
+      let createdKeys = [];
       for (let x in state.array) {
         for (let y in state.array[x]) {
+          // get dimensions of keyboard
           let keyX = state.array[x][y].x + state.array[x][y].width;
           if (state.keyboardWidth < keyX) {
             state.keyboardWidth = keyX;
@@ -167,9 +170,84 @@ export const keyGeneratorSlice = createSlice({
           if (state.keyboardHeight < keyY) {
             state.keyboardHeight = keyY;
           }
+
+          // get the keycode of the specific key
+          // if spacebar
+          if (state.array[x][y].legend.length === 0) {
+
+          }
+          // if special symbol
+          else if (state.array[x][y].legend.length === 1 && !state.array[x][y].legend.match(/^[a-z0-9]+$/i)) {
+            console.log(state.array[x][y].legend);
+            switch(state.array[x][y].legend) {
+              case '~' :
+                break;
+              case '!' :
+                break;
+              case '@' :
+                break;
+              case '#' :
+                break;
+              case '#' :
+                break;
+              case '$' :
+                break;
+              case '%' :
+                break;
+              case '^' :
+                break;
+              case '&' :
+                break;
+              case '*' :
+                break;
+              case '(' :
+                break;
+              case ')' :
+                break;
+              case '-' :
+                break;
+              case '_' :
+                break;
+              case '+' :
+                break;
+              case '/' :
+                break;
+              case '-' :
+                break;
+              case '{' :
+                break;
+              case '}' :
+                break;
+              case '|' :
+                break;
+              case '+' :
+                break;
+              case ':' :
+                break;
+              case '"' :
+                break;
+              case '<' :
+                break;
+              case '>' :
+                break;
+              case '?' :
+                break;
+              case '↑' :
+                break;
+              case '←' :
+                break;
+              case '↓' :
+                break;
+              case '→' :
+                break;
+              case '.' :
+                break;
+            }
+          }
+          // word
+          let parseLegend = state.array[x][y].legend.replace(/\s/g, '').toUpperCase();
         }
       }
-      // console.log("W:"+state.keyboardWidth+" H:"+state.keyboardHeight);
       state.highlight = {borderColor:"#ff0033"};
     },
     highlightColor: (state, action) => {
@@ -178,6 +256,7 @@ export const keyGeneratorSlice = createSlice({
   },
 });
 
+// function for parsing strings like "\\"
 function parseEscapedChars(str) {
   let parsedStr = "";
   for (let i = 0; i < str.length; i++) {
@@ -192,10 +271,7 @@ function parseEscapedChars(str) {
 
 export const { parseKLE, clearField, incrementByAmount, highlightColor } = keyGeneratorSlice.actions;
 
-// The function below is called a selector and allows us to select a value from
-// the state. Selectors can also be defined inline where they're used instead of
-// in the slice file. For example: `useSelector((state) => state.keyGenerator.value)`
-// export const selectCount = state => state.keyGenerator.input;
+// state exports
 export const selectLayout = state => state.keyGenerator.array;
 export const selectKeyboardWidth = state => state.keyGenerator.keyboardWidth;
 export const selectKeyboardHeight = state => state.keyGenerator.keyboardHeight;
