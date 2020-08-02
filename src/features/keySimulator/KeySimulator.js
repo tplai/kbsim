@@ -2,8 +2,11 @@ import React, { useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import {
   parseKLE,
+  keyDown,
+  keyUp,
   highlightColor,
   selectLayout,
+  selectLocations,
   selectKeyboardStyle,
   selectHighlight,
 } from './keySimulatorSlice';
@@ -16,7 +19,8 @@ import styles from './KeySimulator.module.css';
 export function KeySimulator() {
   // Layout array of keyboard
   const layout = useSelector(selectLayout);
-
+  // x y indices of legends
+  const keyLocations = useSelector(selectLocations);
   // dimensions of keyboard and border
   const keyboardStyle = useSelector(selectKeyboardStyle);
 
@@ -28,11 +32,13 @@ export function KeySimulator() {
   const [highlightType, setHighlight] = useState();
 
   const keyObject = layout.map((row, index) => {
-    return(<div className={styles.keyrow}>
+    return(<div className={styles.keyrow} key={index}>
       {
         row.map((key) => {
           return(
             <Key
+              key={key.keyid}
+              className={key.class}
               legend={key.legend}
               sublegend={key.sublegend}
               width={key.width}
@@ -42,6 +48,7 @@ export function KeySimulator() {
               keytopcolor={key.keytopcolor}
               keybordercolor={key.keybordercolor}
               textcolor={key.textcolor}
+              pressed={key.pressed}
             />
           )
         })
@@ -52,14 +59,31 @@ export function KeySimulator() {
   let keyPresses = [];
 
   const handleKeyDown = (e) => {
-    // setKeyDown(e.keyCode);
-    console.log(keynames[e.keyCode]);
-    // console.log(keyObject[0].props.children);
-    // console.log(store.getState());
-    // dispatch(handleKeyDown(keyDown));
+    let tree = store.getState();
+    let coordArray = tree.keySimulator.keyLocations[keynames[e.keyCode]]
+    for (let coords in tree.keySimulator.keyLocations[keynames[e.keyCode]]) {
+      // console.log(layout[coordArray[coords][0]][coordArray[coords][1]]);
+      let action = {
+        x: coordArray[coords][0],
+        y: coordArray[coords][1],
+      };
+      dispatch(keyDown(action));
+      // layout[coordArray[coords][0]][coordArray[coords][1]].legend = "XD"
+      // console.log(keyObject[coordArray[coords][0]].props.children[coordArray[coords][1]].props.className);
+      // keyObject[coordArray[coords][0]].props.children[coordArray[coords][1]].props.className += " asdf";
+    }
   }
   const handleKeyUp = (e) => {
-    // console.log(e.keyCode);
+    let tree = store.getState();
+    let coordArray = tree.keySimulator.keyLocations[keynames[e.keyCode]]
+    for (let coords in tree.keySimulator.keyLocations[keynames[e.keyCode]]) {
+      // console.log(layout[coordArray[coords][0]][coordArray[coords][1]]);
+      let action = {
+        x: coordArray[coords][0],
+        y: coordArray[coords][1],
+      };
+      dispatch(keyUp(action));
+    }
   }
 
   return (

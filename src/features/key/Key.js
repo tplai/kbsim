@@ -5,15 +5,15 @@ import styles from './Key.module.css';
 // keysize must be divisble by 9
 const keysize = 54;
 
-const Key = ({legend, sublegend, width, height, x, y, keytopcolor, keybordercolor, textcolor}) => (
-  <div className={styles.keycap}>
+const Key = ({className, legend, sublegend, width, height, x, y, keytopcolor, keybordercolor, textcolor, pressed}) => (
+  <div className={`${styles.keycap} ${className}`}>
     <div
       className={styles.keyborder}
       style={{
         left: x * keysize,
         top: y * keysize,
-        width: keysize * width,
-        height: keysize * height,
+        width: width * keysize,
+        height: height * keysize,
         backgroundColor: keybordercolor,
       }}
     />
@@ -22,9 +22,10 @@ const Key = ({legend, sublegend, width, height, x, y, keytopcolor, keybordercolo
       style={{
         left: x * keysize + keysize / 9,
         top: y * keysize + keysize / 18,
-        width: keysize * width - keysize * 2 / 9,
-        height: keysize * height - keysize * 2 / 9,
+        width: width * keysize - keysize * 2 / 9,
+        height: height * keysize - keysize * 2 / 9,
         backgroundColor: keytopcolor,
+        display: pressed ? 'none' : ''
       }}
     />
     <div
@@ -32,22 +33,22 @@ const Key = ({legend, sublegend, width, height, x, y, keytopcolor, keybordercolo
       style={{
         left: x * keysize + keysize / 9,
         top: y * keysize + keysize / 18,
-        width: keysize * width - keysize * 2 / 9,
-        height: keysize * height - keysize * 2 / 9,
+        width: width * keysize - keysize * 2 / 9,
+        height: height * keysize - keysize * 2 / 9,
       }}
     >
       <div
         className={styles.keylegend}
         style={{
-          width: keysize * width - keysize * 3 / 9,
-          maxWidth: keysize * width - keysize * 3 / 9,
-          height: keysize * height - keysize * 3 / 9,
+          width: width * keysize - keysize * 3 / 9,
+          maxWidth: width * keysize - keysize * 3 / 9,
+          height: height * keysize - keysize * 3 / 9,
         }}
       >
         <div
           style={{
-            width: keysize * width - keysize * 3 / 9,
-            height: keysize * height - keysize * 3 / 9,
+            width: width * keysize - keysize * 3 / 9,
+            height: height * keysize - keysize * 3 / 9,
             color: textcolor,
           }}>
           {legend}
@@ -56,16 +57,16 @@ const Key = ({legend, sublegend, width, height, x, y, keytopcolor, keybordercolo
       <div
         className={styles.keysublegend}
         style={{
-          width: keysize * width - keysize * 3 / 9,
-          height: keysize * height - keysize * 3 / 9,
+          width: width * keysize - keysize * 3 / 9,
+          height: height * keysize - keysize * 3 / 9,
           color: textcolor,
         }}
       >
         <div
           style={{
-            width: keysize * width - keysize * 3 / 9,
-            maxWidth: keysize * width - keysize * 3 / 9,
-            height: keysize * height - keysize * 3 / 9,
+            width: width * keysize - keysize * 3 / 9,
+            maxWidth: width * keysize - keysize * 3 / 9,
+            height: height * keysize - keysize * 3 / 9,
           }}>
           {sublegend}
         </div>
@@ -75,6 +76,7 @@ const Key = ({legend, sublegend, width, height, x, y, keytopcolor, keybordercolo
 )
 
 Key.propTypes = {
+  className: PropTypes.string.isRequired,
   legend: PropTypes.string.isRequired,
   sublegend: PropTypes.string.isRequired,
   x: PropTypes.number.isRequired,
@@ -84,6 +86,7 @@ Key.propTypes = {
   keytopcolor: PropTypes.string.isRequired,
   keybordercolor: PropTypes.string.isRequired,
   textcolor: PropTypes.string.isRequired,
+  pressed: PropTypes.bool.isRequired,
 }
 
 export default Key

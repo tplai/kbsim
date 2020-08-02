@@ -24,7 +24,7 @@
 
 .keylegends{
  padding: 3px;
- font-size: 12px !important;
+ font-size: 14px !important;
  line-height: 1em;
 }
 
@@ -43,27 +43,5 @@
 }
 
 .keypressed {
-	-webkit-animation: keypressed 200ms cubic-bezier(0.250, 0.460, 0.450, 0.940) both;
-	        animation: keypressed 200ms cubic-bezier(0.250, 0.460, 0.450, 0.940) both;
-}
-
-@-webkit-keyframes keypressed {
-  0% {
-    -webkit-transform: scale(1);
-            transform: scale(1);
-  }
-  100% {
-    -webkit-transform: scale(0.95);
-            transform: scale(0.95);
-  }
-}
-@keyframes keypressed {
-  0% {
-    -webkit-transform: scale(1);
-            transform: scale(1);
-  }
-  100% {
-    -webkit-transform: scale(0.95);
-            transform: scale(0.95);
-  }
+	display: none;
 }

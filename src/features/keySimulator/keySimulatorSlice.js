@@ -12,6 +12,7 @@ export const keySimulatorSlice = createSlice({
     array: [],
     keyLocations: {},
     keyboardStyle: {},
+    pressedKeys: [],
     highlight: {},
   },
   reducers: {
@@ -28,6 +29,7 @@ export const keySimulatorSlice = createSlice({
         return;
       }
       // split the rows into an array
+
       for (let i in state.array) {
         // regex match text within "" and {}
         state.array[i] = state.array[i].match(/(["'])(?:(?=(\\?))\2.)*?\1|([{])(?:(?=(\\?))\2.)*?([}])/g);
@@ -36,8 +38,11 @@ export const keySimulatorSlice = createSlice({
           return;
         }
       }
+      let keycount = 0;
       // format array into key rendering dictionary
       let keyInfo = {
+        keyid: keycount,
+        class: "",
         legend: "",
         sublegend: "",
         x: 0.0,
@@ -47,12 +52,16 @@ export const keySimulatorSlice = createSlice({
         keytopcolor: shadeColor(defaultKeyColor, 10),
         keybordercolor: defaultKeyColor,
         textcolor: defaultTextColor,
+        pressed: false,
       }
+
       for (let x = 0; x < state.array.length; x++) {
         let formatNextKey = false;
         // reset formatting and increment y coordinate
         if (x !== 0) {
           keyInfo = {
+            keyid: keycount,
+            class: "",
             legend: "",
             sublegend: "",
             x: 0.0,
@@ -62,14 +71,15 @@ export const keySimulatorSlice = createSlice({
             keytopcolor: keyInfo.keytopcolor,
             keybordercolor: keyInfo.keybordercolor,
             textcolor: keyInfo.textcolor,
+            pressed: false,
           }
-          // console.log(keyInfo.keycolor);
         }
         for (let y = 0; y < state.array[x].length; y++) {
           // if no special formatting, reset key formatting and increment x coordinate
           if (!formatNextKey && y !== 0) {
-            // console.log(keyInfo.keycolor);
             keyInfo = {
+              keyid: keycount,
+              class: "",
               legend: "",
               sublegend: "",
               x: keyInfo.x + keyInfo.width,
@@ -79,8 +89,8 @@ export const keySimulatorSlice = createSlice({
               keytopcolor: keyInfo.keytopcolor,
               keybordercolor: keyInfo.keybordercolor,
               textcolor: keyInfo.textcolor,
+              pressed: false,
             }
-            // console.log("after"+keyInfo.keycolor);
           }
           if (state.array[x][y].charAt(0) === "{" &&
               state.array[x][y].charAt(state.array[x][y].length - 1) === "}") {
@@ -143,6 +153,7 @@ export const keySimulatorSlice = createSlice({
             keyInfo.legend = parseEscapedChars(legends[0]);
 
             formatNextKey = false;
+            keycount += 1;
             // console.log(keyInfo.keycolor);
             state.array[x][y] = keyInfo;
           }
@@ -162,9 +173,8 @@ export const keySimulatorSlice = createSlice({
           }
         }
       }
-
-      let supportedKeys = [];
-      let unsupportedKeys = [];
+      // let supportedKeys = [];
+      // let unsupportedKeys = [];
 
       let keyboardWidth = 0;
       let keyboardHeight = 0;
@@ -181,11 +191,19 @@ export const keySimulatorSlice = createSlice({
           }
 
           // get the keycode of the specific key
-          // if spacebar
-
-          // word
           let primaryLegend = parseLegends(state.array[x][y].legend, state.array[x][y].sublegend);
-          // console.log(primaryLegend);
+          if (primaryLegend) {
+            state.array[x][y].class = primaryLegend;
+            if (!state.keyLocations[primaryLegend]) {
+              state.keyLocations[primaryLegend] = [[x, y]];
+            }
+            else {
+              state.keyLocations[primaryLegend].push([x, y]);
+            }
+          }
+          else {
+            state.array[x][y].class = "unsupported";
+          }
         }
       }
 
@@ -200,6 +218,12 @@ export const keySimulatorSlice = createSlice({
         paddingRight: borderWidth * keySize,
       }
       state.highlight = {borderColor:"#ff0033"};
+    },
+    keyDown: (state, action) => {
+      state.array[action.payload.x][action.payload.y].pressed = true;
+    },
+    keyUp: (state, action) => {
+      state.array[action.payload.x][action.payload.y].pressed = false;
     },
     highlightColor: (state, action) => {
       state.highlight = action.payload;
@@ -342,10 +366,11 @@ function shadeColor(color, percent) {
     return "#"+RR+GG+BB;
 }
 
-export const { parseKLE, highlightColor } = keySimulatorSlice.actions;
+export const { parseKLE, keyDown, keyUp, highlightColor } = keySimulatorSlice.actions;
 
 // state exports
 export const selectLayout = state => state.keySimulator.array;
+export const selectLocations = state => state.keySimulator.keyLocations;
 export const selectKeyboardStyle = state => state.keySimulator.keyboardStyle;
 export const selectHighlight = state => state.keySimulator.highlight;
 
