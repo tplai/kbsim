@@ -4,11 +4,11 @@ import {
   parseKLE,
   keyDown,
   keyUp,
-  highlightColor,
+  // highlightColor,
   selectLayout,
   selectLocations,
   selectKeyboardStyle,
-  selectHighlight,
+  // selectHighlight,
 } from './keySimulatorSlice';
 import { keynames } from './keycodeMaps.js';
 // import { keySounds } from './audioFiles.js';
@@ -36,11 +36,11 @@ export function KeySimulator() {
   const keyboardStyle = useSelector(selectKeyboardStyle);
 
   // highlight for indicating if KLE was formatted correctly
-  const highlight = useSelector(selectHighlight);
+  // const highlight = useSelector(selectHighlight);
   const dispatch = useDispatch();
   const [kleValue, setKleValue] = useState();
   // const [inputValue, setInputValue] = useState()
-  const [highlightType, setHighlight] = useState();
+  // const [highlightType, setHighlight] = useState();
 
   const keyObject = layout.map((row, index) => {
     return(<div className={styles.keyrow} key={index}>
