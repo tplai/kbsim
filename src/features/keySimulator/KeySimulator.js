@@ -11,10 +11,21 @@ import {
   selectHighlight,
 } from './keySimulatorSlice';
 import { keynames } from './keycodeMaps.js';
+// import { keySounds } from './audioFiles.js';
 import { keyPresets } from './keyPresets.js'
 import Key from './../key/Key.js';
 import store from './../../app/store';
 import styles from './KeySimulator.module.css';
+
+// audio imports
+import keySpacePress from './../../audio/holypanda/press/SPACE.mp3';
+import keySpaceRelease from './../../audio/holypanda/release/SPACE.mp3';
+import keyEnterPress from './../../audio/holypanda/press/ENTER.mp3';
+import keyEnterRelease from './../../audio/holypanda/release/ENTER.mp3';
+import keyBackspacePress from './../../audio/holypanda/press/BACKSPACE.mp3';
+import keyBackspaceRelease from './../../audio/holypanda/release/BACKSPACE.mp3';
+import keyGenericPress from './../../audio/holypanda/press/GENERIC.mp3';
+import keyGenericRelease from './../../audio/holypanda/release/GENERIC.mp3';
 
 export function KeySimulator() {
   // Layout array of keyboard
@@ -56,21 +67,40 @@ export function KeySimulator() {
       </div>)
     });
 
-  let keyPresses = [];
+  // bad performance if audios are replayed
+  const keySounds = {
+    press: {
+      SPACE: keySpacePress,
+      ENTER: keyEnterPress,
+      BACKSPACE: keyBackspacePress,
+      GENERIC: keyGenericPress,
+    },
+    release: {
+      SPACE: keySpacePress,
+      ENTER: keyEnterPress,
+      BACKSPACE: keyBackspacePress,
+      GENERIC: keyGenericPress,
+    },
+  }
 
   const handleKeyDown = (e) => {
     let tree = store.getState();
     let coordArray = tree.keySimulator.keyLocations[keynames[e.keyCode]]
-    for (let coords in tree.keySimulator.keyLocations[keynames[e.keyCode]]) {
-      // console.log(layout[coordArray[coords][0]][coordArray[coords][1]]);
+    for (let coords in coordArray) {
       let action = {
         x: coordArray[coords][0],
         y: coordArray[coords][1],
       };
       dispatch(keyDown(action));
-      // layout[coordArray[coords][0]][coordArray[coords][1]].legend = "XD"
-      // console.log(keyObject[coordArray[coords][0]].props.children[coordArray[coords][1]].props.className);
-      // keyObject[coordArray[coords][0]].props.children[coordArray[coords][1]].props.className += " asdf";
+
+      if (!tree.keySimulator.pressedKeys.includes(keynames[e.keyCode])) {
+        if (keynames[e.keyCode] in keySounds.press) {
+          new Audio(keySounds.press[keynames[e.keyCode]]).play();
+        }
+        else {
+          new Audio(keySounds.press.GENERIC).play();
+        }
+      }
     }
   }
   const handleKeyUp = (e) => {
@@ -83,6 +113,14 @@ export function KeySimulator() {
         y: coordArray[coords][1],
       };
       dispatch(keyUp(action));
+
+      if (keynames[e.keyCode] == "SPACE") {
+        // let audio = new Audio(keyReleaseSounds);
+        new Audio(keySpaceRelease).play();
+      }
+      else {
+        new Audio(keyGenericRelease).play();
+      }
     }
   }
 
@@ -116,7 +154,7 @@ export function KeySimulator() {
           }
           aria-label="Input KLE raw data"
         >
-          Parse Raw KLE
+          Set Layout
         </button>
       </div>
     </div>
