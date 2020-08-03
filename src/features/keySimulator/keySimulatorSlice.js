@@ -17,6 +17,12 @@ export const keySimulatorSlice = createSlice({
   },
   reducers: {
     parseKLE: (state, action) => {
+      // reset state
+      state.array = [];
+      state.keyLocations = {};
+      state.keyboardStyle = {};
+      state.pressedKeys = [];
+
       state.input = action.payload;
       if (!state.input) {
         state.highlight = {borderColor:"#ff0033"};
