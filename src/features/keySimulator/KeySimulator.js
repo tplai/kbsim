@@ -114,26 +114,32 @@ export function KeySimulator() {
         new Audio(keySounds.press[keynames[e.keyCode]]).play();
       }
       else {
-        switch(parseInt(coordArray[0][0])) {
-          case 0:
-            new Audio(keySounds.press.GENERICR0).play();
-            break;
-          case 1:
-            new Audio(keySounds.press.GENERICR1).play();
-            break;
-          case 2:
-            new Audio(keySounds.press.GENERICR2).play();
-            break;
-          case 3:
-            new Audio(keySounds.press.GENERICR3).play();
-            break;
-          case 4:
-            new Audio(keySounds.press.GENERICR4).play();
-            break;
-          default:
-            new Audio(keySounds.press.GENERICR4).play();
-            break;
-      }
+        if (coordArray) {
+          switch(parseInt(coordArray[0][0])) {
+            case 0:
+              new Audio(keySounds.press.GENERICR0).play();
+              break;
+            case 1:
+              new Audio(keySounds.press.GENERICR1).play();
+              break;
+            case 2:
+              new Audio(keySounds.press.GENERICR2).play();
+              break;
+            case 3:
+              new Audio(keySounds.press.GENERICR3).play();
+              break;
+            case 4:
+              new Audio(keySounds.press.GENERICR4).play();
+              break;
+            default:
+              new Audio(keySounds.press.GENERICR4).play();
+              break;
+          }
+        }
+        // key not found
+        else {
+          new Audio(keySounds.press.GENERICR4).play();
+        }
       }
     }
 
