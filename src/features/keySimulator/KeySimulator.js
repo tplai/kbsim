@@ -12,12 +12,13 @@ import {
 } from './keySimulatorSlice';
 import { keynames } from './keycodeMaps.js';
 // import { keySounds } from './audioFiles.js';
-import { keyPresets } from './keyPresets.js'
+// import { keyPresets } from './keyPresets.js'
 import Key from './../key/Key.js';
 import store from './../../app/store';
 import styles from './KeySimulator.module.css';
 
 // audio imports
+// improvement area: dynamic imports, programmatic pitch shifting with .wav instead
 import keySpacePress from './../../audio/holypanda/press/SPACE.mp3';
 import keySpaceRelease from './../../audio/holypanda/release/SPACE.mp3';
 import keyEnterPress from './../../audio/holypanda/press/ENTER.mp3';
@@ -25,6 +26,11 @@ import keyEnterRelease from './../../audio/holypanda/release/ENTER.mp3';
 import keyBackspacePress from './../../audio/holypanda/press/BACKSPACE.mp3';
 import keyBackspaceRelease from './../../audio/holypanda/release/BACKSPACE.mp3';
 import keyGenericPress from './../../audio/holypanda/press/GENERIC.mp3';
+import keyGenericPressR0 from './../../audio/holypanda/press/GENERIC_R0.mp3';
+import keyGenericPressR1 from './../../audio/holypanda/press/GENERIC_R1.mp3';
+import keyGenericPressR2 from './../../audio/holypanda/press/GENERIC_R2.mp3';
+import keyGenericPressR3 from './../../audio/holypanda/press/GENERIC_R3.mp3';
+import keyGenericPressR4 from './../../audio/holypanda/press/GENERIC_R4.mp3';
 import keyGenericRelease from './../../audio/holypanda/release/GENERIC.mp3';
 
 export function KeySimulator() {
@@ -73,13 +79,17 @@ export function KeySimulator() {
       SPACE: keySpacePress,
       ENTER: keyEnterPress,
       BACKSPACE: keyBackspacePress,
-      GENERIC: keyGenericPress,
+      GENERICR0: keyGenericPressR0,
+      GENERICR1: keyGenericPressR1,
+      GENERICR2: keyGenericPressR2,
+      GENERICR3: keyGenericPressR3,
+      GENERICR4: keyGenericPressR4,
     },
     release: {
-      SPACE: keySpacePress,
-      ENTER: keyEnterPress,
-      BACKSPACE: keyBackspacePress,
-      GENERIC: keyGenericPress,
+      SPACE: keySpaceRelease,
+      ENTER: keyEnterRelease,
+      BACKSPACE: keyBackspaceRelease,
+      GENERIC: keyGenericRelease,
     },
   }
 
@@ -98,7 +108,26 @@ export function KeySimulator() {
           new Audio(keySounds.press[keynames[e.keyCode]]).play();
         }
         else {
-          new Audio(keySounds.press.GENERIC).play();
+          switch(parseInt(coordArray[coords][0])) {
+            case 0:
+              new Audio(keySounds.press.GENERICR0).play();
+              break;
+            case 1:
+              new Audio(keySounds.press.GENERICR1).play();
+              break;
+            case 2:
+              new Audio(keySounds.press.GENERICR2).play();
+              break;
+            case 3:
+              new Audio(keySounds.press.GENERICR3).play();
+              break;
+            case 4:
+              new Audio(keySounds.press.GENERICR4).play();
+              break;
+            default:
+              new Audio(keySounds.press.GENERICR4).play();
+              break;
+        }
         }
       }
     }
@@ -114,12 +143,12 @@ export function KeySimulator() {
       };
       dispatch(keyUp(action));
 
-      if (keynames[e.keyCode] == "SPACE") {
+      if (keynames[e.keyCode] in keySounds.press) {
         // let audio = new Audio(keyReleaseSounds);
-        new Audio(keySpaceRelease).play();
+        new Audio(keySounds.release[keynames[e.keyCode]]).play();
       }
       else {
-        new Audio(keyGenericRelease).play();
+        new Audio(keySounds.press.GENERIC).play()
       }
     }
   }
