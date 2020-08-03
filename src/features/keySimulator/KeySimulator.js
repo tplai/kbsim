@@ -12,7 +12,7 @@ import {
 } from './keySimulatorSlice';
 import { keynames } from './keycodeMaps.js';
 // import { keySounds } from './audioFiles.js';
-// import { keyPresets } from './keyPresets.js'
+import { keyPresets } from './keyPresets.js'
 import Key from './../key/Key.js';
 import store from './../../app/store';
 import styles from './KeySimulator.module.css';
@@ -108,35 +108,35 @@ export function KeySimulator() {
         y: coordArray[coords][1],
       };
       dispatch(keyDown(action));
-
-      if (!tree.keySimulator.pressedKeys.includes(keynames[e.keyCode])) {
-        if (keynames[e.keyCode] in keySounds.press) {
-          new Audio(keySounds.press[keynames[e.keyCode]]).play();
-        }
-        else {
-          switch(parseInt(coordArray[coords][0])) {
-            case 0:
-              new Audio(keySounds.press.GENERICR0).play();
-              break;
-            case 1:
-              new Audio(keySounds.press.GENERICR1).play();
-              break;
-            case 2:
-              new Audio(keySounds.press.GENERICR2).play();
-              break;
-            case 3:
-              new Audio(keySounds.press.GENERICR3).play();
-              break;
-            case 4:
-              new Audio(keySounds.press.GENERICR4).play();
-              break;
-            default:
-              new Audio(keySounds.press.GENERICR4).play();
-              break;
-        }
-        }
+    }
+    if (!tree.keySimulator.pressedKeys.includes(keynames[e.keyCode])) {
+      if (keynames[e.keyCode] in keySounds.press) {
+        new Audio(keySounds.press[keynames[e.keyCode]]).play();
+      }
+      else {
+        switch(parseInt(coordArray[0][0])) {
+          case 0:
+            new Audio(keySounds.press.GENERICR0).play();
+            break;
+          case 1:
+            new Audio(keySounds.press.GENERICR1).play();
+            break;
+          case 2:
+            new Audio(keySounds.press.GENERICR2).play();
+            break;
+          case 3:
+            new Audio(keySounds.press.GENERICR3).play();
+            break;
+          case 4:
+            new Audio(keySounds.press.GENERICR4).play();
+            break;
+          default:
+            new Audio(keySounds.press.GENERICR4).play();
+            break;
+      }
       }
     }
+
   }
   const handleKeyUp = (e) => {
     let tree = store.getState();
@@ -148,14 +148,13 @@ export function KeySimulator() {
         y: coordArray[coords][1],
       };
       dispatch(keyUp(action));
-
-      if (keynames[e.keyCode] in keySounds.press) {
-        // let audio = new Audio(keyReleaseSounds);
-        new Audio(keySounds.release[keynames[e.keyCode]]).play();
-      }
-      else {
-        new Audio(keySounds.press.GENERIC).play()
-      }
+    }
+    if (keynames[e.keyCode] in keySounds.press) {
+      // let audio = new Audio(keyReleaseSounds);
+      new Audio(keySounds.release[keynames[e.keyCode]]).play();
+    }
+    else {
+      new Audio(keySounds.press.GENERIC).play()
     }
   }
 
@@ -179,6 +178,7 @@ export function KeySimulator() {
           className={styles.textarea}
           aria-label="Set increment amount"
           onChange={e => setKleValue(e.target.value)}
+          defaultValue={keyPresets.white_dawn}
         />
       </div>
       <div className={styles.row}>
