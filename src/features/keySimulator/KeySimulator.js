@@ -95,7 +95,7 @@ export function KeySimulator() {
 
   const handleKeyDown = (e) => {
     // prevent function keys and alt from affecting simulator
-    if (e.keyCode === 18 || e.keyCode === 112 || e.keyCode === 114 ||
+    if (e.keyCode === 18 ||  e.keyCode === 112 || e.keyCode === 114 ||
         e.keyCode === 116 || e.keyCode === 117 || e.keyCode === 121 ||
         e.keyCode === 122 || e.keyCode === 123) {
         e.preventDefault();
@@ -184,7 +184,7 @@ export function KeySimulator() {
           className={styles.textarea}
           aria-label="Set increment amount"
           onChange={e => setKleValue(e.target.value)}
-          defaultValue={keyPresets.white_dawn}
+          defaultValue={keyPresets.olivia_dawn}
         />
       </div>
       <div className={styles.row}>

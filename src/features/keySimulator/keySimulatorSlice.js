@@ -25,21 +25,29 @@ export const keySimulatorSlice = createSlice({
 
       state.input = action.payload;
       if (!state.input) {
+        state.array = [];
         state.highlight = {borderColor:"#ff0033"};
         return;
       }
       // split the input into rows by newline
       state.array = state.input.split(/\r\n|\r|\n/);
       if (state.array.length === 0) {
+        state.array = [];
         state.highlight = {borderColor:"#ff0033"};
         return;
       }
       // split the rows into an array
 
       for (let i in state.array) {
+        // remove empty lines
+        if (state.array[i] == "") {
+          state.array.splice(i, 1);
+          continue;
+        }
         // regex match text within "" and {}
         state.array[i] = state.array[i].match(/(["'])(?:(?=(\\?))\2.)*?\1|([{])(?:(?=(\\?))\2.)*?([}])/g);
         if (!state.array[i]) {
+          state.array = [];
           state.highlight = {borderColor:"#ff0033"};
           return;
         }
@@ -104,44 +112,47 @@ export const keySimulatorSlice = createSlice({
             let keyFormat = state.array[x][y].substring(1, state.array[x][y].length - 1).replace(/\s/g, '');
             // split multiple formatting information into an array
             let formatInfo = keyFormat.split(",");
-            for (let format in formatInfo) {
-              let formatTuple = formatInfo[format].split(":");
-              if (formatTuple.length === 2) {
-                switch (formatTuple[0]) {
-                  case 'w':
-                    keyInfo.width = parseFloat(formatTuple[1]);
-                    break;
-                  case 'h':
-                    keyInfo.height = parseFloat(formatTuple[1]);
-                    break;
-                  case 'x':
-                    keyInfo.x += parseFloat(formatTuple[1]);
-                    break;
-                  case 'y':
-                    keyInfo.y += parseFloat(formatTuple[1]);
-                    break;
-                  case 'c':
-                    // trim quotes
-                    if (formatTuple[1].charAt(0) === '"' &&
-                        formatTuple[1].charAt(formatTuple[1].length - 1) === '"') {
-                      formatTuple[1] = formatTuple[1].substring(1, formatTuple[1].length - 1);
-                    }
-                    keyInfo.keybordercolor = formatTuple[1];
-                    keyInfo.keytopcolor = shadeColor(formatTuple[1], 10);
-                    break;
-                  case 't':
-                    // trim quotes
-                    if (formatTuple[1].charAt(0) === '"' &&
-                        formatTuple[1].charAt(formatTuple[1].length - 1) === '"') {
-                      formatTuple[1] = formatTuple[1].substring(1, formatTuple[1].length - 1);
-                    }
-                    keyInfo.textcolor = formatTuple[1];
-                    break;
+            if (Array.isArray(formatInfo)) {
+              for (let format in formatInfo) {
+                let formatTuple = formatInfo[format].split(":");
+                if (formatTuple.length === 2) {
+                  switch (formatTuple[0]) {
+                    case 'w':
+                      keyInfo.width = parseFloat(formatTuple[1]);
+                      break;
+                    case 'h':
+                      keyInfo.height = parseFloat(formatTuple[1]);
+                      break;
+                    case 'x':
+                      keyInfo.x += parseFloat(formatTuple[1]);
+                      break;
+                    case 'y':
+                      keyInfo.y += parseFloat(formatTuple[1]);
+                      break;
+                    case 'c':
+                      // trim quotes
+                      if (formatTuple[1].charAt(0) === '"' &&
+                          formatTuple[1].charAt(formatTuple[1].length - 1) === '"') {
+                        formatTuple[1] = formatTuple[1].substring(1, formatTuple[1].length - 1);
+                      }
+                      keyInfo.keybordercolor = formatTuple[1];
+                      keyInfo.keytopcolor = shadeColor(formatTuple[1], 10);
+                      break;
+                    case 't':
+                      // trim quotes
+                      if (formatTuple[1].charAt(0) === '"' &&
+                          formatTuple[1].charAt(formatTuple[1].length - 1) === '"') {
+                        formatTuple[1] = formatTuple[1].substring(1, formatTuple[1].length - 1);
+                      }
+                      keyInfo.textcolor = formatTuple[1];
+                      break;
+                  }
                 }
-              }
-              else {
-                state.highlight = {borderColor:"#ff0033"};
-                return;
+                else {
+                  state.array = [];
+                  state.highlight = {borderColor:"#ff0033"};
+                  return;
+                }
               }
             }
             formatNextKey = true;
@@ -179,8 +190,6 @@ export const keySimulatorSlice = createSlice({
           }
         }
       }
-      // let supportedKeys = [];
-      // let unsupportedKeys = [];
 
       let keyboardWidth = 0;
       let keyboardHeight = 0;
@@ -223,7 +232,8 @@ export const keySimulatorSlice = createSlice({
         paddingLeft: borderWidth * keySize,
         paddingRight: borderWidth * keySize,
       }
-      state.highlight = {borderColor:"#ff0033"};
+      // state.array = [];
+      // state.highlight = {borderColor:"#ff0033"};
     },
     keyDown: (state, action) => {
       state.array[action.payload.x][action.payload.y].pressed = true;
