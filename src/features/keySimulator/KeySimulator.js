@@ -160,7 +160,7 @@ export function KeySimulator() {
       new Audio(keySounds.release[keynames[e.keyCode]]).play();
     }
     else {
-      new Audio(keySounds.press.GENERIC).play()
+      new Audio(keySounds.release.GENERIC).play();
     }
   }
 
