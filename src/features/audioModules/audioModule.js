@@ -6,6 +6,7 @@ import { cream } from './cream.js';
 import { holypanda } from './holypanda.js';
 import { mxblack } from './mxblack'
 import { redink } from './redink.js';
+import { topre } from './topre.js';
 
 export const keySounds = {
   blackink: blackink,
@@ -16,7 +17,7 @@ export const keySounds = {
   holypanda: holypanda,
   mxblack: mxblack,
   redink: redink,
-  // topre: topre,
+  topre: topre,
 }
 
 // sadly you can't import in the middle of a file
