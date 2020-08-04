@@ -1,14 +1,16 @@
 import { holypanda } from './holypanda.js';
 import { blackink } from './blackink.js';
 import { redink } from './redink.js';
+import { cream } from './cream.js';
+import { boxnavy } from './boxnavy.js';
 
 export const keySounds = {
   holypanda: holypanda,
   blackink: blackink,
   redink: redink,
-  // cream: cream,
+  cream: cream,
   // mxblack: mxblack,
-  // boxnavy: boxnavy,
+  boxnavy: boxnavy,
   // topre: topre,
 }
 

@@ -168,7 +168,9 @@ export function KeySimulator() {
           <option value="redink">Gateron Red Inks</option>
           <option value="cream">NK Creams</option>
           <option value="mxblack">Cherry MX Blacks</option>
-          <option value="boxynavy">Box Navies</option>
+          <option value="boxnavy">Box Navies</option>
+          <option value="buckling">Buckling Spring</option>
+          <option value="bluealps">Blue Alps</option>
           <option value="topre">Topres</option>
         </select>
         <select defaultValue="grey">
