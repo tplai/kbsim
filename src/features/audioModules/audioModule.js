@@ -4,6 +4,7 @@ import { redink } from './redink.js';
 import { mxblack } from './mxblack'
 import { cream } from './cream.js';
 import { boxnavy } from './boxnavy.js';
+import { bluealps } from './bluealps.js';
 
 export const keySounds = {
   holypanda: holypanda,
@@ -12,6 +13,7 @@ export const keySounds = {
   cream: cream,
   mxblack: mxblack,
   boxnavy: boxnavy,
+  bluealps: bluealps,
   // topre: topre,
 }
 
