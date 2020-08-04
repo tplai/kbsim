@@ -22,6 +22,10 @@ module.exports = {
             loader: 'file-loader'
         },
         {
+            test: /\.png$/,
+            loader: 'file-loader'
+        },
+        {
             test: /\.ico$/,
             loader: 'file-loader?name=[name].[ext]'  // <-- retain original file name
         }
