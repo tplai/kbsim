@@ -2,7 +2,12 @@
   display: flex;
   align-items: center;
   justify-content: center;
+  /* height: 80vh;
+  width: 180vh; */
   padding-bottom: 10px;
+  /* background: url("./../../assets/images/oliviadeskmat.png");
+  background-repeat: no-repeat;
+  background-size: cover; */
 }
 
 .keyboard {
