@@ -1,9 +1,10 @@
 import { holypanda } from './holypanda.js';
+import { blackink } from './blackink.js';
 import { redink } from './redink.js';
 
 export const keySounds = {
   holypanda: holypanda,
-  // blackink: blackink,
+  blackink: blackink,
   redink: redink,
   // cream: cream,
   // mxblack: mxblack,

@@ -68,9 +68,9 @@ export function KeySimulator() {
 
   const handleKeyDown = (e) => {
     // prevent function keys and alt from affecting simulator
-    if (e.keyCode === 18 ||  e.keyCode === 112 || e.keyCode === 114 ||
-        e.keyCode === 116 || e.keyCode === 117 || e.keyCode === 121 ||
-        e.keyCode === 122 || e.keyCode === 123) {
+    if (e.keyCode === 18 || e.keyCode === 32 || e.keyCode === 112 ||
+        e.keyCode === 114 || e.keyCode === 116 || e.keyCode === 117 ||
+        e.keyCode === 121 || e.keyCode === 122 || e.keyCode === 123) {
         e.preventDefault();
     }
     let tree = store.getState();
