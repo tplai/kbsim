@@ -1,19 +1,21 @@
-import { holypanda } from './holypanda.js';
 import { blackink } from './blackink.js';
-import { redink } from './redink.js';
-import { mxblack } from './mxblack'
-import { cream } from './cream.js';
-import { boxnavy } from './boxnavy.js';
 import { bluealps } from './bluealps.js';
+import { boxnavy } from './boxnavy.js';
+import { buckling } from './buckling.js';
+import { cream } from './cream.js';
+import { holypanda } from './holypanda.js';
+import { mxblack } from './mxblack'
+import { redink } from './redink.js';
 
 export const keySounds = {
-  holypanda: holypanda,
   blackink: blackink,
-  redink: redink,
-  cream: cream,
-  mxblack: mxblack,
-  boxnavy: boxnavy,
   bluealps: bluealps,
+  boxnavy: boxnavy,
+  buckling: buckling,
+  cream: cream,
+  holypanda: holypanda,
+  mxblack: mxblack,
+  redink: redink,
   // topre: topre,
 }
 
