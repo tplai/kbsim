@@ -11,7 +11,7 @@ import {
   // selectHighlight,
 } from './keySimulatorSlice';
 import { keynames } from './keycodeMaps.js';
-// import { keySounds } from './audioFiles.js';
+import { keySounds } from './../audioModules/audioModule.js';
 import { keyPresets } from './keyPresets.js'
 import Key from './../key/Key.js';
 import store from './../../app/store';
@@ -19,19 +19,9 @@ import styles from './KeySimulator.module.css';
 
 // audio imports
 // improvement area: dynamic imports, programmatic pitch shifting with .wav instead
-import keySpacePress from './../../audio/holypanda/press/SPACE.mp3';
-import keySpaceRelease from './../../audio/holypanda/release/SPACE.mp3';
-import keyEnterPress from './../../audio/holypanda/press/ENTER.mp3';
-import keyEnterRelease from './../../audio/holypanda/release/ENTER.mp3';
-import keyBackspacePress from './../../audio/holypanda/press/BACKSPACE.mp3';
-import keyBackspaceRelease from './../../audio/holypanda/release/BACKSPACE.mp3';
-import keyGenericPress from './../../audio/holypanda/press/GENERIC.mp3';
-import keyGenericPressR0 from './../../audio/holypanda/press/GENERIC_R0.mp3';
-import keyGenericPressR1 from './../../audio/holypanda/press/GENERIC_R1.mp3';
-import keyGenericPressR2 from './../../audio/holypanda/press/GENERIC_R2.mp3';
-import keyGenericPressR3 from './../../audio/holypanda/press/GENERIC_R3.mp3';
-import keyGenericPressR4 from './../../audio/holypanda/press/GENERIC_R4.mp3';
-import keyGenericRelease from './../../audio/holypanda/release/GENERIC.mp3';
+
+// initial rendering
+store.dispatch(parseKLE(keyPresets.olivia_dawn));
 
 export function KeySimulator() {
   // Layout array of keyboard
@@ -44,7 +34,10 @@ export function KeySimulator() {
   // highlight for indicating if KLE was formatted correctly
   // const highlight = useSelector(selectHighlight);
   const dispatch = useDispatch();
+
+
   const [kleValue, setKleValue] = useState();
+  const [switchValue, setSwitchValue] = useState("holypanda");
   // const [inputValue, setInputValue] = useState()
   // const [highlightType, setHighlight] = useState();
 
@@ -73,26 +66,6 @@ export function KeySimulator() {
       </div>)
     });
 
-  // bad performance if audios are replayed
-  const keySounds = {
-    press: {
-      SPACE: keySpacePress,
-      ENTER: keyEnterPress,
-      BACKSPACE: keyBackspacePress,
-      GENERICR0: keyGenericPressR0,
-      GENERICR1: keyGenericPressR1,
-      GENERICR2: keyGenericPressR2,
-      GENERICR3: keyGenericPressR3,
-      GENERICR4: keyGenericPressR4,
-    },
-    release: {
-      SPACE: keySpaceRelease,
-      ENTER: keyEnterRelease,
-      BACKSPACE: keyBackspaceRelease,
-      GENERIC: keyGenericRelease,
-    },
-  }
-
   const handleKeyDown = (e) => {
     // prevent function keys and alt from affecting simulator
     if (e.keyCode === 18 ||  e.keyCode === 112 || e.keyCode === 114 ||
@@ -109,36 +82,38 @@ export function KeySimulator() {
       };
       dispatch(keyDown(action));
     }
-    if (!tree.keySimulator.pressedKeys.includes(keynames[e.keyCode])) {
-      if (keynames[e.keyCode] in keySounds.press) {
-        new Audio(keySounds.press[keynames[e.keyCode]]).play();
+    // if the key is not pressed and valid switch is selected
+    if (!tree.keySimulator.pressedKeys.includes(keynames[e.keyCode]) && switchValue in keySounds) {
+      // play a sound
+      if (keynames[e.keyCode] in keySounds[switchValue].press) {
+        new Audio(keySounds[switchValue].press[keynames[e.keyCode]]).play();
       }
       else {
         if (coordArray) {
           switch(parseInt(coordArray[0][0])) {
             case 0:
-              new Audio(keySounds.press.GENERICR0).play();
+              new Audio(keySounds[switchValue].press.GENERICR0).play();
               break;
             case 1:
-              new Audio(keySounds.press.GENERICR1).play();
+              new Audio(keySounds[switchValue].press.GENERICR1).play();
               break;
             case 2:
-              new Audio(keySounds.press.GENERICR2).play();
+              new Audio(keySounds[switchValue].press.GENERICR2).play();
               break;
             case 3:
-              new Audio(keySounds.press.GENERICR3).play();
+              new Audio(keySounds[switchValue].press.GENERICR3).play();
               break;
             case 4:
-              new Audio(keySounds.press.GENERICR4).play();
+              new Audio(keySounds[switchValue].press.GENERICR4).play();
               break;
             default:
-              new Audio(keySounds.press.GENERICR4).play();
+              new Audio(keySounds[switchValue].press.GENERICR4).play();
               break;
           }
         }
         // key not found
         else {
-          new Audio(keySounds.press.GENERICR4).play();
+          new Audio(keySounds[switchValue].press.GENERICR4).play();
         }
       }
     }
@@ -155,12 +130,15 @@ export function KeySimulator() {
       };
       dispatch(keyUp(action));
     }
-    if (keynames[e.keyCode] in keySounds.press) {
-      // let audio = new Audio(keyReleaseSounds);
-      new Audio(keySounds.release[keynames[e.keyCode]]).play();
-    }
-    else {
-      new Audio(keySounds.release.GENERIC).play();
+    // if a valid switch is selected
+    if (switchValue in keySounds) {
+      if (keynames[e.keyCode] in keySounds[switchValue].press) {
+        // let audio = new Audio(keyReleaseSounds);
+        new Audio(keySounds[switchValue].release[keynames[e.keyCode]]).play();
+      }
+      else {
+        new Audio(keySounds[switchValue].release.GENERIC).play();
+      }
     }
   }
 
@@ -179,6 +157,33 @@ export function KeySimulator() {
           {keyObject}
         </div>
       </div>
+      <div className={styles.row}>
+        <select
+          aria-label="Switch Type"
+          onChange={e => setSwitchValue(e.target.value)}
+          defaultValue="holypanda"
+        >
+          <option value="holypanda">Holy Pandas</option>
+          <option value="blackink">Gateron Black Inks</option>
+          <option value="redink">Gateron Red Inks</option>
+          <option value="cream">NK Creams</option>
+          <option value="mxblack">Cherry MX Blacks</option>
+          <option value="boxynavy">Box Navies</option>
+          <option value="topre">Topres</option>
+        </select>
+        <select defaultValue="grey">
+          <option value="gray">Gray</option>
+          <option value="black">Black</option>
+          <option value="silver">Silver</option>
+          <option value="white">White</option>
+          <option value="red">Red</option>
+          <option value="orange">Orange</option>
+          <option value="yellow">Yellow</option>
+          <option value="green">Green</option>
+          <option value="blue">Blue</option>
+          <option value="purple">Purple</option>
+        </select>
+    </div>
       <div className={styles.row}>
         <textarea
           className={styles.textarea}
