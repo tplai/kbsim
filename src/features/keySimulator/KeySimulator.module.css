@@ -11,27 +11,6 @@
   outline: none;
 }
 
-.selectcontainer {
-  margin-left: auto;
-  margin-right: auto;
-  display: block;
-  align-items: center;
-  justify-content: center;
-  box-shadow: rgba(0, 0, 0, 0.17) 1px 1px 4px;
-  border-radius: 5px;
-  background: #eee;
-  margin-bottom: 2vh;
-  max-width: 832px;
-}
-
-.selectarea {
-  display: flex;
-  /* align-items: center;
-  justify-content: center; */
-  max-width: 800px;
-  padding: 1rem;
-}
-
 /* .mousepad { */
   /* box-sizing: border-box; */
   /* padding-bottom: 10px; */
@@ -120,9 +99,33 @@
   background-color: rgba(112, 76, 182, 0.2);
 }
 
+.selectcontainer {
+  margin-left: auto;
+  margin-right: auto;
+  box-shadow: rgba(0, 0, 0, 0.17) 1px 1px 4px;
+  border-radius: 5px;
+  background: #eee;
+  margin-bottom: 2vh;
+  max-width: 832px;
+}
+
+.selectarea {
+  display: flex;
+}
+
+.selectcol {
+  padding: 1rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 33.33%;
+}
+
 /* class applies to select element itself, not a wrapper element */
 .dropdown {
     display: block;
+    flex-grow: 1;
+    /* min-width: 264px; */
     font-size: 16px;
     font-family: roboto;
     color: #444;
