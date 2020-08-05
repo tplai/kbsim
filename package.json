@@ -5,7 +5,8 @@
   "main": "index.js",
   "scripts": {
     "start": "webpack --watch",
-    "start:dev": "webpack-dev-server --watch"
+    "start:dev": "webpack-dev-server --watch",
+    "build": "webpack -p"
   },
   "author": "Thomas Lai",
   "license": "MIT",
