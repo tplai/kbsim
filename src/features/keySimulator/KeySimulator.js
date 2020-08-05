@@ -150,6 +150,44 @@ export function KeySimulator() {
         tabIndex="0"
       >
         <TypingTest/>
+        
+        <div className={styles.selectcontainer}>
+          <div className={styles.selectarea}>
+            <select
+              className={styles.dropdown}
+              aria-label="Switch Type"
+              onChange={e => setSwitchValue(e.target.value)}
+              defaultValue="holypanda"
+            >
+              <option value="holypanda">Holy Pandas</option>
+              <option value="blackink">Gateron Black Inks</option>
+              <option value="redink">Gateron Red Inks</option>
+              <option value="cream">NK Creams</option>
+              <option value="mxblack">Cherry MX Blacks</option>
+              <option value="boxnavy">Box Navies</option>
+              <option value="buckling">Buckling Spring</option>
+              <option value="bluealps">Blue Alps</option>
+              <option value="topre">Topres</option>
+            </select>
+            <select
+              className={styles.dropdown}
+              aria-label="Case Color"
+              defaultValue="gray"
+            >
+              <option value="gray">Gray</option>
+              <option value="black">Black</option>
+              <option value="silver">Silver</option>
+              <option value="white">White</option>
+              <option value="red">Red</option>
+              <option value="orange">Orange</option>
+              <option value="yellow">Yellow</option>
+              <option value="green">Green</option>
+              <option value="blue">Blue</option>
+              <option value="purple">Purple</option>
+            </select>
+          </div>
+        </div>
+
         <div className={styles.mousepad}>
           <div
             className={styles.keyboard}
@@ -159,35 +197,6 @@ export function KeySimulator() {
           </div>
         </div>
       </div>
-      <div className={styles.row}>
-        <select
-          aria-label="Switch Type"
-          onChange={e => setSwitchValue(e.target.value)}
-          defaultValue="holypanda"
-        >
-          <option value="holypanda">Holy Pandas</option>
-          <option value="blackink">Gateron Black Inks</option>
-          <option value="redink">Gateron Red Inks</option>
-          <option value="cream">NK Creams</option>
-          <option value="mxblack">Cherry MX Blacks</option>
-          <option value="boxnavy">Box Navies</option>
-          <option value="buckling">Buckling Spring</option>
-          <option value="bluealps">Blue Alps</option>
-          <option value="topre">Topres</option>
-        </select>
-        <select defaultValue="grey">
-          <option value="gray">Gray</option>
-          <option value="black">Black</option>
-          <option value="silver">Silver</option>
-          <option value="white">White</option>
-          <option value="red">Red</option>
-          <option value="orange">Orange</option>
-          <option value="yellow">Yellow</option>
-          <option value="green">Green</option>
-          <option value="blue">Blue</option>
-          <option value="purple">Purple</option>
-        </select>
-    </div>
       <div className={styles.row} style={{display:"none"}}>
         <textarea
           className={styles.textarea}
