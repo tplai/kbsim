@@ -21,7 +21,7 @@ export const keySimulatorSlice = createSlice({
       // reset state
       state.array = [];
       state.keyLocations = {};
-      state.keyboardStyle = {};
+      // state.keyboardStyle = {..keyboardStyle};
       state.pressedKeys = [];
 
       state.input = action.payload;
@@ -227,6 +227,7 @@ export const keySimulatorSlice = createSlice({
       let borderWidth = 0.25;
       let borderHeight = 0.25;
       state.keyboardStyle = {
+        ...state.keyboardStyle,
         width: (keyboardWidth + borderWidth * 2) * keySize,
         minWidth: (keyboardWidth + borderWidth * 2) * keySize,
         height: (keyboardHeight + borderHeight * 3.25) * keySize,
