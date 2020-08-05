@@ -175,12 +175,15 @@ export function KeySimulator() {
               onChange={e => dispatch(parseKLE(keyPresets[e.target.value]))}
               defaultValue="olivia_sf"
             >
-              <option value="olivia_sf">GMK Olivia Dawn</option>
+              <option value="olivia_sf">GMK Olivia WKL 75%</option>
               <option value="modo_wkltkl">GMK Modo WKL TKL</option>
               <option value="dracula_tkl">GMK Dracula TKL</option>
+              <option value="mizu_fullsize">GMK Mizu Full Size</option>
+              <option value="bow_fullsize">GMK BoW Full Size</option>
+              <option value="ezze_sxf">GMK 8008 WKL 65%</option>
               <option value="modelm">Model M</option>
               <option value="hhkb">HHKB</option>
-              <option value="white_sf">GMK BoW Dawn</option>
+              <option value="white_sf">GMK BoW 75%</option>
             </select>
             <select
               className={styles.dropdown}
