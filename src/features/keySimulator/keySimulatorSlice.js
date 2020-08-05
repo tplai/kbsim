@@ -1,5 +1,6 @@
 import { createSlice } from '@reduxjs/toolkit';
 import { ansiMap, keycodes } from './../keyModules/keycodeMaps.js';
+import { parseEscapedChars, parseSpecialSymbol, parseLegends, shadeColor } from './../keyModules/parseModules.js';
 
 const keySize = 54;
 const defaultKeyColor = "#ffffff";
@@ -276,175 +277,12 @@ export const keySimulatorSlice = createSlice({
   },
 });
 
-// function for parsing strings like "\\"
-function parseEscapedChars(str) {
-  let parsedStr = "";
-  for (let i = 0; i < str.length; i++) {
-    // if escaped character is found, skip over the escape character and add the escaped character
-    if(str.charAt(i) === '\\' && i !== str.length - 1) {
-      i++;
-    }
-    parsedStr += str.charAt(i);
-  }
-  return parsedStr;
-}
-
-// convert special symbol into a readable string
-function parseSpecialSymbol(char) {
-  switch(char) {
-    case '~':
-      return "TILDE";
-    case '`':
-      return "BACK_QUOTE"
-    case '!':
-      return "EXCLAMATION";
-    case '@':
-      return "AT";
-    case '#':
-      return "HASH";
-    case '$':
-      return "DOLLAR";
-    case '%':
-      return "PERCENT";
-    case '^':
-      return "CIRCUMFLEX";
-    case '&':
-      return "AMPERSAND";
-    case '*':
-      return "ASTERISK";
-    case '(':
-      return "OPEN_PAREN";
-    case ')':
-      return "CLOSE_PAREN";
-    case '-':
-      return "HYPHEN";
-    case '_':
-      return "UNDERSCORE";
-    case '=':
-      return "EQUALS"
-    case '+':
-      return "ADD";
-    case '\\':
-      return "BACK_SLASH";
-    case '{':
-      return "OPEN_CURLY_BRACKET";
-    case '[':
-      return "OPEN_BRACKET";
-    case '}':
-      return "CLOSE_CURLY_BRACKET";
-    case ']':
-      return "CLOSE_BRACKET";
-    case '|':
-      return "PIPE";
-    case ':':
-      return "COLON";
-    case ';':
-      return "SEMICOLON";
-    case '"':
-      return "DOUBLE_QUOTE";
-    case '\'':
-      return "QUOTE";
-    case '<':
-      return "LESS_THAN";
-    case ',':
-      return "COMMA";
-    case '>':
-      return "GREATER_THAN";
-    case '.':
-      return "PERIOD";
-    case '?':
-      return "QUESTION";
-    case '/':
-      return "SLASH"
-    case '↑':
-      return "UP";
-    case '←':
-      return "LEFT";
-    case '↓':
-      return "DOWN";
-    case '→':
-      return "RIGHT";
-    default:
-      return;
-  }
-}
-
-// usually the bottom legend contains the "non-shift" key
-function parseLegends(toplegend, bottomlegend) {
-  // if the legend is not alphanumeric and is 1 character, get the alphanumeric description
-  let formatTopLegend = toplegend.replace(/\s/g, '').toUpperCase();
-  if (formatTopLegend.length === 1 && !formatTopLegend.match(/^[a-z0-9]+$/i)) {
-    formatTopLegend = parseSpecialSymbol(formatTopLegend);
-  }
-  // do same with bottom legend
-  let formatBottomLegend = bottomlegend.replace(/\s/g, '').toUpperCase();
-  if (formatBottomLegend.length === 1 && !formatBottomLegend.match(/^[a-z0-9]+$/i)) {
-    formatBottomLegend = parseSpecialSymbol(formatBottomLegend);
-  }
-
-  let ansiKey = [formatTopLegend, formatBottomLegend];
-  if (ansiKey in ansiMap) {
-    // console.log("Successfully mapped " + ansiKey + " to " +ansiMap[ansiKey]);
-    return ansiMap[ansiKey];
-  }
-  // console.log("Failed: "+ toplegend + " " + bottomlegend + "\n ansiKey: "+ansiKey);
-  return;
-}
-
-function shadeColor(color, percent) {
-    let R = parseInt(color.substring(1,3),16);
-    let G = parseInt(color.substring(3,5),16);
-    let B = parseInt(color.substring(5,7),16);
-
-    R = parseInt(R * (100 + percent) / 100);
-    G = parseInt(G * (100 + percent) / 100);
-    B = parseInt(B * (100 + percent) / 100);
-
-    R = (R<255)?R:255;
-    G = (G<255)?G:255;
-    B = (B<255)?B:255;
-
-    let RR = ((R.toString(16).length==1)?"0"+R.toString(16):R.toString(16));
-    let GG = ((G.toString(16).length==1)?"0"+G.toString(16):G.toString(16));
-    let BB = ((B.toString(16).length==1)?"0"+B.toString(16):B.toString(16));
-
-    return "#"+RR+GG+BB;
-}
-
 export const { parseKLE, keyDown, keyUp, setKeyboardColor, highlightColor } = keySimulatorSlice.actions;
 
 // state exports
 export const selectLayout = state => state.keySimulator.array;
 export const selectLocations = state => state.keySimulator.keyLocations;
 export const selectKeyboardStyle = state => state.keySimulator.keyboardStyle;
-// export const selectMousepadStyle = state => state.keySimulator.mousepadStyle;
 export const selectHighlight = state => state.keySimulator.highlight;
 
 export default keySimulatorSlice.reducer;
-
-/*
-
-["Esc",{x:0.5},"F1","F2","F3","F4",{x:0.5},"F5","F6","F7","F8",{x:0.5},"F9","F10","F11","F12",{x:0.5},"Delete"],
-[{y:0.25},"~\n`","!\n1","@\n2","#\n3","$\n4","%\n5","^\n6","&\n7","*\n8","(\n9",")\n0","_\n-","+\n=",{w:2},"Backspace","End"],
-[{w:1.5},"Tab","Q","W","E","R","T","Y","U","I","O","P","{\n[","}\n]",{w:1.5},"|\n\\","PgUp"],
-[{w:1.75},"Caps Lock","A","S","D","F","G","H","J","K","L",":\n;","\"\n'",{w:2.25},"Enter","PgDn"],
-[{w:2.25},"Shift","Z","X","C","V","B","N","M","<\n,",">\n.","?\n/",{w:1.75},"Shift","↑","Fn"],
-[{w:1.5},"Ctrl",{x:0.75,w:1.5},"Alt",{a:7,w:7},"",{a:4,w:1.5},"Win",{x:0.75},"←","↓","→"]
-
-
-[{c:"#f1beb0",t:"#2b2b2b"},"Esc",{x:0.5,c:"#e1dbd1"},"F1","F2","F3","F4",{x:0.5,c:"#2b2b2b",t:"#f1beb0"},"F5","F6","F7","F8",{x:0.5,c:"#e1dbd1",t:"#2b2b2b"},"F9","F10","F11","F12",{x:0.5,c:"#2b2b2b",t:"#f1beb0"},"Delete"],
-[{y:0.25},"~\n`",{c:"#e1dbd1",t:"#2b2b2b"},"!\n1","@\n2","#\n3","$\n4","%\n5","^\n6","&\n7","*\n8","(\n9",")\n0","_\n-","+\n=",{c:"#2b2b2b",t:"#f1beb0",w:2},"Backspace","Home"],
-[{w:1.5},"Tab",{c:"#e1dbd1",t:"#2b2b2b"},"Q","W","E","R","T","Y","U","I","O","P","{\n[","}\n]",{c:"#2b2b2b",t:"#f1beb0",w:1.5},"|\n\\","PgUp"],
-[{w:1.75},"Caps Lock",{c:"#e1dbd1",t:"#2b2b2b"},"A","S","D",{n:true},"F","G","H",{n:true},"J","K","L",":\n;","\"\n'",{c:"#2b2b2b",t:"#f1beb0",w:2.25},"Enter","PgDn"],
-[{w:2.25},"Shift",{c:"#e1dbd1",t:"#2b2b2b"},"Z","X","C","V","B","N","M","<\n,",">\n.","?\n/",{c:"#2b2b2b",t:"#f1beb0",w:1.75},"Shift",{c:"#f1beb0",t:"#2b2b2b"},"↑",{c:"#2b2b2b",t:"#f1beb0"},"End"],
-[{w:1.5},"Ctrl",{x:0.75,w:1.55},"Alt",{x:-0.05,c:"#f1beb0",t:"#000000",a:7,w:7},"",{c:"#2b2b2b",t:"#f1beb0",a:4,w:1.5},"Win",{x:0.75,c:"#f1beb0",t:"#2b2b2b"},"←","↓","→"]
-
-["Esc",{x:1},"F1","F2","F3","F4",{x:0.5},"F5","F6","F7","F8",{x:0.5},"F9","F10","F11","F12",{x:0.25},"PrtSc","Scroll Lock","Pause\nBreak"],
-[{y:0.5},"~\n`","!\n1","@\n2","#\n3","$\n4","%\n5","^\n6","&\n7","*\n8","(\n9",")\n0","_\n-","+\n=",{w:2},"Backspace",{x:0.25},"Insert","Home","PgUp",{x:0.25},"Num Lock","/","*","-"],
-[{w:1.5},"Tab","Q","W","E","R","T","Y","U","I","O","P","{\n[","}\n]",{w:1.5},"|\n\\",{x:0.25},"Delete","End","PgDn",{x:0.25},"7\nHome","8\n↑","9\nPgUp",{h:2},"+"],
-[{w:1.75},"Caps Lock","A","S","D","F","G","H","J","K","L",":\n;","\"\n'",{w:2.25},"Enter",{x:3.5},"4\n←","5","6\n→"],
-[{w:2.25},"Shift","Z","X","C","V","B","N","M","<\n,",">\n.","?\n/",{w:2.75},"Shift",{x:1.25},"↑",{x:1.25},"1\nEnd","2\n↓","3\nPgDn",{h:2},"Enter"],
-[{w:1.25},"Ctrl",{w:1.25},"Win",{w:1.25},"Alt",{a:7,w:6.25},"",{a:4,w:1.25},"Alt",{w:1.25},"Win",{w:1.25},"Menu",{w:1.25},"Ctrl",{x:0.25},"←","↓","→",{x:0.25,w:2},"0\nIns",".\nDel"]
-
-
-*/
