@@ -251,14 +251,15 @@ export const keySimulatorSlice = createSlice({
     },
     keyDown: (state, action) => {
       state.array[action.payload.x][action.payload.y].pressed = true;
+      // console.log(action.payload.keycode);
       // if the key is not pressed, add it to the collection of pressed keys
-      if (!state.pressedKeys.includes(state.array[action.payload.x][action.payload.y].class)) {
-        state.pressedKeys.push(state.array[action.payload.x][action.payload.y].class);
+      if (!state.pressedKeys.includes(action.payload.keycode)) {
+        state.pressedKeys.push(action.payload.keycode);
       }
     },
     keyUp: (state, action) => {
       state.array[action.payload.x][action.payload.y].pressed = false;
-      let keyIndex = state.pressedKeys.indexOf(state.array[action.payload.x][action.payload.y].class);
+      let keyIndex = state.pressedKeys.indexOf(action.payload.keycode);
       if (keyIndex > -1) {
         state.pressedKeys.splice(keyIndex, 1);
       }

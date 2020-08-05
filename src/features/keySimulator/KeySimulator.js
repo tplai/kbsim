@@ -77,16 +77,17 @@ export function KeySimulator() {
         e.preventDefault();
     }
     let tree = store.getState();
-    let coordArray = tree.keySimulator.keyLocations[keynames[e.keyCode]]
+    let coordArray = tree.keySimulator.keyLocations[keynames[e.keyCode]];
     for (let coords in coordArray) {
       let action = {
         x: coordArray[coords][0],
         y: coordArray[coords][1],
+        keycode: e.keyCode,
       };
       dispatch(keyDown(action));
     }
     // if the key is not pressed and valid switch is selected
-    if (!tree.keySimulator.pressedKeys.includes(keynames[e.keyCode]) && switchValue in keySounds) {
+    if (coordArray && !tree.keySimulator.pressedKeys.includes(e.keyCode) && switchValue in keySounds) {
       // play a sound
       if (keynames[e.keyCode] in keySounds[switchValue].press) {
         new Audio(keySounds[switchValue].press[keynames[e.keyCode]]).play();
@@ -130,6 +131,7 @@ export function KeySimulator() {
       let action = {
         x: coordArray[coords][0],
         y: coordArray[coords][1],
+        keycode: e.keyCode,
       };
       dispatch(keyUp(action));
     }
@@ -157,46 +159,53 @@ export function KeySimulator() {
 
         <div className={styles.selectcontainer}>
           <div className={styles.selectarea}>
-            <select
-              className={styles.dropdown}
-              aria-label="Switch Type"
-              onChange={e => setSwitchValue(e.target.value)}
-              defaultValue="holypanda"
-            >
-              <option value="holypanda">Holy Pandas</option>
-              <option value="blackink">Gateron Black Inks</option>
-              <option value="redink">Gateron Red Inks</option>
-              <option value="cream">NK Creams</option>
-              <option value="mxblack">Cherry MX Blacks</option>
-              <option value="boxnavy">Box Navies</option>
-              <option value="buckling">Buckling Spring</option>
-              <option value="bluealps">Blue Alps</option>
-              <option value="topre">Topres</option>
-            </select>
-            <select
-              className={styles.dropdown}
-              aria-label="Keyboard Layout"
-              onChange={e => dispatch(parseKLE(keyPresets[e.target.value].kle))}
-              defaultValue="olivia_sf"
-            >
-              {keyPresets.map((preset, index) => {
+            <div className={styles.selectcol}>
+              <select
+                className={styles.dropdown}
+                aria-label="Switch Type"
+                onChange={e => setSwitchValue(e.target.value)}
+                defaultValue="holypanda"
+              >
+                <option value="holypanda">Holy Pandas</option>
+                <option value="blackink">Gateron Black Inks</option>
+                <option value="redink">Gateron Red Inks</option>
+                <option value="cream">NK Creams</option>
+                <option value="mxblack">Cherry MX Blacks</option>
+                <option value="boxnavy">Box Navies</option>
+                <option value="buckling">Buckling Spring</option>
+                <option value="bluealps">Blue Alps</option>
+                <option value="topre">Topres</option>
+              </select>
+            </div>
+
+            <div className={styles.selectcol}>
+              <select
+                className={styles.dropdown}
+                aria-label="Keyboard Layout"
+                onChange={e => dispatch(parseKLE(keyPresets[e.target.value].kle))}
+                defaultValue="olivia_sf"
+              >
+                {keyPresets.map((preset, index) => {
+                    return (
+                      <option value={index} key={preset.key}>{preset.caption}</option>
+                    );
+                  })}
+              </select>
+            </div>
+            <div className={styles.selectcol}>
+              <select
+                className={styles.dropdown}
+                aria-label="Case Color"
+                onChange={e => dispatch(setKeyboardColor(keyboardColors[e.target.value].background))}
+                defaultValue="gray"
+              >
+                {keyboardColors.map((color, index) => {
                   return (
-                    <option value={index} key={preset.key}>{preset.caption}</option>
+                    <option value={index} key={color.color}>{color.caption}</option>
                   );
                 })}
-            </select>
-            <select
-              className={styles.dropdown}
-              aria-label="Case Color"
-              onChange={e => dispatch(setKeyboardColor(keyboardColors[e.target.value].background))}
-              defaultValue="gray"
-            >
-              {keyboardColors.map((color, index) => {
-                return (
-                  <option value={index} key={color.color}>{color.caption}</option>
-                );
-              })}
-            </select>
+              </select>
+            </div>
           </div>
         </div>
         <div
