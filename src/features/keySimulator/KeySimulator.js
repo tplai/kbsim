@@ -7,6 +7,7 @@ import {
   selectLayout,
   selectLocations,
   selectKeyboardStyle,
+  // selectMousepadStyle,
 } from './keySimulatorSlice';
 import { keynames } from './../keyModules/keycodeMaps.js';
 import { keySounds } from './../audioModules/audioModule.js';
@@ -29,6 +30,7 @@ export function KeySimulator() {
   const keyLocations = useSelector(selectLocations);
   // dimensions of keyboard and border
   const keyboardStyle = useSelector(selectKeyboardStyle);
+  // const mousepadStyle = useSelector(selectMousepadStyle);
 
   // highlight for indicating if KLE was formatted correctly
   // const highlight = useSelector(selectHighlight);
@@ -150,7 +152,7 @@ export function KeySimulator() {
         tabIndex="0"
       >
         <TypingTest/>
-        
+
         <div className={styles.selectcontainer}>
           <div className={styles.selectarea}>
             <select
@@ -187,14 +189,11 @@ export function KeySimulator() {
             </select>
           </div>
         </div>
-
-        <div className={styles.mousepad}>
-          <div
-            className={styles.keyboard}
-            style={keyboardStyle}
-          >
-            {keyObject}
-          </div>
+        <div
+          className={styles.keyboard}
+          style={keyboardStyle}
+        >
+          {keyObject}
         </div>
       </div>
       <div className={styles.row} style={{display:"none"}}>

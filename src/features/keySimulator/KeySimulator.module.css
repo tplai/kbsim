@@ -26,15 +26,15 @@
 
 .selectarea {
   display: flex;
-  align-items: center;
-  justify-content: center;
+  /* align-items: center;
+  justify-content: center; */
   max-width: 800px;
   padding: 1rem;
 }
 
 .mousepad {
   box-sizing: border-box;
-  padding-bottom: 10px;
+  /* padding-bottom: 10px; */
   outline: 9px;
   display: flex;
   align-items: center;
@@ -42,7 +42,7 @@
   background: linear-gradient(to bottom, #212121 0%, #404040 100%);
   border: solid 3px;
   border-radius: 20px;
-  width: 120vh;
+  /* width: 120vh; */
 }
 
 .keyboard {
@@ -59,8 +59,7 @@
   min-height: 56px;
   align-items: left;
   display: flex;
-  margin-top: 10vh;
-  margin-bottom: 10vh;
+  /* margin-top: 10vh; */
 }
 
 .row {

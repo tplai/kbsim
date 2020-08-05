@@ -12,6 +12,7 @@ export const keySimulatorSlice = createSlice({
     array: [],
     keyLocations: {},
     keyboardStyle: {},
+    // mousepadStyle: {},
     pressedKeys: [],
     highlight: {},
   },
@@ -226,12 +227,23 @@ export const keySimulatorSlice = createSlice({
       let borderHeight = 0.25;
       state.keyboardStyle = {
         width: (keyboardWidth + borderWidth * 2) * keySize,
+        minWidth: (keyboardWidth + borderWidth * 2) * keySize,
         height: (keyboardHeight + borderHeight * 2) * keySize,
         paddingTop: borderHeight * keySize,
         paddingBottom: borderHeight * keySize,
         paddingLeft: borderWidth * keySize,
         paddingRight: borderWidth * keySize,
+        marginBottom: keySize * 2,
       }
+      // state.mousepadStyle = {
+      //   width: (keyboardWidth + borderWidth * 2) * keySize * 2,
+      //   minWidth: (keyboardWidth + borderWidth * 2) * keySize * 2,
+      //   height: (keyboardHeight + borderHeight * 2) * keySize * 1.5,
+      //   paddingTop: borderHeight * keySize,
+      //   paddingBottom: borderHeight * keySize,
+      //   paddingLeft: borderWidth * keySize,
+      //   paddingRight: borderWidth * keySize,
+      // }
       // state.array = [];
       // state.highlight = {borderColor:"#ff0033"};
     },
@@ -396,6 +408,7 @@ export const { parseKLE, keyDown, keyUp, highlightColor } = keySimulatorSlice.ac
 export const selectLayout = state => state.keySimulator.array;
 export const selectLocations = state => state.keySimulator.keyLocations;
 export const selectKeyboardStyle = state => state.keySimulator.keyboardStyle;
+// export const selectMousepadStyle = state => state.keySimulator.mousepadStyle;
 export const selectHighlight = state => state.keySimulator.highlight;
 
 export default keySimulatorSlice.reducer;

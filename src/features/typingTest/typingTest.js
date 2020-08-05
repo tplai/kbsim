@@ -71,7 +71,7 @@ export function TypingTest() {
         />
         <span className={styles.toolbar}>
           <span className={styles.time}>1:00</span>
-          <button disabled="">Reset</button>
+          <button disabled="">Redo</button>
         </span>
       </div>
     </div>
