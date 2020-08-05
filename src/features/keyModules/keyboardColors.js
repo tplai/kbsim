@@ -20,6 +20,11 @@ export const keyboardColors = [
     background: "linear-gradient(360deg, rgba(255,255,255,1) 0%, rgba(236,236,236,1) 75%)",
   },
   {
+    color: "beige",
+    caption: "Beige",
+    background: "linear-gradient(360deg, rgba(239,228,226,1) 0%, rgba(221,213,212,1) 75%)",
+  },
+  {
     color: "rosegold",
     caption: "Rose Gold",
     background: "linear-gradient(360deg, rgba(249,187,172,1) 0%, rgba(231,175,161,1) 75%)",
