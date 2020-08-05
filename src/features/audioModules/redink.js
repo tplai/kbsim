@@ -1,15 +1,15 @@
-import keySpacePress from './../../audio/redink/press/SPACE.mp3';
-import keySpaceRelease from './../../audio/redink/release/SPACE.mp3';
-import keyEnterPress from './../../audio/redink/press/ENTER.mp3';
-import keyEnterRelease from './../../audio/redink/release/ENTER.mp3';
-import keyBackspacePress from './../../audio/redink/press/BACKSPACE.mp3';
-import keyBackspaceRelease from './../../audio/redink/release/BACKSPACE.mp3';
-import keyGenericPressR0 from './../../audio/redink/press/GENERIC_R0.mp3';
-import keyGenericPressR1 from './../../audio/redink/press/GENERIC_R1.mp3';
-import keyGenericPressR2 from './../../audio/redink/press/GENERIC_R2.mp3';
-import keyGenericPressR3 from './../../audio/redink/press/GENERIC_R3.mp3';
-import keyGenericPressR4 from './../../audio/redink/press/GENERIC_R4.mp3';
-import keyGenericRelease from './../../audio/redink/release/GENERIC.mp3';
+import keySpacePress from './../../assets/audio/redink/press/SPACE.mp3';
+import keySpaceRelease from './../../assets/audio/redink/release/SPACE.mp3';
+import keyEnterPress from './../../assets/audio/redink/press/ENTER.mp3';
+import keyEnterRelease from './../../assets/audio/redink/release/ENTER.mp3';
+import keyBackspacePress from './../../assets/audio/redink/press/BACKSPACE.mp3';
+import keyBackspaceRelease from './../../assets/audio/redink/release/BACKSPACE.mp3';
+import keyGenericPressR0 from './../../assets/audio/redink/press/GENERIC_R0.mp3';
+import keyGenericPressR1 from './../../assets/audio/redink/press/GENERIC_R1.mp3';
+import keyGenericPressR2 from './../../assets/audio/redink/press/GENERIC_R2.mp3';
+import keyGenericPressR3 from './../../assets/audio/redink/press/GENERIC_R3.mp3';
+import keyGenericPressR4 from './../../assets/audio/redink/press/GENERIC_R4.mp3';
+import keyGenericRelease from './../../assets/audio/redink/release/GENERIC.mp3';
 
 export const redink = {
   press: {

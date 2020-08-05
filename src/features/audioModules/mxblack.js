@@ -1,15 +1,15 @@
-import keySpacePress from './../../audio/mxblack/press/SPACE.mp3';
-import keySpaceRelease from './../../audio/mxblack/release/SPACE.mp3';
-import keyEnterPress from './../../audio/mxblack/press/ENTER.mp3';
-import keyEnterRelease from './../../audio/mxblack/release/ENTER.mp3';
-import keyBackspacePress from './../../audio/mxblack/press/BACKSPACE.mp3';
-import keyBackspaceRelease from './../../audio/mxblack/release/BACKSPACE.mp3';
-import keyGenericPressR0 from './../../audio/mxblack/press/GENERIC_R0.mp3';
-import keyGenericPressR1 from './../../audio/mxblack/press/GENERIC_R1.mp3';
-import keyGenericPressR2 from './../../audio/mxblack/press/GENERIC_R2.mp3';
-import keyGenericPressR3 from './../../audio/mxblack/press/GENERIC_R3.mp3';
-import keyGenericPressR4 from './../../audio/mxblack/press/GENERIC_R4.mp3';
-import keyGenericRelease from './../../audio/mxblack/release/GENERIC.mp3';
+import keySpacePress from './../../assets/audio/mxblack/press/SPACE.mp3';
+import keySpaceRelease from './../../assets/audio/mxblack/release/SPACE.mp3';
+import keyEnterPress from './../../assets/audio/mxblack/press/ENTER.mp3';
+import keyEnterRelease from './../../assets/audio/mxblack/release/ENTER.mp3';
+import keyBackspacePress from './../../assets/audio/mxblack/press/BACKSPACE.mp3';
+import keyBackspaceRelease from './../../assets/audio/mxblack/release/BACKSPACE.mp3';
+import keyGenericPressR0 from './../../assets/audio/mxblack/press/GENERIC_R0.mp3';
+import keyGenericPressR1 from './../../assets/audio/mxblack/press/GENERIC_R1.mp3';
+import keyGenericPressR2 from './../../assets/audio/mxblack/press/GENERIC_R2.mp3';
+import keyGenericPressR3 from './../../assets/audio/mxblack/press/GENERIC_R3.mp3';
+import keyGenericPressR4 from './../../assets/audio/mxblack/press/GENERIC_R4.mp3';
+import keyGenericRelease from './../../assets/audio/mxblack/release/GENERIC.mp3';
 
 export const mxblack = {
   press: {

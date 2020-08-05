@@ -21,7 +21,7 @@ export const keySounds = {
 }
 
 // sadly you can't import in the middle of a file
-// let audiofolder = "./../../audiofolder";
+// let audiofolder = "./../../assets/audiofolder";
 // let switchfolders = ["holypanda"];
 // let switches = ["SPACE", "CTRL", "GENERIC"];
 // let keySounds = {};
