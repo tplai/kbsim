@@ -1,5 +1,5 @@
 import { createSlice } from '@reduxjs/toolkit';
-import { ansiMap, keycodes } from './keycodeMaps.js';
+import { ansiMap, keycodes } from './../keyModules/keycodeMaps.js';
 
 const keySize = 54;
 const defaultKeyColor = "#ffffff";

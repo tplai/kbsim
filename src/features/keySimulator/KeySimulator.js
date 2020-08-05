@@ -4,15 +4,13 @@ import {
   parseKLE,
   keyDown,
   keyUp,
-  // highlightColor,
   selectLayout,
   selectLocations,
   selectKeyboardStyle,
-  // selectHighlight,
 } from './keySimulatorSlice';
-import { keynames } from './keycodeMaps.js';
+import { keynames } from './../keyModules/keycodeMaps.js';
 import { keySounds } from './../audioModules/audioModule.js';
-import { keyPresets } from './keyPresets.js'
+import { keyPresets } from './../keyModules/keyPresets.js'
 import Key from './../key/Key.js';
 import store from './../../app/store';
 import styles from './KeySimulator.module.css';
@@ -150,11 +148,16 @@ export function KeySimulator() {
         onKeyUp={e => handleKeyUp(e)}
         tabIndex="0"
       >
-        <div
-          className={styles.keyboard}
-          style={keyboardStyle}
-        >
-          {keyObject}
+        <div className={styles.row}>
+          <input/>
+        </div>
+        <div className={styles.mousepad}>
+          <div
+            className={styles.keyboard}
+            style={keyboardStyle}
+          >
+            {keyObject}
+          </div>
         </div>
       </div>
       <div className={styles.row}>

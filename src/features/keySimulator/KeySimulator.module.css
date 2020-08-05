@@ -1,20 +1,33 @@
 .keycontainer {
-  display: flex;
-  align-items: center;
-  justify-content: center;
   /* height: 80vh;
   width: 180vh; */
-  padding-bottom: 10px;
+  /* background-color: #212121; */
   /* background: url("./../../assets/images/oliviadeskmat.png");
   background-repeat: no-repeat;
   background-size: cover; */
+}
+
+.keycontainer:focus {
+  outline: none;
+}
+
+.mousepad {
+  box-sizing: border-box;
+  padding-bottom: 10px;
+  outline: 9px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: linear-gradient(to bottom, #212121 0%, #404040 100%);
+  border: solid 3px;
+  border-radius: 20px;
 }
 
 .keyboard {
   /* position: inherit; */
   border: solid 1px;
   border-color: #000;
-  border-radius: 6px;
+  border-radius: 10px;
   box-sizing: border-box;
   box-shadow: 0 0 0 1px rgba(16,22,26,.1), 0 1px 1px rgba(16,22,26,.2), 0 2px 6px rgba(16,22,26,.2);
   background-clip: padding-box;
@@ -24,6 +37,8 @@
   min-height: 56px;
   align-items: left;
   display: flex;
+  margin-top: 10vh;
+  margin-bottom: 10vh;
 }
 
 .row {
