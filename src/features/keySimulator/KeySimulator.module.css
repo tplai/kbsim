@@ -2,7 +2,6 @@
   outline: none;
 }
 
-
 .keyboard {
   border-color: #000;
   border-radius: 10px;
@@ -79,7 +78,7 @@
   border-radius: 5px;
   background: #eee;
   margin-bottom: 2vh;
-  max-width: 832px;
+  width: 832px;
 }
 
 .selectarea {
