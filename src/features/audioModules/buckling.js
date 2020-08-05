@@ -12,6 +12,8 @@ import keyGenericPressR4 from './../../assets/audio/buckling/press/GENERIC_R4.mp
 import keyGenericRelease from './../../assets/audio/buckling/release/GENERIC.mp3';
 
 export const buckling = {
+  key: "buckling",
+  caption: "Buckling Spring",
   press: {
     SPACE: keySpacePress,
     ENTER: keyEnterPress,

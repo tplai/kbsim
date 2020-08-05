@@ -11,7 +11,9 @@ import keyGenericPressR3 from './../../assets/audio/redink/press/GENERIC_R3.mp3'
 import keyGenericPressR4 from './../../assets/audio/redink/press/GENERIC_R4.mp3';
 import keyGenericRelease from './../../assets/audio/redink/release/GENERIC.mp3';
 
-export const redink = {
+export const inkred = {
+  key: "inkred",
+  caption: "Gateron Red Inks",
   press: {
     SPACE: keySpacePress,
     ENTER: keyEnterPress,

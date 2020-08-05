@@ -11,7 +11,9 @@ import keyGenericPressR3 from './../../assets/audio/bluealps/press/GENERIC_R3.mp
 import keyGenericPressR4 from './../../assets/audio/bluealps/press/GENERIC_R4.mp3';
 import keyGenericRelease from './../../assets/audio/bluealps/release/GENERIC.mp3';
 
-export const bluealps = {
+export const alpsblue = {
+  key: "alpsblue",
+  caption: "SKCM Blue Alps",
   press: {
     SPACE: keySpacePress,
     ENTER: keyEnterPress,

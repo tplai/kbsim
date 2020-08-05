@@ -12,6 +12,8 @@ import keyGenericPressR4 from './../../assets/audio/cream/press/GENERIC_R4.mp3';
 import keyGenericRelease from './../../assets/audio/cream/release/GENERIC.mp3';
 
 export const cream = {
+  key: "creams",
+  caption: "NovelKeys Creams",
   press: {
     SPACE: keySpacePress,
     ENTER: keyEnterPress,

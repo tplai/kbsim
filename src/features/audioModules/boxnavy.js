@@ -12,6 +12,8 @@ import keyGenericPressR4 from './../../assets/audio/boxnavy/press/GENERIC_R4.mp3
 import keyGenericRelease from './../../assets/audio/boxnavy/release/GENERIC.mp3';
 
 export const boxnavy = {
+  key: "boxnavy",
+  caption: "Kailh Box Navies",
   press: {
     SPACE: keySpacePress,
     ENTER: keyEnterPress,

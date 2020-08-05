@@ -12,6 +12,8 @@ import keyGenericPressR4 from './../../assets/audio/holypanda/press/GENERIC_R4.m
 import keyGenericRelease from './../../assets/audio/holypanda/release/GENERIC.mp3';
 
 export const holypanda = {
+  key: "holypanda",
+  caption: "Holy Pandas",
   press: {
     SPACE: keySpacePress,
     ENTER: keyEnterPress,

@@ -18,9 +18,6 @@ import Key from './../key/Key.js';
 import store from './../../app/store';
 import styles from './KeySimulator.module.css';
 
-// audio imports
-// improvement area: dynamic imports, programmatic pitch shifting with .wav instead
-
 // initially render the keys
 store.dispatch(parseKLE(keyPresets[0].kle));
 // intially render the keyboard color
@@ -33,16 +30,12 @@ export function KeySimulator() {
   const keyLocations = useSelector(selectLocations);
   // dimensions of keyboard and border
   const keyboardStyle = useSelector(selectKeyboardStyle);
-  // const mousepadStyle = useSelector(selectMousepadStyle);
 
-  // highlight for indicating if KLE was formatted correctly
-  // const highlight = useSelector(selectHighlight);
   const dispatch = useDispatch();
 
   const [kleValue, setKleValue] = useState();
-  const [switchValue, setSwitchValue] = useState("holypanda");
-  // const [inputValue, setInputValue] = useState()
-  // const [highlightType, setHighlight] = useState();
+  // set intial switch to first keysound
+  const [switchValue, setSwitchValue] = useState("0");
 
   const keyObject = layout.map((row, index) => {
     return(<div className={styles.keyrow} key={index}>
@@ -87,7 +80,7 @@ export function KeySimulator() {
       dispatch(keyDown(action));
     }
     // if the key is not pressed and valid switch is selected
-    if (coordArray && !tree.keySimulator.pressedKeys.includes(e.keyCode) && switchValue in keySounds) {
+    if (coordArray && !tree.keySimulator.pressedKeys.includes(e.keyCode) && keySounds[switchValue]) {
       // play a sound
       if (keynames[e.keyCode] in keySounds[switchValue].press) {
         new Audio(keySounds[switchValue].press[keynames[e.keyCode]]).play();
@@ -164,17 +157,13 @@ export function KeySimulator() {
                 className={styles.dropdown}
                 aria-label="Switch Type"
                 onChange={e => setSwitchValue(e.target.value)}
-                defaultValue="holypanda"
+                defaultValue="0"
               >
-                <option value="holypanda">Holy Pandas</option>
-                <option value="blackink">Gateron Black Inks</option>
-                <option value="redink">Gateron Red Inks</option>
-                <option value="cream">NK Creams</option>
-                <option value="mxblack">Cherry MX Blacks</option>
-                <option value="boxnavy">Box Navies</option>
-                <option value="buckling">Buckling Spring</option>
-                <option value="bluealps">Blue Alps</option>
-                <option value="topre">Topres</option>
+                {keySounds.map((sound, index) => {
+                    return (
+                      <option value={index} key={sound.key}>{sound.caption}</option>
+                    );
+                })}
               </select>
             </div>
 
@@ -189,7 +178,7 @@ export function KeySimulator() {
                     return (
                       <option value={index} key={preset.key}>{preset.caption}</option>
                     );
-                  })}
+                })}
               </select>
             </div>
             <div className={styles.selectcol}>
@@ -215,25 +204,26 @@ export function KeySimulator() {
           {keyObject}
         </div>
       </div>
-      <div className={styles.row} style={{display:"none"}}>
-        <textarea
-          className={styles.textarea}
-          aria-label="Set increment amount"
-          onChange={e => setKleValue(e.target.value)}
-          defaultValue={keyPresets.olivia_sf}
-        />
-      </div>
-      <div className={styles.row} style={{display:"none"}}>
-        <button
-          className={styles.button}
-          onClick={() =>
-            dispatch(parseKLE(kleValue))
-          }
-          aria-label="Input KLE raw data"
-        >
-          Set Layout
-        </button>
-      </div>
     </div>
   );
 }
+
+// <div className={styles.row} style={{display:"none"}}>
+//   <textarea
+//     className={styles.textarea}
+//     aria-label="Set increment amount"
+//     onChange={e => setKleValue(e.target.value)}
+//     defaultValue={keyPresets.olivia_sf}
+//   />
+// </div>
+// <div className={styles.row} style={{display:"none"}}>
+//   <button
+//     className={styles.button}
+//     onClick={() =>
+//       dispatch(parseKLE(kleValue))
+//     }
+//     aria-label="Input KLE raw data"
+//   >
+//     Set Layout
+//   </button>
+// </div>

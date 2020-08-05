@@ -12,6 +12,8 @@ import keyGenericPressR4 from './../../assets/audio/topre/press/GENERIC_R4.mp3';
 import keyGenericRelease from './../../assets/audio/topre/release/GENERIC.mp3';
 
 export const topre = {
+  key: "topre",
+  caption: "Topre",
   press: {
     SPACE: keySpacePress,
     ENTER: keyEnterPress,

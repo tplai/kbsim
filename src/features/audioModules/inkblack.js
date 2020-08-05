@@ -11,7 +11,9 @@ import keyGenericPressR3 from './../../assets/audio/blackink/press/GENERIC_R3.mp
 import keyGenericPressR4 from './../../assets/audio/blackink/press/GENERIC_R4.mp3';
 import keyGenericRelease from './../../assets/audio/blackink/release/GENERIC.mp3';
 
-export const blackink = {
+export const inkblack = {
+  key: "inkblack",
+  caption: "Gateron Black Inks",
   press: {
     SPACE: keySpacePress,
     ENTER: keyEnterPress,

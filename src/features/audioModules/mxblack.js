@@ -12,6 +12,8 @@ import keyGenericPressR4 from './../../assets/audio/mxblack/press/GENERIC_R4.mp3
 import keyGenericRelease from './../../assets/audio/mxblack/release/GENERIC.mp3';
 
 export const mxblack = {
+  key: "mxblack",
+  caption: "Cherry MX Blacks",
   press: {
     SPACE: keySpacePress,
     ENTER: keyEnterPress,

@@ -1,24 +1,24 @@
-import { blackink } from './blackink.js';
-import { bluealps } from './bluealps.js';
+import { alpsblue } from './alpsblue.js';
 import { boxnavy } from './boxnavy.js';
 import { buckling } from './buckling.js';
 import { cream } from './cream.js';
 import { holypanda } from './holypanda.js';
+import { inkblack } from './inkblack.js';
+import { inkred } from './inkred.js';
 import { mxblack } from './mxblack'
-import { redink } from './redink.js';
 import { topre } from './topre.js';
 
-export const keySounds = {
-  blackink: blackink,
-  bluealps: bluealps,
-  boxnavy: boxnavy,
-  buckling: buckling,
-  cream: cream,
-  holypanda: holypanda,
-  mxblack: mxblack,
-  redink: redink,
-  topre: topre,
-}
+export const keySounds = [
+  holypanda,
+  inkblack,
+  inkred,
+  cream,
+  mxblack,
+  boxnavy,
+  buckling,
+  alpsblue,
+  topre,
+]
 
 // sadly you can't import in the middle of a file
 // let audiofolder = "./../../assets/audiofolder";
