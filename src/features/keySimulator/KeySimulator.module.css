@@ -1,46 +1,18 @@
-.keycontainer {
-  /* height: 80vh;
-  width: 180vh; */
-  /* background-color: #212121; */
-  /* background: url("./../../assets/images/oliviadeskmat.png");
-  background-repeat: no-repeat;
-  background-size: cover; */
-}
-
 .keycontainer:focus {
   outline: none;
 }
 
-/* .mousepad { */
-  /* box-sizing: border-box; */
-  /* padding-bottom: 10px; */
-  /* outline: 9px; */
-  /* display: flex; */
-  /* align-items: center; */
-  /* justify-content: center; */
-  /* background: linear-gradient(to bottom, #212121 0%, #404040 100%); */
-  /* border: solid 3px; */
-  /* border-radius: 20px; */
-  /* width: 120vh; */
-/* } */
 
 .keyboard {
-  /* position: inherit; */
-  /* border: solid 1px; */
   border-color: #000;
   border-radius: 10px;
   box-sizing: border-box;
   box-shadow:   0 2px 8px 0 rgba(0,0,0,0.2),0 1px 5px 0 rgba(0,0,0,0.19);
-             /* 16px 16px 32px #ffffff; */
-  /* box-shadow: 0 0 0 1px rgba(16,22,26,.1), 0 1px 1px rgba(16,22,26,.2), 0 2px 6px rgba(16,22,26,.2); */
   background-clip: padding-box;
-  /* background: rgb(255,255,255); */
-  /* background: linear-gradient(360deg, rgba(130,130,130,1) 0%, rgba(166,167,168,1) 75%); */
   min-width: 56px;
   min-height: 56px;
   align-items: left;
   display: flex;
-  /* margin-top: 10vh; */
 }
 
 .row {
@@ -88,7 +60,6 @@
   padding: 2px;
   width: 1440px;
   height: 256px;
-  /* text-align: center; */
   margin-right: 8px;
   resize: none;
 }
@@ -120,14 +91,12 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  width: 33.33%;
+  width: 30%;
 }
 
-/* class applies to select element itself, not a wrapper element */
 .dropdown {
     display: block;
     flex-grow: 1;
-    /* min-width: 264px; */
     font-size: 16px;
     font-family: roboto;
     color: #444;
@@ -144,28 +113,20 @@
     appearance: none;
     background-color: #fff;
     background-image: url('../../assets/images/expand.png');
-    /* , */
-     /* linear-gradient(to bottom, #ffffff 0%,#e5e5e5 100%); */
     background-repeat: no-repeat, repeat;
-    /* arrow icon position (1em from the right, 50% vertical) , then gradient position*/
     background-position: right .7em top 50%, 0 0;
-    /* icon size, then gradient */
     background-size: 1em auto, 100%;
 }
+
 /* Hide arrow icon in IE browsers */
 .dropdown::-ms-expand {
     display: none;
 }
-/* Hover style */
-.dropdown:hover {
-    border-color: #888;
-}
-/* Focus style */
+
 .dropdown:focus {
     border: 2px solid #212121;
 }
 
-/* Set options to normal weight */
 .dropdown option {
     font-weight:normal;
 }
@@ -176,6 +137,15 @@
     padding: .6em .8em .5em 1.4em;
 }
 
-.dropdown:disabled:hover, .dropdown[aria-disabled=true] {
-    border-color: #aaa;
+.mutecol {
+  padding: 1rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 10%;
+}
+
+.mutebox {
+  align-items: center;
+  font-size: 16px;
 }
