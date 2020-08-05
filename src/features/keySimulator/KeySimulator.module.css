@@ -26,11 +26,13 @@
 
 .keyboard {
   /* position: inherit; */
-  border: solid 1px;
+  /* border: solid 1px; */
   border-color: #000;
   border-radius: 10px;
   box-sizing: border-box;
-  box-shadow: 0 0 0 1px rgba(16,22,26,.1), 0 1px 1px rgba(16,22,26,.2), 0 2px 6px rgba(16,22,26,.2);
+  box-shadow:   0 2px 8px 0 rgba(0,0,0,0.2),0 1px 5px 0 rgba(0,0,0,0.19);
+             /* 16px 16px 32px #ffffff; */
+  /* box-shadow: 0 0 0 1px rgba(16,22,26,.1), 0 1px 1px rgba(16,22,26,.2), 0 2px 6px rgba(16,22,26,.2); */
   background-clip: padding-box;
   /* background: rgb(255,255,255); */
   /* background: linear-gradient(360deg, rgba(130,130,130,1) 0%, rgba(166,167,168,1) 75%); */
