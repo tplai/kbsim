@@ -20,7 +20,7 @@ import styles from './KeySimulator.module.css';
 // improvement area: dynamic imports, programmatic pitch shifting with .wav instead
 
 // initial rendering
-store.dispatch(parseKLE(keyPresets.olivia_dawn));
+store.dispatch(parseKLE(keyPresets.olivia_sf));
 
 export function KeySimulator() {
   // Layout array of keyboard
@@ -173,13 +173,14 @@ export function KeySimulator() {
               className={styles.dropdown}
               aria-label="Keyboard Layout"
               onChange={e => dispatch(parseKLE(keyPresets[e.target.value]))}
-              defaultValue="olivia_dawn"
+              defaultValue="olivia_sf"
             >
-              <option value="olivia_dawn">GMK Olivia Dawn</option>
+              <option value="olivia_sf">GMK Olivia Dawn</option>
               <option value="modo_wkltkl">GMK Modo WKL TKL</option>
               <option value="dracula_tkl">GMK Dracula TKL</option>
+              <option value="modelm">Model M</option>
               <option value="hhkb">HHKB</option>
-              <option value="white_dawn">GMK BoW Dawn</option>
+              <option value="white_sf">GMK BoW Dawn</option>
             </select>
             <select
               className={styles.dropdown}
@@ -211,7 +212,7 @@ export function KeySimulator() {
           className={styles.textarea}
           aria-label="Set increment amount"
           onChange={e => setKleValue(e.target.value)}
-          defaultValue={keyPresets.olivia_dawn}
+          defaultValue={keyPresets.olivia_sf}
         />
       </div>
       <div className={styles.row} style={{display:"none"}}>
