@@ -262,6 +262,12 @@ export const keySimulatorSlice = createSlice({
         state.pressedKeys.splice(keyIndex, 1);
       }
     },
+    setKeyboardColor: (state, action) => {
+      state.keyboardStyle = {
+        ...state.keyboardStyle,
+        background: action.payload
+      }
+    },
     highlightColor: (state, action) => {
       state.highlight = action.payload;
     },
@@ -403,7 +409,7 @@ function shadeColor(color, percent) {
     return "#"+RR+GG+BB;
 }
 
-export const { parseKLE, keyDown, keyUp, highlightColor } = keySimulatorSlice.actions;
+export const { parseKLE, keyDown, keyUp, setKeyboardColor, highlightColor } = keySimulatorSlice.actions;
 
 // state exports
 export const selectLayout = state => state.keySimulator.array;

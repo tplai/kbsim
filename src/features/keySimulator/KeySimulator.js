@@ -4,6 +4,7 @@ import {
   parseKLE,
   keyDown,
   keyUp,
+  setKeyboardColor,
   selectLayout,
   selectLocations,
   selectKeyboardStyle,
@@ -11,6 +12,7 @@ import {
 import { keynames } from './../keyModules/keycodeMaps.js';
 import { keySounds } from './../audioModules/audioModule.js';
 import { keyPresets } from './../keyModules/keyPresets.js'
+import { keyboardColors } from './../keyModules/keyboardColors.js'
 import { TypingTest } from './../typingTest/TypingTest.js';
 import Key from './../key/Key.js';
 import store from './../../app/store';
@@ -19,8 +21,10 @@ import styles from './KeySimulator.module.css';
 // audio imports
 // improvement area: dynamic imports, programmatic pitch shifting with .wav instead
 
-// initial rendering
+// initially render the keys
 store.dispatch(parseKLE(keyPresets[0].kle));
+// intially render the keyboard color
+store.dispatch(setKeyboardColor(keyboardColors[0].background));
 
 export function KeySimulator() {
   // Layout array of keyboard
@@ -176,26 +180,22 @@ export function KeySimulator() {
               defaultValue="olivia_sf"
             >
               {keyPresets.map((preset, index) => {
-                return (
-                  <option value={index} key={preset.key}>{preset.caption}</option>
-                );
-              })}
+                  return (
+                    <option value={index} key={preset.key}>{preset.caption}</option>
+                  );
+                })}
             </select>
             <select
               className={styles.dropdown}
               aria-label="Case Color"
+              onChange={e => dispatch(setKeyboardColor(keyboardColors[e.target.value].background))}
               defaultValue="gray"
             >
-              <option value="gray">Gray</option>
-              <option value="black">Black</option>
-              <option value="silver">Silver</option>
-              <option value="white">White</option>
-              <option value="red">Red</option>
-              <option value="orange">Orange</option>
-              <option value="yellow">Yellow</option>
-              <option value="green">Green</option>
-              <option value="blue">Blue</option>
-              <option value="purple">Purple</option>
+              {keyboardColors.map((color, index) => {
+                return (
+                  <option value={index} key={color.color}>{color.caption}</option>
+                );
+              })}
             </select>
           </div>
         </div>
