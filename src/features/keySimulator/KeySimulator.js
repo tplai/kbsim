@@ -33,9 +33,15 @@ export function KeySimulator() {
 
   const dispatch = useDispatch();
 
+  const [muted, setMute] = useState(false);
   const [kleValue, setKleValue] = useState();
   // set intial switch to first keysound
   const [switchValue, setSwitchValue] = useState("0");
+
+  const toggleMute = () => {
+    // mute ? setMute(false) : setMute(true);
+    setMute(!muted);
+  }
 
   const keyObject = layout.map((row, index) => {
     return(<div className={styles.keyrow} key={index}>
@@ -80,7 +86,7 @@ export function KeySimulator() {
       dispatch(keyDown(action));
     }
     // if the key is not pressed and valid switch is selected
-    if (coordArray && !tree.keySimulator.pressedKeys.includes(e.keyCode) && keySounds[switchValue]) {
+    if (!muted && coordArray && !tree.keySimulator.pressedKeys.includes(e.keyCode) && keySounds[switchValue]) {
       // play a sound
       if (keynames[e.keyCode] in keySounds[switchValue].press) {
         new Audio(keySounds[switchValue].press[keynames[e.keyCode]]).play();
@@ -129,7 +135,7 @@ export function KeySimulator() {
       dispatch(keyUp(action));
     }
     // if a valid switch is selected
-    if (switchValue in keySounds) {
+    if (!muted && keySounds[switchValue]) {
       if (keynames[e.keyCode] in keySounds[switchValue].press) {
         // let audio = new Audio(keyReleaseSounds);
         new Audio(keySounds[switchValue].release[keynames[e.keyCode]]).play();
@@ -139,6 +145,7 @@ export function KeySimulator() {
       }
     }
   }
+
 
   return (
     <div>
@@ -194,6 +201,17 @@ export function KeySimulator() {
                   );
                 })}
               </select>
+            </div>
+            <div className={styles.mutecol}>
+              <label className={styles.mutebox}>
+                <input
+                  type="checkbox"
+                  onChange={e => toggleMute()}
+                  aria-label="Mute Sound"
+                />
+                <span className={styles.checkMark}></span>
+                Mute
+              </label>
             </div>
           </div>
         </div>
