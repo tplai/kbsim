@@ -223,13 +223,14 @@ export const keySimulatorSlice = createSlice({
         }
       }
 
+      // mostly arbitrary values
       let borderWidth = 0.25;
       let borderHeight = 0.25;
       state.keyboardStyle = {
         width: (keyboardWidth + borderWidth * 2) * keySize,
         minWidth: (keyboardWidth + borderWidth * 2) * keySize,
-        height: (keyboardHeight + borderHeight * 2) * keySize,
-        paddingTop: borderHeight * keySize,
+        height: (keyboardHeight + borderHeight * 3.25) * keySize,
+        paddingTop: borderHeight * keySize * 1.75,
         paddingBottom: borderHeight * keySize,
         paddingLeft: borderWidth * keySize,
         paddingRight: borderWidth * keySize,

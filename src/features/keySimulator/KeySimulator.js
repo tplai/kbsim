@@ -7,7 +7,6 @@ import {
   selectLayout,
   selectLocations,
   selectKeyboardStyle,
-  // selectMousepadStyle,
 } from './keySimulatorSlice';
 import { keynames } from './../keyModules/keycodeMaps.js';
 import { keySounds } from './../audioModules/audioModule.js';
@@ -35,7 +34,6 @@ export function KeySimulator() {
   // highlight for indicating if KLE was formatted correctly
   // const highlight = useSelector(selectHighlight);
   const dispatch = useDispatch();
-
 
   const [kleValue, setKleValue] = useState();
   const [switchValue, setSwitchValue] = useState("holypanda");
@@ -170,6 +168,18 @@ export function KeySimulator() {
               <option value="buckling">Buckling Spring</option>
               <option value="bluealps">Blue Alps</option>
               <option value="topre">Topres</option>
+            </select>
+            <select
+              className={styles.dropdown}
+              aria-label="Keyboard Layout"
+              onChange={e => dispatch(parseKLE(keyPresets[e.target.value]))}
+              defaultValue="olivia_dawn"
+            >
+              <option value="olivia_dawn">GMK Olivia Dawn</option>
+              <option value="modo_wkltkl">GMK Modo WKL TKL</option>
+              <option value="dracula_tkl">GMK Dracula TKL</option>
+              <option value="hhkb">HHKB</option>
+              <option value="white_dawn">GMK BoW Dawn</option>
             </select>
             <select
               className={styles.dropdown}
