@@ -1,3 +1,5 @@
+import { ansiMap, keycodes } from './keycodeMaps.js';
+
 // function for parsing strings like "\\"
 export function parseEscapedChars(str) {
   let parsedStr = "";

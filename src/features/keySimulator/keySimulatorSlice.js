@@ -1,5 +1,4 @@
 import { createSlice } from '@reduxjs/toolkit';
-import { ansiMap, keycodes } from './../keyModules/keycodeMaps.js';
 import { parseEscapedChars, parseSpecialSymbol, parseLegends, shadeColor } from './../keyModules/parseModules.js';
 
 const keySize = 54;
