@@ -32,18 +32,18 @@
   padding: 1rem;
 }
 
-.mousepad {
-  box-sizing: border-box;
+/* .mousepad { */
+  /* box-sizing: border-box; */
   /* padding-bottom: 10px; */
-  outline: 9px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  background: linear-gradient(to bottom, #212121 0%, #404040 100%);
-  border: solid 3px;
-  border-radius: 20px;
+  /* outline: 9px; */
+  /* display: flex; */
+  /* align-items: center; */
+  /* justify-content: center; */
+  /* background: linear-gradient(to bottom, #212121 0%, #404040 100%); */
+  /* border: solid 3px; */
+  /* border-radius: 20px; */
   /* width: 120vh; */
-}
+/* } */
 
 .keyboard {
   /* position: inherit; */
