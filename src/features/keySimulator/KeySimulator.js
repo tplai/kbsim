@@ -20,7 +20,7 @@ import styles from './KeySimulator.module.css';
 // improvement area: dynamic imports, programmatic pitch shifting with .wav instead
 
 // initial rendering
-store.dispatch(parseKLE(keyPresets.olivia_sf));
+store.dispatch(parseKLE(keyPresets[0].kle));
 
 export function KeySimulator() {
   // Layout array of keyboard
@@ -172,18 +172,14 @@ export function KeySimulator() {
             <select
               className={styles.dropdown}
               aria-label="Keyboard Layout"
-              onChange={e => dispatch(parseKLE(keyPresets[e.target.value]))}
+              onChange={e => dispatch(parseKLE(keyPresets[e.target.value].kle))}
               defaultValue="olivia_sf"
             >
-              <option value="olivia_sf">GMK Olivia WKL 75%</option>
-              <option value="modo_wkltkl">GMK Modo WKL TKL</option>
-              <option value="dracula_tkl">GMK Dracula TKL</option>
-              <option value="mizu_fullsize">GMK Mizu Full Size</option>
-              <option value="bow_fullsize">GMK BoW Full Size</option>
-              <option value="ezze_sxf">GMK 8008 WKL 65%</option>
-              <option value="modelm">Model M</option>
-              <option value="hhkb">HHKB</option>
-              <option value="white_sf">GMK BoW 75%</option>
+              {keyPresets.map((preset, index) => {
+                return (
+                  <option value={index} key={preset.key}>{preset.caption}</option>
+                );
+              })}
             </select>
             <select
               className={styles.dropdown}
