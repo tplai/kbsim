@@ -21,6 +21,7 @@
   background: linear-gradient(to bottom, #212121 0%, #404040 100%);
   border: solid 3px;
   border-radius: 20px;
+  width: 120vh;
 }
 
 .keyboard {

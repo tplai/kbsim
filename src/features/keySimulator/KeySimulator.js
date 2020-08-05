@@ -11,6 +11,7 @@ import {
 import { keynames } from './../keyModules/keycodeMaps.js';
 import { keySounds } from './../audioModules/audioModule.js';
 import { keyPresets } from './../keyModules/keyPresets.js'
+import { TypingTest } from './../typingTest/TypingTest.js';
 import Key from './../key/Key.js';
 import store from './../../app/store';
 import styles from './KeySimulator.module.css';
@@ -66,7 +67,7 @@ export function KeySimulator() {
 
   const handleKeyDown = (e) => {
     // prevent function keys and alt from affecting simulator
-    if (e.keyCode === 18 || e.keyCode === 32 || e.keyCode === 112 ||
+    if (e.keyCode === 18 || e.keyCode === 112 ||
         e.keyCode === 114 || e.keyCode === 116 || e.keyCode === 117 ||
         e.keyCode === 121 || e.keyCode === 122 || e.keyCode === 123) {
         e.preventDefault();
@@ -148,9 +149,7 @@ export function KeySimulator() {
         onKeyUp={e => handleKeyUp(e)}
         tabIndex="0"
       >
-        <div className={styles.row}>
-          <input/>
-        </div>
+        <TypingTest/>
         <div className={styles.mousepad}>
           <div
             className={styles.keyboard}
@@ -189,7 +188,7 @@ export function KeySimulator() {
           <option value="purple">Purple</option>
         </select>
     </div>
-      <div className={styles.row}>
+      <div className={styles.row} style={{display:"none"}}>
         <textarea
           className={styles.textarea}
           aria-label="Set increment amount"
@@ -197,7 +196,7 @@ export function KeySimulator() {
           defaultValue={keyPresets.olivia_dawn}
         />
       </div>
-      <div className={styles.row}>
+      <div className={styles.row} style={{display:"none"}}>
         <button
           className={styles.button}
           onClick={() =>

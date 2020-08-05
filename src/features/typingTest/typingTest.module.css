@@ -1,0 +1,71 @@
+.typingcontainer {
+  display: inline-block;
+  text-align: left;
+  box-shadow: rgba(0, 0, 0, 0.17) 1px 1px 4px;
+  border-radius: 5px;
+  background: #eee;
+  margin-bottom: 2vh;
+}
+
+.wordcontainer {
+  padding: 1rem;
+  max-width: 800px;
+}
+
+.wordarea {
+  display: inline-block;
+  border-radius: 5px;
+  height: 6rem;
+  overflow: hidden;
+}
+
+.words {
+  position: relative;
+}
+
+.word {
+  padding: .5rem;
+  display: inline-block;
+  font-size: 1.5rem;
+  border-radius: 5px;
+}
+
+.active {
+  background: #e0e0e0;
+}
+
+.inputbar {
+  padding: 1rem;
+  background: #eee;
+  display: flex;
+  flex-wrap: wrap;
+}
+
+.inputbar > input {
+  font-size: 16px;
+  border: none;
+  padding: 10px;
+  flex-grow: 1;
+}
+
+.toolbar {
+  display: flex;
+}
+
+.time {
+  padding: 10px;
+  background: #000000;
+  color: white;
+  margin: 0 10px;
+  display: flex;
+  align-items: center;
+  font-size: 16px;
+};
+
+
+.typinginput {
+  font-size: 32px;
+  border: none;
+  padding: 10px;
+  flex-grow: 1;
+}
