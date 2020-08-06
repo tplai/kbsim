@@ -34,16 +34,16 @@ export const keyboardColors = [
     caption: "Light Gold",
     background: "linear-gradient(360deg, rgba(229,206,152,1) 0%, rgba(213,191,141,1) 75%)",
   },
-  {
-    color: "red",
-    caption: "Red",
-    background: "linear-gradient(360deg, rgba(186,32,32,1) 0%, rgba(187,0,0,1) 75%)",
-  },
-  {
-    color: "burgundy",
-    caption: "Burgundy",
-    background: "linear-gradient(360deg, rgba(88,1,18,1) 0%, rgba(69,2,15,1) 75%)",
-  },
+  // {
+  //   color: "red",
+  //   caption: "Red",
+  //   background: "linear-gradient(360deg, rgba(186,32,32,1) 0%, rgba(187,0,0,1) 75%)",
+  // },
+  // {
+  //   color: "burgundy",
+  //   caption: "Burgundy",
+  //   background: "linear-gradient(360deg, rgba(88,1,18,1) 0%, rgba(69,2,15,1) 75%)",
+  // },
   // {
   //   color: "orange",
   //   caption: "Orange",
