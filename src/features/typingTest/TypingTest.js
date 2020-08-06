@@ -5,9 +5,13 @@ import styles from './TypingTest.module.css';
 
 export function TypingTest() {
 
-  const handleKeyDown = (e) => {
+  const [inputVal, setInput] = useState("");
 
+  const handleKeyDown = (e) => {
+    // console.log(e.target.value);
+    // setInput()
   }
+
   const handleKeyUp = (e) => {
 
   }
@@ -17,24 +21,42 @@ export function TypingTest() {
       <div className={styles.wordcontainer}>
         <div className={styles.wordarea}>
           <div className={styles.words}>
-            <span className={`${styles.word} ${styles.active}`}>word</span>
-            <span className={styles.word}>word</span>
-            <span className={styles.word}>word</span>
-            <span className={styles.word}>word</span>
-            <span className={styles.word}>word</span>
-            <span className={styles.word}>word</span>
-            <span className={styles.word}>word</span>
-            <span className={styles.word}>word</span>
-            <span className={styles.word}>word</span>
+            <span className={`${styles.word} ${styles.active}`}>lorum</span>
+            <span className={styles.word}>ipsum</span>
+            <span className={styles.word}>lorum</span>
+            <span className={styles.word}>ipsum</span>
+            <span className={styles.word}>lorum</span>
+            <span className={styles.word}>ipsum</span>
+            <span className={styles.word}>lorum</span>
+            <span className={styles.word}>ipsum</span>
+            <span className={styles.word}>lorum</span>
+            <span className={styles.word}>ipsum</span>
+            <span className={styles.word}>lorum</span>
+            <span className={styles.word}>ipsum</span>
+            <span className={styles.word}>lorum</span>
+            <span className={styles.word}>ipsum</span>
+            <span className={styles.word}>lorum</span>
+            <span className={styles.word}>ipsum</span>
+            <span className={styles.word}>lorum</span>
+            <span className={styles.word}>ipsum</span>
+            <span className={styles.word}>lorum</span>
+            <span className={styles.word}>ipsum</span>
+            <span className={styles.word}>lorum</span>
+            <span className={styles.word}>ipsum</span>
+            <span className={styles.word}>lorum</span>
+            <span className={styles.word}>ipsum</span>
+            <span className={styles.word}>ipsum</span>
           </div>
         </div>
       </div>
       <div className={styles.inputbar}>
         <input
           className={styles.typinginput}
+          onChange={handleKeyDown}
+          autoFocus="true"
           autoCorrect="off"
           autoCapitalize="off"
-          spellCheck={false}
+          spellCheck="false"
         />
         <span className={styles.toolbar}>
           <span className={styles.time}>1:00</span>
