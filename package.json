@@ -26,6 +26,7 @@
   "dependencies": {
     "@babel/polyfill": "^7.10.4",
     "@reduxjs/toolkit": "^1.4.0",
+    "howler": "^2.2.0",
     "react": "^16.13.1",
     "react-dom": "^16.13.1",
     "react-redux": "^7.2.1"

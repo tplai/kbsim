@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
+import { Howl, Howler } from 'howler';
 import {
   parseKLE,
   keyDown,
@@ -69,6 +70,7 @@ export function KeySimulator() {
     });
 
   const handleKeyDown = (e) => {
+    console.log("xd");
     // prevent function keys and alt from affecting simulator
     if (e.keyCode === 18 || e.keyCode === 112 ||
         e.keyCode === 114 || e.keyCode === 116 || e.keyCode === 117 ||
@@ -89,34 +91,36 @@ export function KeySimulator() {
     if (!muted && coordArray && !tree.keySimulator.pressedKeys.includes(e.keyCode) && keySounds[switchValue]) {
       // play a sound
       if (keynames[e.keyCode] in keySounds[switchValue].press) {
-        new Audio(keySounds[switchValue].press[keynames[e.keyCode]]).play();
+        new Howl({src: keySounds[switchValue].press[keynames[e.keyCode]]}).play();
       }
       else {
         if (coordArray) {
           switch(parseInt(coordArray[0][0])) {
             case 0:
-              new Audio(keySounds[switchValue].press.GENERICR0).play();
+              let sound = new Howl({src: [keySounds[switchValue].press.GENERICR0]});
+              sound.play();
+              // new Audio(keySounds[switchValue].press.GENERICR0).play();
               break;
             case 1:
-              new Audio(keySounds[switchValue].press.GENERICR1).play();
+              new Howl({src: keySounds[switchValue].press.GENERICR1}).play();
               break;
             case 2:
-              new Audio(keySounds[switchValue].press.GENERICR2).play();
+              new Howl({src: keySounds[switchValue].press.GENERICR2}).play();
               break;
             case 3:
-              new Audio(keySounds[switchValue].press.GENERICR3).play();
+              new Howl({src: keySounds[switchValue].press.GENERICR3}).play();
               break;
             case 4:
-              new Audio(keySounds[switchValue].press.GENERICR4).play();
+              new Howl({src: keySounds[switchValue].press.GENERICR4}).play();
               break;
             default:
-              new Audio(keySounds[switchValue].press.GENERICR4).play();
+              new Howl({src: keySounds[switchValue].press.GENERICR4}).play();
               break;
           }
         }
         // key not found
         else {
-          new Audio(keySounds[switchValue].press.GENERICR4).play();
+          new Howl({src: keySounds[switchValue].press.GENERICR4}).play();
         }
       }
     }
@@ -138,10 +142,10 @@ export function KeySimulator() {
     if (!muted && keySounds[switchValue]) {
       if (keynames[e.keyCode] in keySounds[switchValue].press) {
         // let audio = new Audio(keyReleaseSounds);
-        new Audio(keySounds[switchValue].release[keynames[e.keyCode]]).play();
+        new Howl({src: keySounds[switchValue].release[keynames[e.keyCode]]}).play();
       }
       else {
-        new Audio(keySounds[switchValue].release.GENERIC).play();
+        new Howl({src: keySounds[switchValue].release.GENERIC}).play();
       }
     }
   }
@@ -151,8 +155,8 @@ export function KeySimulator() {
     <div>
       <div
         className={styles.keycontainer}
-        onKeyDown={e => handleKeyDown(e)}
-        onKeyUp={e => handleKeyUp(e)}
+        onKeyDown={handleKeyDown}
+        onKeyUp={handleKeyUp}
         tabIndex="0"
       >
         <TypingTest/>
