@@ -1,7 +1,6 @@
 import React, { useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { Howl, Howler } from 'howler';
-import { ToastContainer, toast } from './../toast/toast.js';
 import {
   parseKLE,
   keyDown,
@@ -11,10 +10,11 @@ import {
   selectLocations,
   selectKeyboardStyle,
 } from './keySimulatorSlice';
-import { keynames } from './../keyModules/keycodeMaps.js';
 import { keySounds } from './../audioModules/audioModule.js';
+import { keynames } from './../keyModules/keycodeMaps.js';
 import { keyPresets } from './../keyModules/keyPresets.js'
 import { keyboardColors } from './../keyModules/keyboardColors.js'
+import { ToastContainer, toast } from './../toast/toast.js';
 import { TypingTest } from './../typingTest/TypingTest.js';
 import Key from './../key/Key.js';
 import store from './../../app/store';
