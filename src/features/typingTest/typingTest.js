@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
+import { wordList, shuffle } from './wordlist.js';
 // import {
 //
 // } from './keySimulatorSlice';
@@ -20,37 +21,6 @@ export function TypingTest() {
         <div className={styles.wordarea}>
           <div className={styles.words}>
             <span className={`${styles.word} ${styles.active}`}>word</span>
-            <span className={styles.word}>word</span>
-            <span className={styles.word}>word</span>
-            <span className={styles.word}>word</span>
-            <span className={styles.word}>word</span>
-            <span className={styles.word}>word</span>
-            <span className={styles.word}>word</span>
-            <span className={styles.word}>word</span>
-            <span className={styles.word}>word</span>
-            <span className={styles.word}>word</span>
-            <span className={styles.word}>word</span>
-            <span className={styles.word}>word</span>
-            <span className={styles.word}>word</span>
-            <span className={styles.word}>word</span>
-            <span className={styles.word}>word</span>
-            <span className={styles.word}>word</span>
-            <span className={styles.word}>word</span>
-            <span className={styles.word}>word</span>
-            <span className={styles.word}>word</span>
-            <span className={styles.word}>word</span>
-            <span className={styles.word}>word</span>
-            <span className={styles.word}>word</span>
-            <span className={styles.word}>word</span>
-            <span className={styles.word}>word</span>
-            <span className={styles.word}>word</span>
-            <span className={styles.word}>word</span>
-            <span className={styles.word}>word</span>
-            <span className={styles.word}>word</span>
-            <span className={styles.word}>word</span>
-            <span className={styles.word}>word</span>
-            <span className={styles.word}>word</span>
-            <span className={styles.word}>word</span>
             <span className={styles.word}>word</span>
             <span className={styles.word}>word</span>
             <span className={styles.word}>word</span>
