@@ -1,7 +1,7 @@
 export const keyPresets = [
     {
       key: "nzzn_fullsize",
-      caption: "GMK 9009 Fullsize",
+      caption: "9009 Fullsize",
       kle: `[{c:"#d99089",t:"#282628"},"Esc",{x:1,c:"#ddd7cb"},"F1","F2","F3","F4",{x:0.5,c:"#bcb59f"},"F5","F6","F7","F8",{x:0.5,c:"#ddd7cb"},"F9","F10","F11","F12",{x:0.25,c:"#bcb59f"},"PrtSc","Scroll Lock","Pause\\nBreak"],
       [{y:0.25,c:"#ddd7cb"},"~\\n\`","!\\n1","@\\n2","#\\n3","$\\n4","%\\n5","^\\n6","&\\n7","*\\n8","(\\n9",")\\n0","_\\n-","+\\n=",{c:"#bcb59f",w:2},"Backspace",{x:0.25,c:"#d99089"},"Insert",{c:"#bcb59f"},"Home","PgUp",{x:0.25},"Num Lock","/","*","-"],
       [{w:1.5},"Tab",{c:"#ddd7cb"},"Q","W","E","R","T","Y","U","I","O","P","{\\n[","}\\n]",{w:1.5},"|\\n\\\\",{x:0.25,c:"#bcb59f"},"Delete","End","PgDn",{x:0.25,c:"#ddd7cb"},"7\\nHome","8\\n↑","9\\nPgUp",{c:"#bcb59f",h:2},"+"],
@@ -11,7 +11,7 @@ export const keyPresets = [
     },
     {
       key: "mizu_fullsize",
-      caption: "GMK Mizu Fullsize",
+      caption: "Mizu Fullsize",
       kle: `[{c:"#f8f7f3",t:"#243746"},"Esc",{x:1,c:"#b7d8eb"},"F1","F2","F3","F4",{x:0.5,c:"#243746",t:"#f8f7f3"},"F5","F6","F7","F8",{x:0.5,c:"#b7d8eb",t:"#243746"},"F9","F10","F11","F12",{x:0.25,c:"#243746",t:"#f8f7f3"},"PrtSc","Scroll Lock","Pause\\nBreak"],
       [{y:0.25, c:"#b7d8eb",t:"#243746"},"~\\n\`","!\\n1","@\\n2","#\\n3","$\\n4","%\\n5","^\\n6","&\\n7","*\\n8","(\\n9",")\\n0","_\\n-","+\\n=",{c:"#243746",t:"#f8f7f3",w:2},"Backspace",{x:0.25},"Insert","Home","PgUp",{x:0.25},"Num Lock","/","*","-"],
       [{w:1.5},"Tab",{c:"#b7d8eb",t:"#243746"},"Q","W","E","R","T","Y","U","I","O","P","{\\n[","}\\n]",{w:1.5},"|\\n\\\\",{x:0.25,c:"#243746",t:"#f8f7f3"},"Delete","End","PgDn",{x:0.25,c:"#b7d8eb",t:"#243746"},"7\\nHome","8\\n↑","9\\nPgUp",{c:"#243746",t:"#f8f7f3",h:2},"+"],
@@ -21,7 +21,7 @@ export const keyPresets = [
     },
     {
       key: "bow_fullsize",
-      caption: "GMK BoW Fullsize",
+      caption: "BoW Fullsize",
       kle: `["Esc",{x:1},"F1","F2","F3","F4",{x:0.5},"F5","F6","F7","F8",{x:0.5},"F9","F10","F11","F12",{x:0.25},"PrtSc","Scroll Lock","Pause\\nBreak"],
       [{y:0.25},"~\\n\`","!\\n1","@\\n2","#\\n3","$\\n4","%\\n5","^\\n6","&\\n7","*\\n8","(\\n9",")\\n0","_\\n-","+\\n=",{w:2},"Backspace",{x:0.25},"Insert","Home","PgUp",{x:0.25},"Num Lock","/","*","-"],
       [{w:1.5},"Tab","Q","W","E","R","T","Y","U","I","O","P","{\\n[","}\\n]",{w:1.5},"|\\n\\\\",{x:0.25},"Delete","End","PgDn",{x:0.25},"7\\nHome","8\\n↑","9\\nPgUp",{h:2},"+"],
@@ -31,7 +31,7 @@ export const keyPresets = [
     },
     {
       key: "modo_wkltkl",
-      caption: "GMK MoDo WKL TKL",
+      caption: "MoDo WKL TKL",
       kle: `[{c:"#d36a7b",t:"#e8e8e8"},"Esc",{x:1,c:"#82878d"},"F1","F2","F3","F4",{x:0.5,c:"#515459"},"F5","F6","F7","F8",{x:0.5,c:"#82878d"},"F9","F10","F11","F12",{x:0.25,c:"#515459"},"PrtSc","Scroll Lock","Pause\\nBreak"],
       [{y:0.25},"~\\n\`",{c:"#82878d"},"!\\n1","@\\n2","#\\n3","$\\n4","%\\n5","^\\n6","&\\n7","*\\n8","(\\n9",")\\n0","_\\n-","+\\n=",{c:"#515459",w:2},"Backspace",{x:0.25},"Insert","Home","PgUp"],
       [{w:1.5},"Tab",{c:"#82878d"},"Q","W","E","R","T","Y","U","I","O","P","{\\n[","}\\n]",{c:"#515459",w:1.5},"|\\n\\\\",{x:0.25},"Delete","End","PgDn"],
@@ -41,7 +41,7 @@ export const keyPresets = [
     },
     {
       key: "dracula_tkl",
-      caption: "GMK Dracula TKL",
+      caption: "Dracula TKL",
       kle: `[{c:"#bd93f9",t:"#282a36"},"Esc",{x:1,c:"#44475a",t:"#f8f8f2"},"F1","F2","F3","F4",{x:0.5,c:"#282a36"},"F5","F6","F7","F8",{x:0.5,c:"#44475a"},"F9","F10","F11","F12",{x:0.25,c:"#282a36"},"PrtSc","Scroll Lock","Pause\\nBreak"],
       [{y:0.25},"~\\n\`",{c:"#44475a"},"!\\n1","@\\n2","#\\n3","$\\n4","%\\n5","^\\n6","&\\n7","*\\n8","(\\n9",")\\n0","_\\n-","+\\n=",{c:"#282a36",t:"#ff79c6",w:2},"Backspace",{x:0.25,t:"#f8f8f2"},"Insert","Home","PgUp"],
       [{t:"#ff79c6",w:1.5},"Tab",{c:"#44475a",t:"#f8f8f2"},"Q","W","E","R","T","Y","U","I","O","P","{\\n[","}\\n]",{c:"#282a36",w:1.5},"|\\n\\\\",{x:0.25},"Delete","End","PgDn"],
@@ -51,7 +51,7 @@ export const keyPresets = [
     },
     {
       key: "olivia_sf",
-      caption: "GMK Olivia WKL 75% ",
+      caption: "Olivia WKL 75% ",
       kle: `[{c:"#f1beb0",t:"#2b2b2b"},"Esc",{x:0.5,c:"#e1dbd1"},"F1","F2","F3","F4",{x:0.5,c:"#2b2b2b",t:"#f1beb0"},"F5","F6","F7","F8",{x:0.5,c:"#e1dbd1",t:"#2b2b2b"},"F9","F10","F11","F12",{x:0.5,c:"#2b2b2b",t:"#f1beb0"},"Delete"],
 [{y:0.25},"~\\n\`",{c:"#e1dbd1",t:"#2b2b2b"},"!\\n1","@\\n2","#\\n3","$\\n4","%\\n5","^\\n6","&\\n7","*\\n8","(\\n9",")\\n0","_\\n-","+\\n=",{c:"#2b2b2b",t:"#f1beb0",w:2},"Backspace","Home"],
 [{w:1.5},"Tab",{c:"#e1dbd1",t:"#2b2b2b"},"Q","W","E","R","T","Y","U","I","O","P","{\\n[","}\\n]",{c:"#2b2b2b",t:"#f1beb0",w:1.5},"|\\n\\\\","PgUp"],
@@ -61,7 +61,7 @@ export const keyPresets = [
     },
     {
       key: "ezze_sxf",
-      caption: "GMK 8008 WKL 65%",
+      caption: "8008 WKL 65%",
       kle: `[{c:"#fe588c"},"Esc",{c:"#9ba7b7",t:"#3f4754"},"!\\n1","@\\n2","#\\n3","$\\n4","%\\n5","^\\n6","&\\n7","*\\n8","(\\n9",")\\n0","_\\n-","+\\n=","|\\n\\\\","~\\n\`",{c:"#3f4754",t:"#fe588c"},"Delete"],
 [{w:1.5},"Tab",{c:"#9ba7b7",t:"#3f4754"},"Q","W","E","R","T","Y","U","I","O","P","{\\n[","}\\n]",{c:"#3f4754",t:"#fe588c",w:1.5},"Backspace","PgUp"],
 [{w:1.75},"Caps Lock",{c:"#9ba7b7",t:"#3f4754"},"A","S","D","F","G","H","J","K","L",":\\n;","\\"\\n'",{c:"#fe588c",t:"#000000",w:2.25},"Enter",{c:"#3f4754",t:"#fe588c"},"PgDn"],
