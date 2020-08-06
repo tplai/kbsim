@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { Howl, Howler } from 'howler';
+import { ToastContainer, toast } from './../toast/toast.js';
 import {
   parseKLE,
   keyDown,
@@ -39,11 +40,6 @@ export function KeySimulator() {
   // set intial switch to first keysound
   const [switchValue, setSwitchValue] = useState("0");
 
-  const toggleMute = () => {
-    // mute ? setMute(false) : setMute(true);
-    setMute(!muted);
-  }
-
   const keyObject = layout.map((row, index) => {
     return(<div className={styles.keyrow} key={index}>
       {
@@ -69,8 +65,19 @@ export function KeySimulator() {
       </div>)
     });
 
+  const toggleMute = () => {
+    // mute ? setMute(false) : setMute(true);
+    setMute(!muted);
+  }
+
+  const handleSwitchChange = (e) => {
+    setSwitchValue(e.target.value)
+    // new Howl({src: keySounds[e.target.value].press.GENERICR4}).play();
+    toast.show( `Switch sound changed to ${keySounds[e.target.value].caption} ✔️`, { timeout: 5000, pause: false, delay: 0, position: 'bottom-center' });
+  }
+
+  // send an action to the reducer to highlight the corresponding key, then play a sound
   const handleKeyDown = (e) => {
-    console.log("xd");
     // prevent function keys and alt from affecting simulator
     if (e.keyCode === 18 || e.keyCode === 112 ||
         e.keyCode === 114 || e.keyCode === 116 || e.keyCode === 117 ||
@@ -89,10 +96,11 @@ export function KeySimulator() {
     }
     // if the key is not pressed and valid switch is selected
     if (!muted && coordArray && !tree.keySimulator.pressedKeys.includes(e.keyCode) && keySounds[switchValue]) {
-      // play a sound
+      // if the key is a special key (i.e. backspace, space, enter, etc) play a sound
       if (keynames[e.keyCode] in keySounds[switchValue].press) {
         new Howl({src: keySounds[switchValue].press[keynames[e.keyCode]]}).play();
       }
+      // generic key, get the row it's in and play the pitch-adjusted sound
       else {
         if (coordArray) {
           switch(parseInt(coordArray[0][0])) {
@@ -124,8 +132,9 @@ export function KeySimulator() {
         }
       }
     }
-
   }
+
+  // send an action to the reducer to release the key, then play a sound
   const handleKeyUp = (e) => {
     let tree = store.getState();
     let coordArray = tree.keySimulator.keyLocations[keynames[e.keyCode]]
@@ -150,7 +159,6 @@ export function KeySimulator() {
     }
   }
 
-
   return (
     <div>
       <div
@@ -167,7 +175,7 @@ export function KeySimulator() {
               <select
                 className={styles.dropdown}
                 aria-label="Switch Type"
-                onChange={e => setSwitchValue(e.target.value)}
+                onChange={handleSwitchChange}
                 defaultValue="0"
               >
                 {keySounds.map((sound, index) => {
@@ -226,6 +234,7 @@ export function KeySimulator() {
           {keyObject}
         </div>
       </div>
+      <ToastContainer/>
     </div>
   );
 }
