@@ -18,7 +18,7 @@
 .wordarea {
   display: inline-block;
   border-radius: 5px;
-  height: 6.1rem;
+  height: 6.5rem;
   overflow: hidden;
 }
 
@@ -28,6 +28,7 @@
 
 .inputbar {
   padding: 1rem;
+  padding-top: 0.1rem;
   /* background: #eee; */
   display: flex;
   flex-wrap: wrap;
@@ -66,4 +67,26 @@
   border: none;
   padding: 10px;
   flex-grow: 1;
+}
+
+.word {
+  padding: .5rem;
+  display: inline-block;
+  font-size: 1.5rem;
+  border-radius: 2px;
+}
+
+.word.default {
+}
+
+.word.correct {
+  color: #3ab049;
+}
+
+.word.incorrect {
+  color: #fe0000;
+}
+
+.word.active {
+  background: #e0e0e0;
 }

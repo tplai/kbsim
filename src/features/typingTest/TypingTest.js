@@ -1,33 +1,74 @@
-import React, { useState } from 'react';
+import React, { useState, useRef } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import {
+  generateWords,
+  incrementWord,
   keyDown,
   tick,
   redo,
   selectTime,
   selectWords,
+  selectWordIndex,
 } from './typingTestSlice.js';
-import Word from './../word/Word.js';
+// import Word from './../word/Word.js';
 import styles from './TypingTest.module.css';
+import store from './../../app/store';
+
+store.dispatch(generateWords());
 
 export function TypingTest() {
   const words = useSelector(selectWords);
   const timeLeft = useSelector(selectTime);
+  const wordIndex = useSelector(selectWordIndex);
+  // const wordRef = React.createRef();
 
   const dispatch = useDispatch();
 
-  const [inputVal, setInput] = useState("");
-  const [startRace, setStartRace] = useState(false);
+  const [inputVal, setInputVal] = useState("");
+  // const [startRace, setStartRace] = useState(false);
 
   let wordObject = words.map((word, index) => {
     return(
-      <Word key={index} focused={false} status={"default"} text={word}/>
+      <span
+        key={index}
+        ref={word.focused ? useRef() : null}
+        className={`${styles.word} ${word.focused ? styles.active : ''} ${styles[word.status]}`}
+      >
+        {word.text}
+      </span>
     )
+    // return(
+    //   <Word
+    //     key={index}
+    //     focused={word.focused}
+    //     status={word.status}
+    //     text={word.text}
+    //     ref={word.focused ? useRef() : null}
+    //   />
+    // )
   });
 
+  const handleChange = (e) => {
+    setInputVal(e.target.value.trim());
+  }
+
   const handleKeyDown = (e) => {
-    // console.log(e.target.value);
-    // setInput()
+    if (e.keyCode === 32) {
+      setInputVal("");
+      if (inputVal) {
+        dispatch(incrementWord());
+      }
+      // console.log(wordIndex);
+      // console.log();
+      // let wordIndex = store.getState().typingTest.index;
+      console.log(wordObject[wordIndex].ref.current.offsetTop);
+      // if (wordObject[wordIndex].ref.current.offsetTop > )
+      // console.log(wordObject[wordIndex + 1].ref);
+      // setTimeout(() => console.log(wordIndex), 2000)
+      // console.log(wordIndex);
+      // console.log(wordRef);
+      // console.log(wordObject[wordIndex]);
+    }
   }
 
   const handleKeyUp = (e) => {
@@ -48,12 +89,6 @@ export function TypingTest() {
     }
   }
 
-  // <Word focused={true} status={"correct"} text={"lorem"}/>
-  // <Word focused={true} status={"incorrect"} text={"lorem"}/>
-  // <Word focused={false} status={"correct"} text={"lorem"}/>
-  // <Word focused={false} status={"blank"} text={"lorem"}/>
-  // <Word focused={false} status={"blank"} text={"lorem"}/>
-
   return (
     <div className={styles.typingcontainer}>
       <div className={styles.wordcontainer}>
@@ -66,7 +101,9 @@ export function TypingTest() {
       <div className={styles.inputbar}>
         <input
           className={styles.typinginput}
-          onChange={handleKeyDown}
+          value={inputVal}
+          onChange={handleChange}
+          onKeyDown={handleKeyDown}
           autoFocus={true}
           autoCorrect="off"
           autoCapitalize="off"
