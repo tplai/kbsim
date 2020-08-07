@@ -1,0 +1,18 @@
+.word {
+  padding: .5rem;
+  display: inline-block;
+  font-size: 1.5rem;
+  border-radius: 5px;
+}
+
+.word.correct {
+  color: #3ab049;
+}
+
+.word.incorrect {
+  color: #fe0000;
+}
+
+.word.active {
+  background: #e0e0e0;
+}
