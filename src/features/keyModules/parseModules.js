@@ -113,6 +113,13 @@ export function parseLegends(toplegend, bottomlegend) {
   return;
 }
 
+export function keyCodeOf(str) {
+  if (str in keycodes) {
+    return keycodes[str];
+  }
+  return -1;
+}
+
 export function shadeColor(color, percent) {
     let R = parseInt(color.substring(1,3),16);
     let G = parseInt(color.substring(3,5),16);
