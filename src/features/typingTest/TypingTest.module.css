@@ -17,23 +17,12 @@
 .wordarea {
   display: inline-block;
   border-radius: 5px;
-  height: 6rem;
+  height: 6.1rem;
   overflow: hidden;
 }
 
 .words {
   position: relative;
-}
-
-.word {
-  padding: .5rem;
-  display: inline-block;
-  font-size: 1.5rem;
-  border-radius: 5px;
-}
-
-.active {
-  background: #e0e0e0;
 }
 
 .inputbar {
