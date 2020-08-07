@@ -1,11 +1,11 @@
-import React, { useState, useRef } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import {
   generateWords,
   incrementWord,
   shiftWords,
   classifyWord,
-  keyDown,
+  spellCheck,
   tick,
   redo,
   selectTime,
@@ -13,7 +13,6 @@ import {
   selectWordIndex,
 } from './typingTestSlice.js';
 import Word from './../word/Word.js';
-// import { keycodeMap }
 import store from './../../app/store';
 import styles from './TypingTest.module.css';
 
@@ -31,15 +30,6 @@ export function TypingTest() {
   // const [startRace, setStartRace] = useState(false);
 
   let wordObject = words.map((word, index) => {
-    // return(
-    //   <span
-    //     key={index}
-    //     ref={word.focused ? useRef() : null}
-    //     className={`${styles.word} ${word.focused ? styles.active : ''} ${styles[word.status]}`}
-    //   >
-    //     {word.text}
-    //   </span>
-    // )
     return(
       <Word
         key={index}
@@ -52,22 +42,18 @@ export function TypingTest() {
   });
 
 
-  // executes when the key is pressed, before state is updated (before handleChange)
-  const handleKeyDown = (e) => {
-    // if (e.keyCode === 32) {
-    //   if (inputVal) {
-    //     dispatch(classifyWord({index: wordIndex, input: inputVal}));
-    //     dispatch(incrementWord());
-    //   }
-    //   setInputVal("");
-    // }
-    // // console.log(e.keyCode);
-    // if (e.keyCode === 16 && e.keyCode === 83) {
-    //   // console.log("yo");
-    // }
-  }
+  // subscribe to inputVal - execute this if inputVal changes
+  // shift the words when the first row is finished
+  useEffect(() => {
+    if (wordObject[wordIndex].ref && wordObject[wordIndex].ref.current.offsetTop > 0) {
+      dispatch(shiftWords());
+    }
+    dispatch(spellCheck({input: inputVal}));
+  }, [inputVal]);
 
-  const handleKeyPress = (e) => {
+  // intended behavior: go to next word when space is pressed
+  // if the cursor is in the middle of the word, still clear the input and go next word
+  const handleKeyPress =  (e) => {
     if (e.key === ' ') {
       if (inputVal) {
         // inputVal is one character behind, so we don't have to trim inputVal
@@ -76,17 +62,11 @@ export function TypingTest() {
       }
       setInputVal("");
     }
-    // console.log(e.key);
   }
 
-  // binds the inputVal hook to the input, executes after handleKeyDown
+  // binds the inputVal hook to the input
   const handleChange = (e) => {
     setInputVal(e.target.value.trim());
-    // watch for when the user finishes typing a row, then truncate the word array
-    if (wordObject[wordIndex].ref && wordObject[wordIndex].ref.current.offsetTop > 0) {
-      dispatch(shiftWords());
-    }
-    // console.log(inputVal);
   }
 
   const redo = () => {
@@ -111,30 +91,31 @@ export function TypingTest() {
 
   return (
     <div className={styles.typingcontainer}>
-      <div className={styles.wordcontainer}>
-        <div className={styles.wordarea}>
-          <div className={styles.words}>
-              {wordObject}
+      <div>
+        <div className={styles.wordcontainer}>
+          <div className={styles.wordarea}>
+            <div className={styles.words}>
+                {wordObject}
+            </div>
           </div>
         </div>
-      </div>
-      <div className={styles.inputbar}>
-        <input
-          className={styles.typinginput}
-          value={inputVal}
-          onChange={handleChange}
-          onKeyDown={handleKeyDown}
-          onKeyPress={handleKeyPress}
-          autoFocus={true}
-          autoCorrect="off"
-          autoCapitalize="off"
-          spellCheck="false"
-          ref={inputRef}
-        />
-        <span className={styles.toolbar}>
-          <span className={styles.time}>{timeLeft ? timeLeft / 60 : "x"}:{timeLeft ? parseSecond(timeLeft) : "xx"}</span>
-          <button className={styles.redo} onClick={() => redo()}>Redo</button>
-        </span>
+        <div className={styles.inputbar}>
+          <input
+            className={styles.typinginput}
+            value={inputVal}
+            onChange={handleChange}
+            onKeyPress={handleKeyPress}
+            autoFocus={true}
+            autoCorrect="off"
+            autoCapitalize="off"
+            spellCheck="false"
+            ref={inputRef}
+          />
+          <span className={styles.toolbar}>
+            <span className={styles.time}>{timeLeft ? timeLeft / 60 : "x"}:{timeLeft ? parseSecond(timeLeft) : "xx"}</span>
+            <button className={styles.redo} onClick={() => redo()}>Redo</button>
+          </span>
+        </div>
       </div>
     </div>
   );

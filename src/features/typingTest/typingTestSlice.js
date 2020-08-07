@@ -75,8 +75,21 @@ export const typingTestSlice = createSlice({
         state.words[action.payload.index].status = "incorrect";
       }
     },
-    keyDown: (state, action) => {
-
+    spellCheck: (state, action) => {
+      // console.log(action.payload);
+      if (action.payload.input) {
+        if (action.payload.input.length <= state.words[state.index].text.length) {
+          if (state.words[state.index].text.substring(0, action.payload.input.length) === action.payload.input) {
+            state.words[state.index].status = "default";
+          }
+          else {
+            state.words[state.index].status = "incorrect";
+          }
+        }
+        else {
+          state.words[state.index].status = "incorrect";
+        }
+      }
     },
     tick: (state, action) => {
       state.time--;
@@ -86,7 +99,7 @@ export const typingTestSlice = createSlice({
   },
 });
 
-export const { generateWords, incrementWord, shiftWords, classifyWord, tick, redo } = typingTestSlice.actions;
+export const { generateWords, incrementWord, shiftWords, classifyWord, spellCheck, tick, redo } = typingTestSlice.actions;
 
 // state exports
 export const selectTime = state => state.typingTest.time;
