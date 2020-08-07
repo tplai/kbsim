@@ -1,7 +1,7 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import './index.css';
-import App from './App';
+import { KeySimulator } from './features/keySimulator/KeySimulator'
 import store from './app/store';
 import { Provider } from 'react-redux';
 import * as serviceWorker from './serviceWorker';
@@ -12,7 +12,7 @@ require('file-loader?name=[name].[ext]!./index.html');
 ReactDOM.render(
   <React.StrictMode>
     <Provider store={store}>
-      <App />
+      <KeySimulator/>
     </Provider>
   </React.StrictMode>,
   document.getElementById('root')
