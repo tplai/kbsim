@@ -5,6 +5,9 @@
   border-radius: 5px;
 }
 
+.word.default {
+}
+
 .word.correct {
   color: #3ab049;
 }

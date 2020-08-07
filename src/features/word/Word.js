@@ -1,14 +1,16 @@
-import React from 'react'
+import React, { useRef, forwardRef } from 'react'
 import PropTypes from 'prop-types'
 import styles from './Word.module.css';
 
-const Word = ({focused, status, text}) => (
+// forwardRef to get a ref to the span
+const Word = React.forwardRef((props, ref) => (
   <span
-    className={`${styles.word} ${focused ? styles.active : ''} ${styles[status]}`}
+    ref={ref}
+    className={`${styles.word} ${props.focused ? styles.active : ''} ${styles[props.status]}`}
   >
-    {text}
+    {props.text}
   </span>
-)
+));
 
 Word.propTypes = {
   // className: PropTypes.string.isRequired,
