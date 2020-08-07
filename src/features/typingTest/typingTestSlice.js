@@ -23,7 +23,13 @@ export const typingTestSlice = createSlice({
   },
   reducers: {
     generateWords: (state) => {
+      // reset existing words
+      if (state.index < state.words.length) {
+        state.words[state.index].focused = false;
+      }
       state.words = [];
+      state.index = 0;
+
       let randomwords = getRandom(wordList, 30);
       for (let word in randomwords) {
         let wordObj = {
@@ -38,19 +44,35 @@ export const typingTestSlice = createSlice({
       // randomwords[0].ref = state.wordRef;
       state.words = randomwords;
     },
-    updateWords: (state) => {
-
-    },
     incrementWord: (state) => {
       if (state.words.length - 1 > state.index) {
         state.words[state.index].focused = false;
         state.words[++state.index].focused = true;
-        // state.words[state.index].focused = false;
-        // state.words[state.index].ref = null;
-        // state.words[state.index + 1].ref = action.payload.ref;
-        // state.words[state.index + 1].focused = true;
-        // state.index++;
-        // console.log(state.index);
+      }
+    },
+    shiftWords: (state) => {
+      if (state.index > 0) {
+        state.words.splice(0, state.index);
+      }
+      state.index = 0;
+      let randomwords = getRandom(wordList, 15);
+      for (let word in randomwords) {
+        let wordObj = {
+          text: randomwords[word],
+          focused: false,
+          status: "default",
+          ref: null,
+        }
+        randomwords[word] = wordObj;
+      }
+      state.words = [...state.words, ...randomwords];
+    },
+    classifyWord: (state, action) => {
+      if (action.payload.input === state.words[action.payload.index].text) {
+        state.words[action.payload.index].status = "correct";
+      }
+      else {
+        state.words[action.payload.index].status = "incorrect";
       }
     },
     keyDown: (state, action) => {
@@ -64,7 +86,7 @@ export const typingTestSlice = createSlice({
   },
 });
 
-export const { generateWords, incrementWord, keyDown, tick, redo } = typingTestSlice.actions;
+export const { generateWords, incrementWord, shiftWords, classifyWord, tick, redo } = typingTestSlice.actions;
 
 // state exports
 export const selectTime = state => state.typingTest.time;

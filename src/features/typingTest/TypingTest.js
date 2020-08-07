@@ -3,6 +3,8 @@ import { useSelector, useDispatch } from 'react-redux';
 import {
   generateWords,
   incrementWord,
+  shiftWords,
+  classifyWord,
   keyDown,
   tick,
   redo,
@@ -10,9 +12,10 @@ import {
   selectWords,
   selectWordIndex,
 } from './typingTestSlice.js';
-// import Word from './../word/Word.js';
-import styles from './TypingTest.module.css';
+import Word from './../word/Word.js';
+// import { keycodeMap }
 import store from './../../app/store';
+import styles from './TypingTest.module.css';
 
 store.dispatch(generateWords());
 
@@ -20,7 +23,7 @@ export function TypingTest() {
   const words = useSelector(selectWords);
   const timeLeft = useSelector(selectTime);
   const wordIndex = useSelector(selectWordIndex);
-  // const wordRef = React.createRef();
+  const inputRef = useRef();
 
   const dispatch = useDispatch();
 
@@ -28,51 +31,68 @@ export function TypingTest() {
   // const [startRace, setStartRace] = useState(false);
 
   let wordObject = words.map((word, index) => {
-    return(
-      <span
-        key={index}
-        ref={word.focused ? useRef() : null}
-        className={`${styles.word} ${word.focused ? styles.active : ''} ${styles[word.status]}`}
-      >
-        {word.text}
-      </span>
-    )
     // return(
-    //   <Word
+    //   <span
     //     key={index}
-    //     focused={word.focused}
-    //     status={word.status}
-    //     text={word.text}
     //     ref={word.focused ? useRef() : null}
-    //   />
+    //     className={`${styles.word} ${word.focused ? styles.active : ''} ${styles[word.status]}`}
+    //   >
+    //     {word.text}
+    //   </span>
     // )
+    return(
+      <Word
+        key={index}
+        focused={word.focused}
+        status={word.status}
+        text={word.text}
+        ref={word.focused ? useRef() : null}
+      />
+    )
   });
 
-  const handleChange = (e) => {
-    setInputVal(e.target.value.trim());
+
+  // executes when the key is pressed, before state is updated (before handleChange)
+  const handleKeyDown = (e) => {
+    // if (e.keyCode === 32) {
+    //   if (inputVal) {
+    //     dispatch(classifyWord({index: wordIndex, input: inputVal}));
+    //     dispatch(incrementWord());
+    //   }
+    //   setInputVal("");
+    // }
+    // // console.log(e.keyCode);
+    // if (e.keyCode === 16 && e.keyCode === 83) {
+    //   // console.log("yo");
+    // }
   }
 
-  const handleKeyDown = (e) => {
-    if (e.keyCode === 32) {
-      setInputVal("");
+  const handleKeyPress = (e) => {
+    if (e.key === ' ') {
       if (inputVal) {
+        // inputVal is one character behind, so we don't have to trim inputVal
+        dispatch(classifyWord({index: wordIndex, input: inputVal}));
         dispatch(incrementWord());
       }
-      // console.log(wordIndex);
-      // console.log();
-      // let wordIndex = store.getState().typingTest.index;
-      console.log(wordObject[wordIndex].ref.current.offsetTop);
-      // if (wordObject[wordIndex].ref.current.offsetTop > )
-      // console.log(wordObject[wordIndex + 1].ref);
-      // setTimeout(() => console.log(wordIndex), 2000)
-      // console.log(wordIndex);
-      // console.log(wordRef);
-      // console.log(wordObject[wordIndex]);
+      setInputVal("");
     }
+    // console.log(e.key);
   }
 
-  const handleKeyUp = (e) => {
+  // binds the inputVal hook to the input, executes after handleKeyDown
+  const handleChange = (e) => {
+    setInputVal(e.target.value.trim());
+    // watch for when the user finishes typing a row, then truncate the word array
+    if (wordObject[wordIndex].ref && wordObject[wordIndex].ref.current.offsetTop > 0) {
+      dispatch(shiftWords());
+    }
+    // console.log(inputVal);
+  }
 
+  const redo = () => {
+    inputRef.current.focus();
+    setInputVal("");
+    dispatch(generateWords());
   }
 
   // int
@@ -104,14 +124,16 @@ export function TypingTest() {
           value={inputVal}
           onChange={handleChange}
           onKeyDown={handleKeyDown}
+          onKeyPress={handleKeyPress}
           autoFocus={true}
           autoCorrect="off"
           autoCapitalize="off"
           spellCheck="false"
+          ref={inputRef}
         />
         <span className={styles.toolbar}>
           <span className={styles.time}>{timeLeft ? timeLeft / 60 : "x"}:{timeLeft ? parseSecond(timeLeft) : "xx"}</span>
-          <button disabled="">Redo</button>
+          <button className={styles.redo} onClick={() => redo()}>Redo</button>
         </span>
       </div>
     </div>
