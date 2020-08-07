@@ -74,9 +74,11 @@
 .selectcontainer {
   margin-left: auto;
   margin-right: auto;
-  box-shadow: rgba(0, 0, 0, 0.17) 1px 1px 4px;
-  border-radius: 5px;
-  background: #eee;
+  /* box-shadow: rgba(0, 0, 0, 0.17) 1px 1px 4px; */
+  /* border-radius: 5px; */
+  border: 3px solid;
+  border-color: #eee;
+  background: #fff;
   margin-bottom: 2vh;
   width: 832px;
 }

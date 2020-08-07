@@ -2,9 +2,10 @@
   /* margin-top: 10vh; */
   display: inline-block;
   text-align: left;
-  box-shadow: rgba(0, 0, 0, 0.17) 1px 1px 4px;
-  border-radius: 5px;
-  background: #eee;
+  /* box-shadow: rgba(0, 0, 0, 0.17) 1px 1px 4px; */
+  /* border-radius: 5px; */
+  border: 3px solid;
+  border-color: #eee;
   margin-bottom: 2vh;
   width: 832px;
 }
@@ -27,7 +28,7 @@
 
 .inputbar {
   padding: 1rem;
-  background: #eee;
+  /* background: #eee; */
   display: flex;
   flex-wrap: wrap;
 }
