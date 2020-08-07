@@ -1,31 +1,35 @@
 import { createSlice } from '@reduxjs/toolkit';
+import { getRandom } from './../typingModules/typingModules.js';
+import { wordList, shuffle } from './wordlist.js';
 
 export const typingTestSlice = createSlice({
   name: 'typingTest',
   initialState: {
     input: "",
+    time: 60,
     results: {
       wpm: "",
       keystrokes: "",
       accuracy: "",
     },
-    array: [],
+    words: getRandom(wordList, 30),
   },
   reducers: {
     keyDown: (state, action) => {
 
+    },
+    tick: (state, action) => {
+      state.time--;
     },
     redo: (state, action) => {
     },
   },
 });
 
-export const { keyDown, redo } = typingTestSlice.actions;
+export const { keyDown, tick, redo } = typingTestSlice.actions;
 
 // state exports
-export const selectLayout = state => state.typingTest.array;
-export const selectLocations = state => state.typingTest.keyLocations;
-export const selectKeyboardStyle = state => state.typingTest.keyboardStyle;
-export const selectHighlight = state => state.typingTest.highlight;
+export const selectTime = state => state.typingTest.time;
+export const selectWords = state => state.typingTest.words;
 
 export default typingTestSlice.reducer;
