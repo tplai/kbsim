@@ -1,5 +1,11 @@
 import { createSlice } from '@reduxjs/toolkit';
-import { parseEscapedChars, parseSpecialSymbol, parseLegends, shadeColor } from './../keyModules/parseModules.js';
+import {
+  parseEscapedChars,
+  parseSpecialSymbol,
+  parseLegends,
+  keyCodeOf,
+  shadeColor
+} from './../keyModules/parseModules.js';
 
 const keySize = 54;
 const defaultKeyColor = "#ffffff";
@@ -8,47 +14,39 @@ const defaultTextColor = "#000"
 export const keySimulatorSlice = createSlice({
   name: 'keySimulator',
   initialState: {
-    input: 0,
-    array: [],
+    layout: [],
     keyLocations: {},
     keyboardStyle: {},
-    // mousepadStyle: {},
     pressedKeys: [],
     highlight: {},
   },
   reducers: {
     parseKLE: (state, action) => {
       // reset state
-      state.array = [];
-      state.keyLocations = {};
       // state.keyboardStyle = {..keyboardStyle};
-      state.pressedKeys = [];
+      // state.pressedKeys = [];
 
-      state.input = action.payload;
-      if (!state.input) {
-        state.array = [];
+      if (!action.payload) {
         state.highlight = {borderColor:"#ff0033"};
         return;
       }
       // split the input into rows by newline
-      state.array = state.input.split(/\r\n|\r|\n/);
-      if (state.array.length === 0) {
-        state.array = [];
+      let inputLayout = action.payload.split(/\r\n|\r|\n/);
+      if (inputLayout.length === 0) {
         state.highlight = {borderColor:"#ff0033"};
         return;
       }
       // split the rows into an array
 
-      for (let i in state.array) {
+      for (let i in inputLayout) {
         // remove empty lines
-        if (state.array[i] == "") {
-          state.array.splice(i, 1);
+        if (inputLayout[i] == "") {
+          inputLayout.splice(i, 1);
           continue;
         }
         // regex match text within "" and {}
-        state.array[i] = state.array[i].match(/(["'])(?:(?=(\\?))\2.)*?\1|([{])(?:(?=(\\?))\2.)*?([}])/g);
-        if (!state.array[i]) {
-          state.array = [];
+        inputLayout[i] = inputLayout[i].match(/(["'])(?:(?=(\\?))\2.)*?\1|([{])(?:(?=(\\?))\2.)*?([}])/g);
+        if (!inputLayout[i]) {
           state.highlight = {borderColor:"#ff0033"};
           return;
         }
@@ -70,7 +68,7 @@ export const keySimulatorSlice = createSlice({
         pressed: false,
       }
 
-      for (let x = 0; x < state.array.length; x++) {
+      for (let x = 0; x < inputLayout.length; x++) {
         let formatNextKey = false;
         // reset formatting and increment y coordinate
         if (x !== 0) {
@@ -89,7 +87,7 @@ export const keySimulatorSlice = createSlice({
             pressed: false,
           }
         }
-        for (let y = 0; y < state.array[x].length; y++) {
+        for (let y = 0; y < inputLayout[x].length; y++) {
           // if no special formatting, reset key formatting and increment x coordinate
           if (!formatNextKey && y !== 0) {
             keyInfo = {
@@ -107,10 +105,10 @@ export const keySimulatorSlice = createSlice({
               pressed: false,
             }
           }
-          if (state.array[x][y].charAt(0) === "{" &&
-              state.array[x][y].charAt(state.array[x][y].length - 1) === "}") {
+          if (inputLayout[x][y].charAt(0) === "{" &&
+              inputLayout[x][y].charAt(inputLayout[x][y].length - 1) === "}") {
             // remove whitespace and trim the brackets
-            let keyFormat = state.array[x][y].substring(1, state.array[x][y].length - 1).replace(/\s/g, '');
+            let keyFormat = inputLayout[x][y].substring(1, inputLayout[x][y].length - 1).replace(/\s/g, '');
             // split multiple formatting information into an array
             let formatInfo = keyFormat.split(",");
             if (Array.isArray(formatInfo)) {
@@ -150,7 +148,6 @@ export const keySimulatorSlice = createSlice({
                   }
                 }
                 else {
-                  state.array = [];
                   state.highlight = {borderColor:"#ff0033"};
                   return;
                 }
@@ -158,10 +155,10 @@ export const keySimulatorSlice = createSlice({
             }
             formatNextKey = true;
           }
-          else if (state.array[x][y].charAt(0) === '"' &&
-                   state.array[x][y].charAt(state.array[x][y].length - 1) === '"') {
+          else if (inputLayout[x][y].charAt(0) === '"' &&
+                   inputLayout[x][y].charAt(inputLayout[x][y].length - 1) === '"') {
             // trim quotes
-            let legends = state.array[x][y].substring(1, state.array[x][y].length - 1)
+            let legends = inputLayout[x][y].substring(1, inputLayout[x][y].length - 1)
             // split into by newline
             legends = legends.split("\\n");
             // there is a new line character indicating that there is a sublegend
@@ -173,7 +170,8 @@ export const keySimulatorSlice = createSlice({
             formatNextKey = false;
             keycount += 1;
             // console.log(keyInfo.keycolor);
-            state.array[x][y] = keyInfo;
+            // change the value of the key string into a key object
+            inputLayout[x][y] = keyInfo;
           }
           else {
             state.highlight = {borderColor:"#ff0033"};
@@ -182,46 +180,58 @@ export const keySimulatorSlice = createSlice({
         }
       }
       // remove formatting data from layout array
-      for (let x in state.array) {
-        for (let y in state.array[x]) {
-          if (typeof(state.array[x][y]) === 'string' &&
-              state.array[x][y].charAt(0) === "{" &&
-              state.array[x][y].charAt(state.array[x][y].length - 1) === "}") {
-            state.array[x].splice(y, 1);
+      for (let x in inputLayout) {
+        for (let y in inputLayout[x]) {
+          if (typeof(inputLayout[x][y]) === 'string' &&
+              inputLayout[x][y].charAt(0) === "{" &&
+              inputLayout[x][y].charAt(inputLayout[x][y].length - 1) === "}") {
+            inputLayout[x].splice(y, 1);
           }
         }
       }
 
       let keyboardWidth = 0;
       let keyboardHeight = 0;
-      for (let x in state.array) {
-        for (let y in state.array[x]) {
+      // reset key locations
+      state.keyLocations = {};
+
+      // console.log(state.pressedKeys);
+      for (let x in inputLayout) {
+        for (let y in inputLayout[x]) {
           // get dimensions of keyboard
-          let keyX = state.array[x][y].x + state.array[x][y].width;
+          let keyX = inputLayout[x][y].x + inputLayout[x][y].width;
           if (keyboardWidth < keyX) {
             keyboardWidth = keyX;
           }
-          let keyY = state.array[x][y].y + state.array[x][y].height;
+          let keyY = inputLayout[x][y].y + inputLayout[x][y].height;
           if (keyboardHeight < keyY) {
             keyboardHeight = keyY;
           }
 
-          // get the keycode of the specific key
-          let primaryLegend = parseLegends(state.array[x][y].legend, state.array[x][y].sublegend);
+          // get the common keycode of the pair of legends
+          let primaryLegend = parseLegends(inputLayout[x][y].legend, inputLayout[x][y].sublegend);
+          // set the class, location, and pressed status
           if (primaryLegend) {
-            state.array[x][y].class = primaryLegend;
+            // class
+            inputLayout[x][y].class = primaryLegend;
+            // location
             if (!state.keyLocations[primaryLegend]) {
               state.keyLocations[primaryLegend] = [[x, y]];
             }
             else {
               state.keyLocations[primaryLegend].push([x, y]);
             }
+            // pressed status
+            if (state.pressedKeys.includes(keyCodeOf(primaryLegend))) {
+              inputLayout[x][y].pressed = true;
+            }
           }
           else {
-            state.array[x][y].class = "unsupported";
+            inputLayout[x][y].class = "unsupported";
           }
         }
       }
+
 
       // mostly arbitrary values
       let borderWidth = 0.25;
@@ -237,20 +247,14 @@ export const keySimulatorSlice = createSlice({
         paddingRight: borderWidth * keySize,
         marginBottom: keySize * 2,
       }
-      // state.mousepadStyle = {
-      //   width: (keyboardWidth + borderWidth * 2) * keySize * 2,
-      //   minWidth: (keyboardWidth + borderWidth * 2) * keySize * 2,
-      //   height: (keyboardHeight + borderHeight * 2) * keySize * 1.5,
-      //   paddingTop: borderHeight * keySize,
-      //   paddingBottom: borderHeight * keySize,
-      //   paddingLeft: borderWidth * keySize,
-      //   paddingRight: borderWidth * keySize,
-      // }
-      // state.array = [];
+
+      // successfully parsed layout, update state with the new layout
+      state.layout = inputLayout;
+      // state.layout = [];
       // state.highlight = {borderColor:"#ff0033"};
     },
     keyDown: (state, action) => {
-      state.array[action.payload.x][action.payload.y].pressed = true;
+      state.layout[action.payload.x][action.payload.y].pressed = true;
       // console.log(action.payload.keycode);
       // if the key is not pressed, add it to the collection of pressed keys
       if (!state.pressedKeys.includes(action.payload.keycode)) {
@@ -258,7 +262,7 @@ export const keySimulatorSlice = createSlice({
       }
     },
     keyUp: (state, action) => {
-      state.array[action.payload.x][action.payload.y].pressed = false;
+      state.layout[action.payload.x][action.payload.y].pressed = false;
       let keyIndex = state.pressedKeys.indexOf(action.payload.keycode);
       if (keyIndex > -1) {
         state.pressedKeys.splice(keyIndex, 1);
@@ -279,7 +283,7 @@ export const keySimulatorSlice = createSlice({
 export const { parseKLE, keyDown, keyUp, setKeyboardColor, highlightColor } = keySimulatorSlice.actions;
 
 // state exports
-export const selectLayout = state => state.keySimulator.array;
+export const selectLayout = state => state.keySimulator.layout;
 export const selectLocations = state => state.keySimulator.keyLocations;
 export const selectKeyboardStyle = state => state.keySimulator.keyboardStyle;
 export const selectHighlight = state => state.keySimulator.highlight;
