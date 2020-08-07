@@ -75,11 +75,9 @@ export function KeySimulator() {
     toast.show( `Switch sound changed to ${keySounds[e.target.value].caption} ✔️`, { timeout: 3000, pause: false, delay: 0, position: 'bottom-center' });
     // prelaod the sounds
     for (let sound in keySounds[e.target.value].press) {
-      // console.log(keySounds[e.target.value].press[sound]);
       new Howl({src: keySounds[e.target.value].press[sound], volume: 0}).play();
     }
     for (let sound in keySounds[e.target.value].release) {
-      // console.log(keySounds[e.target.value].release[sound]);
       new Howl({src: keySounds[e.target.value].release[sound], volume: 0}).play();
     }
   }
