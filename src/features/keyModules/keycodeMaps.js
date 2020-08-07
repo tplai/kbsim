@@ -6,8 +6,8 @@ const ansiNames = [
   "ESC","F1","F2","F3","F4","F5","F6","F7","F8","F9","F10","F11","F12","PRTSC","SCROLLLOCK","PAUSE","BACK_QUOTE","1","2","3","4","5","6","7","8","9","0","MINUS","EQUALS","BACKSPACE","INSERT","HOME","PGUP","NUMLOCK","MINUS","MULTIPLY","SUBTRACT","TAB","Q","W","E","R","T","Y","U","I","O","P","OPEN_BRACKET","CLOSE_BRACKET","BACK_SLASH","DELETE","END","PGDN","NUMPAD7","NUMPAD8","NUMPAD9","ADD","CAPSLOCK","A","S","D","F","G","H","J","K","L","SEMICOLON","QUOTE","ENTER","NUMPAD4","NUMPAD5","NUMPAD6","SHIFT","Z","X","C","V","B","N","M","COMMA","PERIOD","SLASH","SHIFT","UP","NUMPAD1","NUMPAD2","NUMPAD3","ENTER","CTRL","WIN","ALT","SPACE","WIN","MENU","CTRL","LEFT","DOWN","RIGHT","NUMPAD0","DECIMAL",
 ];
 
-export const ansiMap = ansiLegends.reduce((obj, value, index) => {
-    obj[value] = ansiNames[index];
+export const ansiMap = ansiLegends.reduce((obj, key, index) => {
+    obj[key] = ansiNames[index];
     return obj;
 }, {});
 
