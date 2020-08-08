@@ -8,12 +8,14 @@ import {
   setKeyboardColor,
   selectLayout,
   selectLocations,
+  selectPressedKeys,
   selectKeyboardStyle,
 } from './keySimulatorSlice';
 import { keySounds } from './../audioModules/audioModule.js';
 import { keynames } from './../keyModules/keycodeMaps.js';
 import { keyPresets } from './../keyModules/keyPresets.js'
 import { keyboardColors } from './../keyModules/keyboardColors.js'
+import { keyCodeOf } from './../keyModules/parseModules.js'
 import { ToastContainer, toast } from './../toast/toast.js';
 import { TypingTest } from './../typingTest/TypingTest.js';
 import Key from './../key/Key.js';
@@ -31,6 +33,8 @@ export function KeySimulator() {
   const layout = useSelector(selectLayout);
   // x y indices of legends
   const keyLocations = useSelector(selectLocations);
+  // pressed keys
+  const pressedKeys = useSelector(selectPressedKeys);
   // dimensions of keyboard and border
   const keyboardStyle = useSelector(selectKeyboardStyle);
 
@@ -52,6 +56,8 @@ export function KeySimulator() {
     }
   }, [switchValue]);
 
+  // useEffect (() => {}, []);
+
   const handleSwitchChange = (e) => {
     setSwitchValue(e.target.value)
     toast.show( `Switch sound changed to ${keySounds[e.target.value].caption} ✔️`, { timeout: 3000, pause: false, delay: 0, position: 'bottom-center' });
@@ -69,52 +75,43 @@ export function KeySimulator() {
       e.keyCode === 114 || e.keyCode === 116 || e.keyCode === 117 ||
       e.keyCode === 121 || e.keyCode === 122 || e.keyCode === 123) {
         e.preventDefault();
-      }
-      let tree = store.getState();
-      let coordArray = tree.keySimulator.keyLocations[keynames[e.keyCode]];
-      for (let coords in coordArray) {
-        let action = {
-          x: coordArray[coords][0],
-          y: coordArray[coords][1],
-          keycode: e.keyCode,
-        };
-        dispatch(keyDown(action));
-      }
-      // if the key is not pressed and valid switch is selected
-      if (!muted && coordArray && !tree.keySimulator.pressedKeys.includes(e.keyCode) && keySounds[switchValue]) {
+    }
+    // get the array X Y coordinates
+    for (let coords in keyLocations[keynames[e.keyCode]]) {
+      let action = {
+        x: keyLocations[keynames[e.keyCode]][coords][0],
+        y: keyLocations[keynames[e.keyCode]][coords][1],
+        keycode: e.keyCode,
+      };
+      dispatch(keyDown(action));
+    }
+      // if not muted, valid key on keyboard, not pressed already, and selected switch has sounds
+    if (!muted && keyLocations[keynames[e.keyCode]] && !pressedKeys.includes(e.keyCode) && keySounds[switchValue]) {
         // if the key is a special key (i.e. backspace, space, enter, etc) play a sound
         if (keynames[e.keyCode] in keySounds[switchValue].press) {
           new Howl({src: keySounds[switchValue].press[keynames[e.keyCode]]}).play();
         }
         // generic key, get the row it's in and play the pitch-adjusted sound
         else {
-          if (coordArray) {
-            switch(parseInt(coordArray[0][0])) {
-              case 0:
-              let sound = new Howl({src: [keySounds[switchValue].press.GENERICR0]});
-              sound.play();
-              // new Audio(keySounds[switchValue].press.GENERICR0).play();
+          switch(parseInt(keyLocations[keynames[e.keyCode]][0][0])) {
+            case 0:
+              new Howl({src: [keySounds[switchValue].press.GENERICR0]}).play();
               break;
-              case 1:
+            case 1:
               new Howl({src: keySounds[switchValue].press.GENERICR1}).play();
               break;
-              case 2:
+            case 2:
               new Howl({src: keySounds[switchValue].press.GENERICR2}).play();
               break;
-              case 3:
+            case 3:
               new Howl({src: keySounds[switchValue].press.GENERICR3}).play();
               break;
-              case 4:
+            case 4:
               new Howl({src: keySounds[switchValue].press.GENERICR4}).play();
               break;
-              default:
+            default:
               new Howl({src: keySounds[switchValue].press.GENERICR4}).play();
               break;
-            }
-          }
-          // key not found
-          else {
-            new Howl({src: keySounds[switchValue].press.GENERICR4}).play();
           }
         }
       }
@@ -122,18 +119,16 @@ export function KeySimulator() {
 
   // send an action to the reducer to release the key, then play a sound
   const handleKeyUp = (e) => {
-    let tree = store.getState();
-    let coordArray = tree.keySimulator.keyLocations[keynames[e.keyCode]]
-    for (let coords in tree.keySimulator.keyLocations[keynames[e.keyCode]]) {
+    for (let coords in keyLocations[keynames[e.keyCode]]) {
       let action = {
-        x: coordArray[coords][0],
-        y: coordArray[coords][1],
+        x: keyLocations[keynames[e.keyCode]][coords][0],
+        y: keyLocations[keynames[e.keyCode]][coords][1],
         keycode: e.keyCode,
       };
       dispatch(keyUp(action));
     }
     // if a valid switch is selected
-    if (!muted && keySounds[switchValue]) {
+    if (!muted && keyLocations[keynames[e.keyCode]] && keySounds[switchValue]) {
       if (keynames[e.keyCode] in keySounds[switchValue].press) {
         new Howl({src: keySounds[switchValue].release[keynames[e.keyCode]]}).play();
       }
@@ -142,6 +137,18 @@ export function KeySimulator() {
       }
     }
   }
+
+  // called when an individual key detects a mousedown event
+  const handleKeyMouseDown = (primaryLegend, x, y) => {
+    console.log(keyCodeOf(primaryLegend) + " " + x + " " + y);
+
+  }
+
+  // called when an individual key detects a mouseup event
+  const handleKeyMouseUp = (primaryLegend) => {
+
+  }
+
 
   return (
     <div>
@@ -227,6 +234,7 @@ export function KeySimulator() {
                       keybordercolor={key.keybordercolor}
                       textcolor={key.textcolor}
                       pressed={key.pressed}
+                      mouseDown={handleKeyMouseDown}
                     />
                   )
                 })

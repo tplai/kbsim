@@ -289,6 +289,7 @@ export const { parseKLE, keyDown, keyUp, setKeyboardColor } = keySimulatorSlice.
 // state exports
 export const selectLayout = state => state.keySimulator.layout;
 export const selectLocations = state => state.keySimulator.keyLocations;
+export const selectPressedKeys = state => state.keySimulator.pressedKeys;
 export const selectKeyboardStyle = state => state.keySimulator.keyboardStyle;
 
 export default keySimulatorSlice.reducer;
