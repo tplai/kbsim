@@ -22,7 +22,7 @@ import Word from './../word/Word.js';
 import store from './../../app/store';
 import styles from './TypingTest.module.css';
 
-const raceTime = 10000;
+const raceTime = 60000;
 
 store.dispatch(generateWords());
 store.dispatch(resetTimer({time: raceTime / 1000}));
@@ -42,8 +42,6 @@ export function TypingTest() {
   const [inputVal, setInputVal] = useState("");
 
   const [ticker, setTicker] = useState(null);
-  // const [started, setStarted] = useState(false);
-  // const [timer, setTimer] = useState();
 
   let wordObject = words.map((word, index) => {
     return(
