@@ -5,8 +5,8 @@ import styles from './Key.module.css';
 // keysize must be divisble by 9
 const keysize = 54;
 
-const Key = ({className, legend, sublegend, width, height, x, y, keytopcolor, keybordercolor, textcolor, pressed}) => (
-  <div className={`${styles.keycap} ${className}`}>
+const Key = ({className, legend, sublegend, width, height, x, y, keytopcolor, keybordercolor, textcolor, pressed, mouseDown, mouseUp}) => (
+  <div className={styles.keycap} onMouseDown={() => {mouseDown(className)}} onMouseUp={() => {mouseUp(className)}}>
     <div
       className={styles.keyborder}
       style={{
@@ -87,6 +87,8 @@ Key.propTypes = {
   keybordercolor: PropTypes.string.isRequired,
   textcolor: PropTypes.string.isRequired,
   pressed: PropTypes.bool.isRequired,
+  mouseDown: PropTypes.func.isRequired,
+  mouseUp: PropTypes.func.isRequired,
 }
 
 export default Key

@@ -139,14 +139,68 @@ export function KeySimulator() {
   }
 
   // called when an individual key detects a mousedown event
-  const handleKeyMouseDown = (primaryLegend, x, y) => {
-    console.log(keyCodeOf(primaryLegend) + " " + x + " " + y);
-
+  const handleKeyMouseDown = (primaryLegend) => {
+    // console.log(keyCodeOf(primaryLegend) + " " + x + " " + y);
+    // get the array X Y coordinates
+    for (let coords in keyLocations[primaryLegend]) {
+      let action = {
+        x: keyLocations[primaryLegend][coords][0],
+        y: keyLocations[primaryLegend][coords][1],
+        keycode: keyCodeOf(primaryLegend),
+      };
+      dispatch(keyDown(action));
+    }
+      // if not muted, valid key on keyboard, not pressed already, and selected switch has sounds
+    if (!muted && keyLocations[primaryLegend] && !pressedKeys.includes(keyCodeOf(primaryLegend)) && keySounds[switchValue]) {
+        // if the key is a special key (i.e. backspace, space, enter, etc) play a sound
+        if (primaryLegend in keySounds[switchValue].press) {
+          new Howl({src: keySounds[switchValue].press[primaryLegend]}).play();
+        }
+        // generic key, get the row it's in and play the pitch-adjusted sound
+        else {
+          switch(parseInt(keyLocations[primaryLegend][0][0])) {
+            case 0:
+              new Howl({src: [keySounds[switchValue].press.GENERICR0]}).play();
+              break;
+            case 1:
+              new Howl({src: keySounds[switchValue].press.GENERICR1}).play();
+              break;
+            case 2:
+              new Howl({src: keySounds[switchValue].press.GENERICR2}).play();
+              break;
+            case 3:
+              new Howl({src: keySounds[switchValue].press.GENERICR3}).play();
+              break;
+            case 4:
+              new Howl({src: keySounds[switchValue].press.GENERICR4}).play();
+              break;
+            default:
+              new Howl({src: keySounds[switchValue].press.GENERICR4}).play();
+              break;
+          }
+        }
+      }
   }
 
   // called when an individual key detects a mouseup event
   const handleKeyMouseUp = (primaryLegend) => {
-
+    for (let coords in keyLocations[primaryLegend]) {
+      let action = {
+        x: keyLocations[primaryLegend][coords][0],
+        y: keyLocations[primaryLegend][coords][1],
+        keycode: keyCodeOf(primaryLegend),
+      };
+      dispatch(keyUp(action));
+    }
+    // if a valid switch is selected
+    if (!muted && keyLocations[primaryLegend] && keySounds[switchValue]) {
+      if (primaryLegend in keySounds[switchValue].press) {
+        new Howl({src: keySounds[switchValue].release[primaryLegend]}).play();
+      }
+      else {
+        new Howl({src: keySounds[switchValue].release.GENERIC}).play();
+      }
+    }
   }
 
 
@@ -235,6 +289,7 @@ export function KeySimulator() {
                       textcolor={key.textcolor}
                       pressed={key.pressed}
                       mouseDown={handleKeyMouseDown}
+                      mouseUp={handleKeyMouseUp}
                     />
                   )
                 })
