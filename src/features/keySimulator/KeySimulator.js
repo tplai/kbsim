@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { Howl, Howler } from 'howler';
 import {
@@ -40,112 +40,90 @@ export function KeySimulator() {
   // set intial switch to first keysound
   const [switchValue, setSwitchValue] = useState("0");
 
-  const keyObject = layout.map((row, index) => {
-    return(<div className={styles.keyrow} key={index}>
-      {
-        row.map((key) => {
-          return(
-            <Key
-              key={key.keyid}
-              className={key.class}
-              legend={key.legend}
-              sublegend={key.sublegend}
-              width={key.width}
-              height={key.height}
-              x={key.x}
-              y={key.y}
-              keytopcolor={key.keytopcolor}
-              keybordercolor={key.keybordercolor}
-              textcolor={key.textcolor}
-              pressed={key.pressed}
-            />
-          )
-        })
-      }
-      </div>)
-    });
+  // subscriber to switch value. When switchvalue changes, execute this function
+  useEffect(() => {
+    // preload the sounds
+    for (let sound in keySounds[switchValue].press) {
+      new Howl({src: keySounds[switchValue].press[sound], volume: 0}).play();
+    }
+    for (let sound in keySounds[switchValue].release) {
+      new Howl({src: keySounds[switchValue].release[sound], volume: 0}).play();
+    }
+  }, [switchValue]);
+
+  const handleSwitchChange = (e) => {
+    setSwitchValue(e.target.value)
+    toast.show( `Switch sound changed to ${keySounds[e.target.value].caption} ✔️`, { timeout: 3000, pause: false, delay: 0, position: 'bottom-center' });
+  }
 
   const toggleMute = () => {
     // mute ? setMute(false) : setMute(true);
     setMute(!muted);
   }
 
-  const handleSwitchChange = (e) => {
-    setSwitchValue(e.target.value)
-    toast.show( `Switch sound changed to ${keySounds[e.target.value].caption} ✔️`, { timeout: 3000, pause: false, delay: 0, position: 'bottom-center' });
-    // prelaod the sounds
-    for (let sound in keySounds[e.target.value].press) {
-      new Howl({src: keySounds[e.target.value].press[sound], volume: 0}).play();
-    }
-    for (let sound in keySounds[e.target.value].release) {
-      new Howl({src: keySounds[e.target.value].release[sound], volume: 0}).play();
-    }
-  }
-
   // send an action to the reducer to highlight the corresponding key, then play a sound
   const handleKeyDown = (e) => {
     // prevent function keys and alt from affecting simulator
     if (e.keyCode === 18 || e.keyCode === 112 ||
-        e.keyCode === 114 || e.keyCode === 116 || e.keyCode === 117 ||
-        e.keyCode === 121 || e.keyCode === 122 || e.keyCode === 123) {
+      e.keyCode === 114 || e.keyCode === 116 || e.keyCode === 117 ||
+      e.keyCode === 121 || e.keyCode === 122 || e.keyCode === 123) {
         e.preventDefault();
-    }
-    let tree = store.getState();
-    let coordArray = tree.keySimulator.keyLocations[keynames[e.keyCode]];
-    for (let coords in coordArray) {
-      let action = {
-        x: coordArray[coords][0],
-        y: coordArray[coords][1],
-        keycode: e.keyCode,
-      };
-      dispatch(keyDown(action));
-    }
-    // if the key is not pressed and valid switch is selected
-    if (!muted && coordArray && !tree.keySimulator.pressedKeys.includes(e.keyCode) && keySounds[switchValue]) {
-      // if the key is a special key (i.e. backspace, space, enter, etc) play a sound
-      if (keynames[e.keyCode] in keySounds[switchValue].press) {
-        new Howl({src: keySounds[switchValue].press[keynames[e.keyCode]]}).play();
       }
-      // generic key, get the row it's in and play the pitch-adjusted sound
-      else {
-        if (coordArray) {
-          switch(parseInt(coordArray[0][0])) {
-            case 0:
+      let tree = store.getState();
+      let coordArray = tree.keySimulator.keyLocations[keynames[e.keyCode]];
+      for (let coords in coordArray) {
+        let action = {
+          x: coordArray[coords][0],
+          y: coordArray[coords][1],
+          keycode: e.keyCode,
+        };
+        dispatch(keyDown(action));
+      }
+      // if the key is not pressed and valid switch is selected
+      if (!muted && coordArray && !tree.keySimulator.pressedKeys.includes(e.keyCode) && keySounds[switchValue]) {
+        // if the key is a special key (i.e. backspace, space, enter, etc) play a sound
+        if (keynames[e.keyCode] in keySounds[switchValue].press) {
+          new Howl({src: keySounds[switchValue].press[keynames[e.keyCode]]}).play();
+        }
+        // generic key, get the row it's in and play the pitch-adjusted sound
+        else {
+          if (coordArray) {
+            switch(parseInt(coordArray[0][0])) {
+              case 0:
               let sound = new Howl({src: [keySounds[switchValue].press.GENERICR0]});
               sound.play();
               // new Audio(keySounds[switchValue].press.GENERICR0).play();
               break;
-            case 1:
+              case 1:
               new Howl({src: keySounds[switchValue].press.GENERICR1}).play();
               break;
-            case 2:
+              case 2:
               new Howl({src: keySounds[switchValue].press.GENERICR2}).play();
               break;
-            case 3:
+              case 3:
               new Howl({src: keySounds[switchValue].press.GENERICR3}).play();
               break;
-            case 4:
+              case 4:
               new Howl({src: keySounds[switchValue].press.GENERICR4}).play();
               break;
-            default:
+              default:
               new Howl({src: keySounds[switchValue].press.GENERICR4}).play();
               break;
+            }
           }
-        }
-        // key not found
-        else {
-          new Howl({src: keySounds[switchValue].press.GENERICR4}).play();
+          // key not found
+          else {
+            new Howl({src: keySounds[switchValue].press.GENERICR4}).play();
+          }
         }
       }
     }
-  }
 
   // send an action to the reducer to release the key, then play a sound
   const handleKeyUp = (e) => {
     let tree = store.getState();
     let coordArray = tree.keySimulator.keyLocations[keynames[e.keyCode]]
     for (let coords in tree.keySimulator.keyLocations[keynames[e.keyCode]]) {
-      // console.log(layout[coordArray[coords][0]][coordArray[coords][1]]);
       let action = {
         x: coordArray[coords][0],
         y: coordArray[coords][1],
@@ -156,7 +134,6 @@ export function KeySimulator() {
     // if a valid switch is selected
     if (!muted && keySounds[switchValue]) {
       if (keynames[e.keyCode] in keySounds[switchValue].press) {
-        // let audio = new Audio(keyReleaseSounds);
         new Howl({src: keySounds[switchValue].release[keynames[e.keyCode]]}).play();
       }
       else {
@@ -185,9 +162,7 @@ export function KeySimulator() {
                 defaultValue="0"
               >
                 {keySounds.map((sound, index) => {
-                    return (
-                      <option value={index} key={sound.key}>{sound.caption}</option>
-                    );
+                    return (<option value={index} key={sound.key}>{sound.caption}</option>);
                 })}
               </select>
             </div>
@@ -200,9 +175,7 @@ export function KeySimulator() {
                 defaultValue="0"
               >
                 {keyPresets.map((preset, index) => {
-                    return (
-                      <option value={index} key={preset.key}>{preset.caption}</option>
-                    );
+                    return (<option value={index} key={preset.key}>{preset.caption}</option>);
                 })}
               </select>
             </div>
@@ -214,9 +187,7 @@ export function KeySimulator() {
                 defaultValue="gray"
               >
                 {keyboardColors.map((color, index) => {
-                  return (
-                    <option value={index} key={color.color}>{color.caption}</option>
-                  );
+                  return (<option value={index} key={color.color}>{color.caption}</option>);
                 })}
               </select>
             </div>
@@ -237,30 +208,33 @@ export function KeySimulator() {
           className={styles.keyboard}
           style={keyboardStyle}
         >
-          {keyObject}
+          {layout.map((row, index) => {
+            return(<div className={styles.keyrow} key={index}>
+              {
+                row.map((key) => {
+                  return(
+                    <Key
+                      key={key.keyid}
+                      className={key.class}
+                      legend={key.legend}
+                      sublegend={key.sublegend}
+                      width={key.width}
+                      height={key.height}
+                      x={key.x}
+                      y={key.y}
+                      keytopcolor={key.keytopcolor}
+                      keybordercolor={key.keybordercolor}
+                      textcolor={key.textcolor}
+                      pressed={key.pressed}
+                    />
+                  )
+                })
+              }
+              </div>)
+            })}
         </div>
         <ToastContainer/>
       </div>
     </div>
   );
 }
-
-// <div className={styles.row} style={{display:"none"}}>
-//   <textarea
-//     className={styles.textarea}
-//     aria-label="Set increment amount"
-//     onChange={e => setKleValue(e.target.value)}
-//     defaultValue={keyPresets.olivia_sf}
-//   />
-// </div>
-// <div className={styles.row} style={{display:"none"}}>
-//   <button
-//     className={styles.button}
-//     onClick={() =>
-//       dispatch(parseKLE(kleValue))
-//     }
-//     aria-label="Input KLE raw data"
-//   >
-//     Set Layout
-//   </button>
-// </div>
