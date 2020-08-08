@@ -8,11 +8,12 @@ export const typingTestSlice = createSlice({
   initialState: {
     input: "",
     started: false,
+    finished: false,
     endTime: null,
     interval: null,
     time: 0,
     stats: {
-      wpm: "",
+      wpm: 0,
       keystrokes: {
         correct: 0,
         incorrect: 0
@@ -76,10 +77,14 @@ export const typingTestSlice = createSlice({
       if (action.payload.input === state.words[action.payload.index].text) {
         state.words[action.payload.index].status = "correct";
         state.stats.words.correct++;
+        // spacebar is a corect keystroke
+        state.stats.keystrokes.correct++;
       }
       else {
         state.words[action.payload.index].status = "incorrect";
         state.stats.words.incorrect++;
+        // spacebar is an incorrect keystroke
+        state.stats.keystrokes.incorrect++;
       }
     },
     spellCheck: (state, action) => {
@@ -107,18 +112,25 @@ export const typingTestSlice = createSlice({
     startTimer: (state) => {
       state.started = true;
     },
-    stopTimer: (state) => {
+    endTimer: (state) => {
       state.started = false;
-    },
-    showResults: (state) => {
-      console.log(`Correct words: ${state.stats.words.correct} Incorrect words: ${state.stats.words.incorrect}\n
-        Correct keystrokes: ${state.stats.keystrokes.correct} Incorrect keystrokes: ${state.stats.keystrokes.incorrect}`);
+      state.finished = true;
+
+      state.stats.wpm = Math.round(state.stats.keystrokes.correct / 5);
+      if (state.stats.keystrokes.correct === 0 && state.stats.keystrokes.incorrect === 0) {
+        state.stats.accuracy = 0;
+      }
+      else {
+        state.stats.accuracy = Math.round(state.stats.keystrokes.correct / (state.stats.keystrokes.correct + state.stats.keystrokes.incorrect) * 100);
+      }
     },
     resetTimer: (state, action) => {
       state.started = false;
+      state.finished = false;
+      // sta
       state.time = action.payload.time;
       state.stats = {
-        wpm: "",
+        wpm: 0,
         keystrokes: {
           correct: 0,
           incorrect: 0
@@ -151,8 +163,8 @@ export const {
   spellCheck,
   tick,
   startTimer,
-  stopTimer,
-  showResults,
+  endTimer,
+  calcResults,
   resetTimer,
   clearHighlight,
  } = typingTestSlice.actions;
@@ -162,5 +174,7 @@ export const selectWords = state => state.typingTest.words;
 export const selectWordIndex = state => state.typingTest.index;
 export const selectTime = state => state.typingTest.time;
 export const selectStarted = state => state.typingTest.started;
+export const selectFinished = state => state.typingTest.finished;
+export const selectStats = state => state.typingTest.stats;
 
 export default typingTestSlice.reducer;

@@ -16,8 +16,7 @@
 }
 
 .wordarea {
-  display: inline-block;
-  border-radius: 5px;
+  /* display: inline-block; */
   height: 6rem;
   overflow: hidden;
 }
@@ -25,6 +24,59 @@
 .words {
   position: relative;
 }
+
+.resultarea {
+  /* display: inline-block; */
+  height: 6rem;
+  opacity: 1;
+	animation-name: fadeInOpacity;
+	animation-iteration-count: 1;
+	animation-timing-function: ease-in;
+	animation-duration: 0.2s;
+}
+
+@keyframes fadeInOpacity {
+	0% {
+		opacity: 0;
+	}
+	100% {
+		opacity: 1;
+	}
+}
+
+.results {
+  display: flex;
+  height: 100%;
+}
+
+.resultcol {
+  padding: 1rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 25%;
+}
+
+.wpm {
+  font-size: 32px;
+}
+
+.keystrokes {
+  font-size: 16px;
+}
+
+.correctresult {
+  color: #3ab049;
+}
+
+.incorrectresult {
+  color: #fe0000;
+}
+
+.resultcol.accuracycol {
+  background: #eee;
+}
+
 
 .inputbar {
   padding: 1rem;

@@ -8,13 +8,15 @@ import {
   spellCheck,
   tick,
   startTimer,
-  stopTimer,
-  showResults,
+  endTimer,
+  calcResults,
   resetTimer,
   selectTime,
   selectWords,
   selectWordIndex,
   selectStarted,
+  selectFinished,
+  selectStats
 } from './typingTestSlice.js';
 import Word from './../word/Word.js';
 import store from './../../app/store';
@@ -28,13 +30,18 @@ store.dispatch(resetTimer({time: raceTime / 1000}));
 export function TypingTest() {
   const words = useSelector(selectWords);
   const wordIndex = useSelector(selectWordIndex);
-  const started = useSelector(selectStarted);
   const timeLeft = useSelector(selectTime);
+  const started = useSelector(selectStarted);
+  const finished = useSelector(selectFinished);
+  const stats = useSelector(selectStats);
+
   const inputRef = useRef();
 
   const dispatch = useDispatch();
 
   const [inputVal, setInputVal] = useState("");
+
+  const [ticker, setTicker] = useState(null);
   // const [started, setStarted] = useState(false);
   // const [timer, setTimer] = useState();
 
@@ -99,6 +106,7 @@ export function TypingTest() {
   }
 
   const redo = () => {
+    clearInterval(ticker);
     inputRef.current.focus();
     setInputVal("");
     dispatch(resetTimer({ time: raceTime / 1000}));
@@ -107,20 +115,14 @@ export function TypingTest() {
 
   const timer = () => {
     let endTime = parseInt(new Date().getTime()) + raceTime;
-    // let interval = 1000;
-    // let interval = setTimeout(step, interval)
-    // console.log(endTime);
-    let step = setInterval(() => {
+    setTicker(setInterval(() => {
       let timeLeft = endTime - parseInt(new Date().getTime());
       dispatch(tick());
-      // console.log(timeLeft);
       if (timeLeft <= 0) {
-        clearInterval(step);
-        dispatch(stopTimer());
-        dispatch(showResults());
-        // console.log("done");
+        clearInterval(ticker);
+        dispatch(endTimer());
       }
-    }, 1000)
+    }, 1000));
   }
 
   // int
@@ -151,11 +153,38 @@ export function TypingTest() {
     <div className={styles.typingcontainer}>
       <div>
         <div className={styles.wordcontainer}>
-          <div className={styles.wordarea}>
-            <div className={styles.words}>
-                {wordObject}
-            </div>
-          </div>
+          {!finished
+            ? <div className={styles.wordarea}>
+                <div className={styles.words}>
+                    {wordObject}
+                </div>
+              </div>
+            : <div className={styles.resultarea}>
+                <div className={styles.results}>
+                  <div className={styles.resultcol} aria-label="Words per minute">
+                    <div className={styles.wpm}>
+                      {stats.wpm} WPM
+                    </div>
+                  </div>
+                  <div className={styles.resultcol}>
+                    <div className={styles.accuracy}>
+                      {`${stats.accuracy}% accuracy`}
+                    </div>
+                  </div>
+                  <div className={styles.resultcol}>
+                    <div className={styles.keystrokes}>
+                      <span className={styles.correctresult}>{stats.keystrokes.correct}</span> | <span className={styles.incorrectresult}>{stats.keystrokes.incorrect}</span> keystrokes
+                    </div>
+                  </div>
+                  <div className={styles.resultcol}>
+                    <div className={styles.wordresult}>
+                      <span className={styles.correctresult}>{stats.words.correct}</span> | <span className={styles.incorrectresult}>{stats.words.incorrect}</span> words
+                    </div>
+                  </div>
+                </div>
+              </div>
+          }
+
         </div>
         <div className={styles.inputbar}>
           <input
@@ -167,6 +196,7 @@ export function TypingTest() {
             autoCorrect="off"
             autoCapitalize="off"
             spellCheck="false"
+            aria-label="Typing input"
             ref={inputRef}
           />
           <span className={styles.toolbar}>
