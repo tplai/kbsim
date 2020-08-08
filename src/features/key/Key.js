@@ -24,8 +24,7 @@ const Key = ({className, legend, sublegend, width, height, x, y, keytopcolor, ke
         top: y * keysize + keysize / 18,
         width: width * keysize - keysize * 2 / 9,
         height: height * keysize - keysize * 2 / 9,
-        backgroundColor: keytopcolor,
-        display: pressed ? 'none' : ''
+        backgroundColor: pressed ? keybordercolor : keytopcolor,
       }}
     />
     <div
