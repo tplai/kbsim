@@ -9,11 +9,11 @@ import { mxblack } from './mxblack'
 import { topre } from './topre.js';
 
 export const keySounds = [
-  holypanda,
-  inkblack,
-  inkred,
   cream,
   mxblack,
+  inkblack,
+  inkred,
+  holypanda,
   boxnavy,
   buckling,
   alpsblue,
