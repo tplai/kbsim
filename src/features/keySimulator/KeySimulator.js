@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { Howl, Howler } from 'howler';
 import {
@@ -40,6 +40,11 @@ export function KeySimulator() {
 
   const dispatch = useDispatch();
 
+  const keycontainer = useRef();
+  const switchselect = useRef();
+  const layoutselect = useRef();
+  const caseselect = useRef();
+
   const [muted, setMute] = useState(false);
   const [kleValue, setKleValue] = useState();
   // set intial switch to first keysound
@@ -60,7 +65,21 @@ export function KeySimulator() {
 
   const handleSwitchChange = (e) => {
     setSwitchValue(e.target.value)
+    switchselect.current.blur();
+    keycontainer.current.focus();
     toast.show( `Switch sound changed to ${keySounds[e.target.value].caption} ✔️`, { timeout: 3000, pause: false, delay: 0, position: 'bottom-center' });
+  }
+
+  const handleLayoutChange = (e) => {
+    dispatch(parseKLE(keyPresets[e.target.value].kle));
+    layoutselect.current.blur();
+    keycontainer.current.focus();
+  }
+
+  const handleCaseChange = (e) => {
+    dispatch(setKeyboardColor(keyboardColors[e.target.value].background))
+    caseselect.current.blur();
+    keycontainer.current.focus();
   }
 
   const toggleMute = () => {
@@ -210,6 +229,7 @@ export function KeySimulator() {
         className={styles.keycontainer}
         onKeyDown={handleKeyDown}
         onKeyUp={handleKeyUp}
+        ref={keycontainer}
         tabIndex="0"
       >
         <TypingTest/>
@@ -219,6 +239,7 @@ export function KeySimulator() {
             <div className={styles.selectcol}>
               <select
                 className={styles.dropdown}
+                ref={switchselect}
                 aria-label="Switch Type"
                 onChange={handleSwitchChange}
                 defaultValue="0"
@@ -232,8 +253,9 @@ export function KeySimulator() {
             <div className={styles.selectcol}>
               <select
                 className={styles.dropdown}
+                ref={layoutselect}
                 aria-label="Keyboard Layout"
-                onChange={e => dispatch(parseKLE(keyPresets[e.target.value].kle))}
+                onChange={handleLayoutChange}
                 defaultValue="0"
               >
                 {keyPresets.map((preset, index) => {
@@ -244,8 +266,9 @@ export function KeySimulator() {
             <div className={styles.selectcol}>
               <select
                 className={styles.dropdown}
+                ref={caseselect}
                 aria-label="Case Color"
-                onChange={e => dispatch(setKeyboardColor(keyboardColors[e.target.value].background))}
+                onChange={handleCaseChange}
                 defaultValue="gray"
               >
                 {keyboardColors.map((color, index) => {
