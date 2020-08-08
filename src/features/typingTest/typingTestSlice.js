@@ -28,6 +28,7 @@ export const typingTestSlice = createSlice({
     index: 0,
   },
   reducers: {
+    // pick 30 words from the wordlist and initialize data for word objects
     generateWords: (state) => {
       // reset existing words
       if (state.index < state.words.length) {
@@ -50,12 +51,15 @@ export const typingTestSlice = createSlice({
       // randomwords[0].ref = state.wordRef;
       state.words = randomwords;
     },
+    // set the highlight to the next word
+    // also removes the ref of the old word and creates a new ref for the newly selected word
     incrementWord: (state) => {
       if (state.index < state.words.length - 1) {
         state.words[state.index].focused = false;
         state.words[++state.index].focused = true;
       }
     },
+    // remove the words in the completed word and pick 15 new words
     shiftWords: (state) => {
       if (state.index > 0) {
         state.words.splice(0, state.index);
@@ -73,6 +77,7 @@ export const typingTestSlice = createSlice({
       }
       state.words = [...state.words, ...randomwords];
     },
+    // check if a word is correct or not and apply the appropriate styles
     classifyWord: (state, action) => {
       if (action.payload.input === state.words[action.payload.index].text) {
         state.words[action.payload.index].status = "correct";
@@ -87,6 +92,7 @@ export const typingTestSlice = createSlice({
         state.stats.keystrokes.incorrect++;
       }
     },
+    // check if a user is typing the current word correctly and apply appropriate stlyes
     spellCheck: (state, action) => {
       // console.log(action.payload);
       if (action.payload.input) {
@@ -101,7 +107,6 @@ export const typingTestSlice = createSlice({
           }
         }
         else {
-          // console.log("yep");
           state.words[state.index].status = "incorrect";
         }
       }
@@ -127,7 +132,6 @@ export const typingTestSlice = createSlice({
     resetTimer: (state, action) => {
       state.started = false;
       state.finished = false;
-      // sta
       state.time = action.payload.time;
       state.stats = {
         wpm: 0,
@@ -135,23 +139,13 @@ export const typingTestSlice = createSlice({
           correct: 0,
           incorrect: 0
         },
-        accuracy: "",
+        accuracy: 0,
         words: {
           correct: 0,
           incorrect: 0,
         }
       };
-    },
-
-    clearHighlight: (state) => {
-      state.started = false;
-      // console.log(state.words.length);
-      if (state.index < state.words.length) {
-        state.words[state.index].focused = false;
-      }
-      state.words[state.index].status = "default";
-      // console.log("XD");
-    },
+    }
   },
 });
 

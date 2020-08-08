@@ -21,11 +21,9 @@ export const keySimulatorSlice = createSlice({
     highlight: {},
   },
   reducers: {
+    // takes an kle layout input and updates the state with layout, keylocations, and style
+    // changes the highlight to red if there is incorrect formatting in the kle layout
     parseKLE: (state, action) => {
-      // reset state
-      // state.keyboardStyle = {..keyboardStyle};
-      // state.pressedKeys = [];
-
       if (!action.payload) {
         state.highlight = {borderColor:"#ff0033"};
         return;
@@ -37,7 +35,6 @@ export const keySimulatorSlice = createSlice({
         return;
       }
       // split the rows into an array
-
       for (let i in inputLayout) {
         // remove empty lines
         if (inputLayout[i] == "") {
@@ -68,6 +65,7 @@ export const keySimulatorSlice = createSlice({
         pressed: false,
       }
 
+      // format each switch
       for (let x = 0; x < inputLayout.length; x++) {
         let formatNextKey = false;
         // reset formatting and increment y coordinate
@@ -105,6 +103,7 @@ export const keySimulatorSlice = createSlice({
               pressed: false,
             }
           }
+          // if the current item is formatting, parse the comma separated values
           if (inputLayout[x][y].charAt(0) === "{" &&
               inputLayout[x][y].charAt(inputLayout[x][y].length - 1) === "}") {
             // remove whitespace and trim the brackets
@@ -116,18 +115,23 @@ export const keySimulatorSlice = createSlice({
                 let formatTuple = formatInfo[format].split(":");
                 if (formatTuple.length === 2) {
                   switch (formatTuple[0]) {
+                    // width of key, only applies to next key
                     case 'w':
                       keyInfo.width = parseFloat(formatTuple[1]);
                       break;
+                    // height of key, only applies to next key
                     case 'h':
                       keyInfo.height = parseFloat(formatTuple[1]);
                       break;
+                    // x padding, applies to all consequent keys
                     case 'x':
                       keyInfo.x += parseFloat(formatTuple[1]);
                       break;
+                    // y padding, applies to all consequent keys
                     case 'y':
                       keyInfo.y += parseFloat(formatTuple[1]);
                       break;
+                    // key color, applies to all consequent keys
                     case 'c':
                       // trim quotes
                       if (formatTuple[1].charAt(0) === '"' &&
@@ -137,6 +141,7 @@ export const keySimulatorSlice = createSlice({
                       keyInfo.keybordercolor = formatTuple[1];
                       keyInfo.keytopcolor = shadeColor(formatTuple[1], 10);
                       break;
+                    // text color, applies to all consequent keys
                     case 't':
                       // trim quotes
                       if (formatTuple[1].charAt(0) === '"' &&
@@ -145,6 +150,7 @@ export const keySimulatorSlice = createSlice({
                       }
                       keyInfo.textcolor = formatTuple[1];
                       break;
+                    // no default - not all formatting cases from KLE are supported yet
                   }
                 }
                 else {
@@ -155,6 +161,7 @@ export const keySimulatorSlice = createSlice({
             }
             formatNextKey = true;
           }
+          // if the current item is a key, parse the legends
           else if (inputLayout[x][y].charAt(0) === '"' &&
                    inputLayout[x][y].charAt(inputLayout[x][y].length - 1) === '"') {
             // trim quotes
@@ -162,6 +169,7 @@ export const keySimulatorSlice = createSlice({
             // split into by newline
             legends = legends.split("\\n");
             // there is a new line character indicating that there is a sublegend
+            // parseEscapedChars: \" -> "
             if (legends.length === 2) {
               keyInfo.sublegend = parseEscapedChars(legends[1]);
             }
@@ -169,7 +177,6 @@ export const keySimulatorSlice = createSlice({
 
             formatNextKey = false;
             keycount += 1;
-            // console.log(keyInfo.keycolor);
             // change the value of the key string into a key object
             inputLayout[x][y] = keyInfo;
           }
@@ -192,10 +199,10 @@ export const keySimulatorSlice = createSlice({
 
       let keyboardWidth = 0;
       let keyboardHeight = 0;
+      // KLE has been successfully parsed if this line has been reached, update keylocations, keyboard style
       // reset key locations
       state.keyLocations = {};
 
-      // console.log(state.pressedKeys);
       for (let x in inputLayout) {
         for (let y in inputLayout[x]) {
           // get dimensions of keyboard
@@ -233,7 +240,7 @@ export const keySimulatorSlice = createSlice({
       }
 
 
-      // mostly arbitrary values
+      // mostly arbitrary values for "aesthetic" purposes
       let borderWidth = 0.25;
       let borderHeight = 0.25;
       state.keyboardStyle = {
@@ -250,17 +257,16 @@ export const keySimulatorSlice = createSlice({
 
       // successfully parsed layout, update state with the new layout
       state.layout = inputLayout;
-      // state.layout = [];
-      // state.highlight = {borderColor:"#ff0033"};
+      // state.highlight = {borderColor:""};
     },
+    // manage pressed keys here so audio doesn't continuously fire when a key is held down
     keyDown: (state, action) => {
       state.layout[action.payload.x][action.payload.y].pressed = true;
-      // console.log(action.payload.keycode);
-      // if the key is not pressed, add it to the collection of pressed keys
       if (!state.pressedKeys.includes(action.payload.keycode)) {
         state.pressedKeys.push(action.payload.keycode);
       }
     },
+    // remove a key from the pressed keys collection
     keyUp: (state, action) => {
       state.layout[action.payload.x][action.payload.y].pressed = false;
       let keyIndex = state.pressedKeys.indexOf(action.payload.keycode);
@@ -268,24 +274,21 @@ export const keySimulatorSlice = createSlice({
         state.pressedKeys.splice(keyIndex, 1);
       }
     },
+    // updates the color of the keyboard
     setKeyboardColor: (state, action) => {
       state.keyboardStyle = {
         ...state.keyboardStyle,
         background: action.payload
       }
-    },
-    highlightColor: (state, action) => {
-      state.highlight = action.payload;
-    },
+    }
   },
 });
 
-export const { parseKLE, keyDown, keyUp, setKeyboardColor, highlightColor } = keySimulatorSlice.actions;
+export const { parseKLE, keyDown, keyUp, setKeyboardColor } = keySimulatorSlice.actions;
 
 // state exports
 export const selectLayout = state => state.keySimulator.layout;
 export const selectLocations = state => state.keySimulator.keyLocations;
 export const selectKeyboardStyle = state => state.keySimulator.keyboardStyle;
-export const selectHighlight = state => state.keySimulator.highlight;
 
 export default keySimulatorSlice.reducer;

@@ -103,6 +103,7 @@ export function TypingTest() {
     // }
   }
 
+  // stop the current timer and reset the time and words
   const redo = () => {
     clearInterval(ticker);
     inputRef.current.focus();
@@ -111,6 +112,7 @@ export function TypingTest() {
     dispatch(generateWords());
   }
 
+  // countdown
   const timer = () => {
     let endTime = parseInt(new Date().getTime()) + raceTime;
     setTicker(setInterval(() => {
@@ -123,7 +125,6 @@ export function TypingTest() {
     }, 1000));
   }
 
-  // int
   const parseSecond = (time) => {
     // console.log(time);
     let seconds = time % 60;
