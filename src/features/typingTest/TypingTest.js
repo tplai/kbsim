@@ -7,27 +7,36 @@ import {
   classifyWord,
   spellCheck,
   tick,
-  redo,
+  startTimer,
+  stopTimer,
+  showResults,
+  resetTimer,
   selectTime,
   selectWords,
   selectWordIndex,
+  selectStarted,
 } from './typingTestSlice.js';
 import Word from './../word/Word.js';
 import store from './../../app/store';
 import styles from './TypingTest.module.css';
 
+const raceTime = 10000;
+
 store.dispatch(generateWords());
+store.dispatch(resetTimer({time: raceTime / 1000}));
 
 export function TypingTest() {
   const words = useSelector(selectWords);
-  const timeLeft = useSelector(selectTime);
   const wordIndex = useSelector(selectWordIndex);
+  const started = useSelector(selectStarted);
+  const timeLeft = useSelector(selectTime);
   const inputRef = useRef();
 
   const dispatch = useDispatch();
 
   const [inputVal, setInputVal] = useState("");
-  // const [startRace, setStartRace] = useState(false);
+  // const [started, setStarted] = useState(false);
+  // const [timer, setTimer] = useState();
 
   let wordObject = words.map((word, index) => {
     return(
@@ -43,50 +52,99 @@ export function TypingTest() {
 
 
   // subscribe to inputVal - execute this if inputVal changes
-  // shift the words when the first row is finished
+  // shift the words when the first row is finished and spellcheck
   useEffect(() => {
-    if (wordObject[wordIndex].ref && wordObject[wordIndex].ref.current.offsetTop > 0) {
-      dispatch(shiftWords());
+    if (timeLeft > 0) {
+      if (wordObject[wordIndex].ref && wordObject[wordIndex].ref.current.offsetTop > 0) {
+        dispatch(shiftWords());
+      }
+      dispatch(spellCheck({input: inputVal}));
     }
-    dispatch(spellCheck({input: inputVal}));
   }, [inputVal]);
 
-  // intended behavior: go to next word when space is pressed
+  // intended behavior: go to next word when space is pressed & time is left
   // if the cursor is in the middle of the word, still clear the input and go next word
+  // additionally, start the timer if it's not space and it hasn't already
   const handleKeyPress =  (e) => {
-    if (e.key === ' ') {
-      if (inputVal) {
-        // inputVal is one character behind, so we don't have to trim inputVal
-        dispatch(classifyWord({index: wordIndex, input: inputVal}));
-        dispatch(incrementWord());
+    if (timeLeft > 0) {
+      if (e.key === ' ') {
+        if (inputVal) {
+          // inputVal is one character behind, so we don't have to trim inputVal
+          dispatch(classifyWord({index: wordIndex, input: inputVal}));
+          dispatch(incrementWord());
+        }
+        // console.log("whos");
+        setInputVal("");
       }
-      setInputVal("");
+      else if (!started) {
+        // console.log("starting timer");
+        dispatch(startTimer());
+        timer();
+      }
     }
+    // console.log(started);
   }
 
   // binds the inputVal hook to the input
   const handleChange = (e) => {
-    setInputVal(e.target.value.trim());
+    let input = e.target.value;
+    if (timeLeft > 0) {
+      input = input.trim();
+    }
+    setInputVal(input);
+    // }
+    // else {
+    //   setInputVal(e.target.value);
+    // }
   }
 
   const redo = () => {
     inputRef.current.focus();
     setInputVal("");
+    dispatch(resetTimer({ time: raceTime / 1000}));
     dispatch(generateWords());
+  }
+
+  const timer = () => {
+    let endTime = parseInt(new Date().getTime()) + raceTime;
+    // let interval = 1000;
+    // let interval = setTimeout(step, interval)
+    // console.log(endTime);
+    let step = setInterval(() => {
+      let timeLeft = endTime - parseInt(new Date().getTime());
+      dispatch(tick());
+      // console.log(timeLeft);
+      if (timeLeft <= 0) {
+        clearInterval(step);
+        dispatch(stopTimer());
+        dispatch(showResults());
+        // console.log("done");
+      }
+    }, 1000)
   }
 
   // int
   const parseSecond = (time) => {
+    // console.log(time);
     let seconds = time % 60;
     if (seconds >= 10) {
-      return toString(seconds);
+      return seconds;
     }
-    else {
+    else if (seconds < 10 && seconds > 0){
       // if (toString(seconds).length == 1) {
         // console.log(`0${seconds}`);
         return `0${seconds}`;
       // }
     }
+    else {
+      // console.log("XD");
+      return `00`;
+    }
+  }
+
+  const parseMinute = (time) => {
+    // console.log(time - (time));
+    return (time - (time % 60)) / 60;
   }
 
   return (
@@ -112,7 +170,7 @@ export function TypingTest() {
             ref={inputRef}
           />
           <span className={styles.toolbar}>
-            <span className={styles.time}>{timeLeft ? timeLeft / 60 : "x"}:{timeLeft ? parseSecond(timeLeft) : "xx"}</span>
+            <span className={styles.time}>{parseMinute(timeLeft)}:{parseSecond(timeLeft)}</span>
             <button className={styles.redo} onClick={() => redo()}>Redo</button>
           </span>
         </div>
