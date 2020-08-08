@@ -20,8 +20,9 @@ import Key from './../key/Key.js';
 import store from './../../app/store';
 import styles from './KeySimulator.module.css';
 
-// initially render the keys
+// initially render a keyboard
 store.dispatch(parseKLE(keyPresets[0].kle));
+// store.dispatch(parseKLE(keyPresets[Math.floor(Math.random() * (keyPresets.length + 1))].kle));
 // intially render the keyboard color
 store.dispatch(setKeyboardColor(keyboardColors[0].background));
 
