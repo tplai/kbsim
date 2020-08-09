@@ -2,12 +2,12 @@ export const keyPresets = [
     {
       key: "9009_wkltkl",
       caption: "9009 WKL TKL",
-      kle: `[{c:"#bcb59f",t:"#383537"},"Esc",{x:1,c:"#ddd7cb"},"F1","F2","F3","F4",{x:0.5,c:"#bcb59f"},"F5","F6","F7","F8",{x:0.5,c:"#ddd7cb"},"F9","F10","F11","F12",{x:0.25,c:"#bcb59f"},"PrtSc","Scroll Lock","Pause\\nBreak"],
-            [{y:0.25,c:"#ddd7cb"},"~\\n\`","!\\n1","@\\n2","#\\n3","$\\n4","%\\n5","^\\n6","&\\n7","*\\n8","(\\n9",")\\n0","_\\n-","+\\n=",{c:"#bcb59f",w:2},"Backspace",{x:0.25},"Insert","Home","PgUp"],
-            [{w:1.5},"Tab",{c:"#ddd7cb"},"Q","W","E","R","T","Y","U","I","O","P","{\\n[","}\\n]",{w:1.5},"|\\n\\\\",{x:0.25,c:"#bcb59f"},"Delete","End","PgDn"],
+      kle: `[{c:"#bcb59f",t:"#383537"},"Esc",{x:1,c:"#ddd7cb"},"F1","F2","F3","F4",{x:0.5,c:"#bcb59f"},"F5","F6","F7","F8",{x:0.5,c:"#ddd7cb"},"F9","F10","F11","F12",{x:0.2,c:"#bcb59f"},"PrtSc","Scroll Lock","Pause\\nBreak"],
+            [{y:0.19,c:"#ddd7cb"},"~\\n\`","!\\n1","@\\n2","#\\n3","$\\n4","%\\n5","^\\n6","&\\n7","*\\n8","(\\n9",")\\n0","_\\n-","+\\n=",{c:"#bcb59f",w:2},"Backspace",{x:0.2},"Insert","Home","PgUp"],
+            [{w:1.5},"Tab",{c:"#ddd7cb"},"Q","W","E","R","T","Y","U","I","O","P","{\\n[","}\\n]",{w:1.5},"|\\n\\\\",{x:0.2,c:"#bcb59f"},"Delete","End","PgDn"],
             [{w:1.75},"Caps Lock",{c:"#ddd7cb"},"A","S","D","F","G","H","J","K","L",":\\n;","\\"\\n'",{c:"#bcb59f",w:2.25},"Enter"],
-            [{w:2.25},"Shift",{c:"#ddd7cb"},"Z","X","C","V","B","N","M","<\\n,",">\\n.","?\\n/",{c:"#bcb59f",w:2.75},"Shift",{x:1.25},"↑"],
-            [{w:1.5},"Ctrl",{x:1,w:1.5},"Alt",{c:"#ddd7cb",a:7,w:7},"",{c:"#bcb59f",a:4,w:1.5},"Alt",{x:1,w:1.5},"Ctrl",{x:0.25},"←","↓","→"]`
+            [{w:2.25},"Shift",{c:"#ddd7cb"},"Z","X","C","V","B","N","M","<\\n,",">\\n.","?\\n/",{c:"#bcb59f",w:2.75},"Shift",{x:1.2},"↑"],
+            [{w:1.5},"Ctrl",{x:1,w:1.5},"Alt",{c:"#ddd7cb",a:7,w:7},"",{c:"#bcb59f",a:4,w:1.5},"Alt",{x:1,w:1.5},"Ctrl",{x:0.2},"←","↓","→"]`
     },
     {
       key: "oblivion_fullsize",
