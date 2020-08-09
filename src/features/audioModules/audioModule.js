@@ -14,11 +14,11 @@ import { turquoise } from './turquoise';
 
 export const keySounds = [
   cream,
+  alpaca,
+  turquoise,
   inkblack,
   inkred,
-  alpaca,
   holypanda,
-  turquoise,
   mxblack,
   mxbrown,
   mxblue,
