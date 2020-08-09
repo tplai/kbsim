@@ -1,19 +1,27 @@
-import { alpsblue } from './alpsblue.js';
-import { boxnavy } from './boxnavy.js';
-import { buckling } from './buckling.js';
-import { cream } from './cream.js';
-import { holypanda } from './holypanda.js';
-import { inkblack } from './inkblack.js';
-import { inkred } from './inkred.js';
-import { mxblack } from './mxblack'
-import { topre } from './topre.js';
+import { alpaca } from './alpaca';
+import { alpsblue } from './alpsblue';
+import { boxnavy } from './boxnavy';
+import { buckling } from './buckling';
+import { cream } from './cream';
+import { holypanda } from './holypanda';
+import { inkblack } from './inkblack';
+import { inkred } from './inkred';
+import { mxblack } from './mxblack';
+import { mxblue } from './mxblue';
+import { mxbrown } from './mxbrown';
+import { topre } from './topre';
+import { turquoise } from './turquoise';
 
 export const keySounds = [
   cream,
-  mxblack,
   inkblack,
   inkred,
+  alpaca,
   holypanda,
+  turquoise,
+  mxblack,
+  mxbrown,
+  mxblue,
   boxnavy,
   buckling,
   alpsblue,
