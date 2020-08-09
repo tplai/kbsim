@@ -1,5 +1,15 @@
 export const keyPresets = [
     {
+      key: "olivia_wkl75",
+      caption: "Olivia WKL 75% ",
+      kle: `[{c:"#f1beb0",t:"#2b2b2b"},"Esc",{x:0.5,c:"#e1dbd1"},"F1","F2","F3","F4",{x:0.5,c:"#2b2b2b",t:"#f1beb0"},"F5","F6","F7","F8",{x:0.5,c:"#e1dbd1",t:"#2b2b2b"},"F9","F10","F11","F12",{x:0.5,c:"#2b2b2b",t:"#f1beb0"},"Delete"],
+      [{y:0.25},"~\\n\`",{c:"#e1dbd1",t:"#2b2b2b"},"!\\n1","@\\n2","#\\n3","$\\n4","%\\n5","^\\n6","&\\n7","*\\n8","(\\n9",")\\n0","_\\n-","+\\n=",{c:"#2b2b2b",t:"#f1beb0",w:2},"Backspace","Home"],
+      [{w:1.5},"Tab",{c:"#e1dbd1",t:"#2b2b2b"},"Q","W","E","R","T","Y","U","I","O","P","{\\n[","}\\n]",{c:"#2b2b2b",t:"#f1beb0",w:1.5},"|\\n\\\\","PgUp"],
+      [{w:1.75},"Caps Lock",{c:"#e1dbd1",t:"#2b2b2b"},"A","S","D",{n:true},"F","G","H",{n:true},"J","K","L",":\\n;","\\\"\\n'",{c:"#2b2b2b",t:"#f1beb0",w:2.25},"Enter","PgDn"],
+      [{w:2.25},"Shift",{c:"#e1dbd1",t:"#2b2b2b"},"Z","X","C","V","B","N","M","<\\n,",">\\n.","?\\n/",{c:"#2b2b2b",t:"#f1beb0",w:1.75},"Shift",{c:"#f1beb0",t:"#2b2b2b"},"↑",{c:"#2b2b2b",t:"#f1beb0"},"End"],
+      [{w:1.5},"Ctrl",{x:0.75,w:1.55},"Alt",{x:-0.05,c:"#f1beb0",t:"#000000",a:7,w:7},"",{c:"#2b2b2b",t:"#f1beb0",a:4,w:1.5},"Win",{x:0.75,c:"#f1beb0",t:"#2b2b2b"},"←","↓","→"]`,
+    },
+    {
       key: "modo_wkltkl",
       caption: "MoDo WKL TKL",
       kle: `[{c:"#d36a7b",t:"#e8e8e8"},"Esc",{x:1,c:"#82878d"},"F1","F2","F3","F4",{x:0.5,c:"#515459"},"F5","F6","F7","F8",{x:0.5,c:"#82878d"},"F9","F10","F11","F12",{x:0.25,c:"#515459"},"PrtSc","Scroll Lock","Pause\\nBreak"],
@@ -60,16 +70,6 @@ export const keyPresets = [
             [{a:4,w:1.75},"Caps Lock",{c:"#2f1c75",t:"#00a2b0"},"A","S","D","F","G","H","J","K","L",":\\n;","\\"\\n'",{c:"#26204b",t:"#ce234e",a:6,w:2.25},"Enter","Page Down"],
             [{w:2.25},"Shift",{c:"#2f1c75",t:"#00a2b0",a:4},"Z","X","C","V","B","N","M","<\\n,",">\\n.","?\\n/",{c:"#26204b",t:"#ce234e",a:6,w:1.75},"Shift",{c:"#ce234e",t:"#26204b",a:7},"↑",{c:"#26204b",t:"#ce234e",a:6},"End"],
             [{w:1.25},"Ctrl",{w:1.25},"Win",{w:1.25},"Alt",{c:"#ce234e",t:"#26204b",a:7,w:6.25},"",{c:"#26204b",t:"#ce234e",a:6},"Alt","Fn","Ctrl",{c:"#ce234e",t:"#26204b",a:7},"←","↓","→"]`,
-    },
-    {
-      key: "olivia_wkl75",
-      caption: "Olivia WKL 75% ",
-      kle: `[{c:"#f1beb0",t:"#2b2b2b"},"Esc",{x:0.5,c:"#e1dbd1"},"F1","F2","F3","F4",{x:0.5,c:"#2b2b2b",t:"#f1beb0"},"F5","F6","F7","F8",{x:0.5,c:"#e1dbd1",t:"#2b2b2b"},"F9","F10","F11","F12",{x:0.5,c:"#2b2b2b",t:"#f1beb0"},"Delete"],
-            [{y:0.25},"~\\n\`",{c:"#e1dbd1",t:"#2b2b2b"},"!\\n1","@\\n2","#\\n3","$\\n4","%\\n5","^\\n6","&\\n7","*\\n8","(\\n9",")\\n0","_\\n-","+\\n=",{c:"#2b2b2b",t:"#f1beb0",w:2},"Backspace","Home"],
-            [{w:1.5},"Tab",{c:"#e1dbd1",t:"#2b2b2b"},"Q","W","E","R","T","Y","U","I","O","P","{\\n[","}\\n]",{c:"#2b2b2b",t:"#f1beb0",w:1.5},"|\\n\\\\","PgUp"],
-            [{w:1.75},"Caps Lock",{c:"#e1dbd1",t:"#2b2b2b"},"A","S","D",{n:true},"F","G","H",{n:true},"J","K","L",":\\n;","\\\"\\n'",{c:"#2b2b2b",t:"#f1beb0",w:2.25},"Enter","PgDn"],
-            [{w:2.25},"Shift",{c:"#e1dbd1",t:"#2b2b2b"},"Z","X","C","V","B","N","M","<\\n,",">\\n.","?\\n/",{c:"#2b2b2b",t:"#f1beb0",w:1.75},"Shift",{c:"#f1beb0",t:"#2b2b2b"},"↑",{c:"#2b2b2b",t:"#f1beb0"},"End"],
-            [{w:1.5},"Ctrl",{x:0.75,w:1.55},"Alt",{x:-0.05,c:"#f1beb0",t:"#000000",a:7,w:7},"",{c:"#2b2b2b",t:"#f1beb0",a:4,w:1.5},"Win",{x:0.75,c:"#f1beb0",t:"#2b2b2b"},"←","↓","→"]`,
     },
     {
       key: "cafe_65",
