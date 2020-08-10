@@ -12,7 +12,7 @@ export const keyPresets = [
     {
       key: "oblivion_fullsize",
       caption: "Oblivion Fullsize",
-      kle: `[{c:"#4d4d4d",t:"#d64827"},"Esc",{x:1,c:"#cccccc",t:"#000000"},"F1","F2","F3","F4",{x:0.5,c:"#4d4d4d",t:"#b7b2a6"},"F5","F6","F7","F8",{x:0.5,c:"#cccccc",t:"#000000"},"F9","F10","F11","F12",{x:0.25,c:"#4d4d4d",t:"#b7b2a6"},"PrtSc","Scroll Lock","Pause\\nBreak"],
+      kle: `[{c:"#4d4d4d",t:"#d64827"},"Esc",{x:1,c:"#d7d6d2",t:"#000000"},"F1","F2","F3","F4",{x:0.5,c:"#4d4d4d",t:"#b7b2a6"},"F5","F6","F7","F8",{x:0.5,c:"#d7d6d2",t:"#000000"},"F9","F10","F11","F12",{x:0.25,c:"#4d4d4d",t:"#b7b2a6"},"PrtSc","Scroll Lock","Pause\\nBreak"],
             [{y:0.25,c:"#d7d6d2",t:"#4d4d4d"},"~\\n\`","!\\n1","@\\n2","#\\n3","$\\n4","%\\n5","^\\n6","&\\n7","*\\n8","(\\n9",")\\n0","_\\n-","+\\n=",{c:"#4d4d4d",t:"#9b91b5",w:2},"Backspace",{x:0.25,t:"#b7b2a6"},"Insert","Home","PgUp",{x:0.25,t:"#d64827"},"Num Lock",{t:"#b7b2a6"},"/","*","-"],
             [{t:"#9b91b5",w:1.5},"Tab",{c:"#d7d6d2",t:"#4d4d4d"},"Q","W","E","R","T","Y","U","I","O","P","{\\n[","}\\n]",{w:1.5},"|\\n\\\\",{x:0.25,c:"#4d4d4d",t:"#b7b2a6"},"Delete","End","PgDn",{x:0.25,c:"#d7d6d2",t:"#4d4d4d"},"7\\nHome","8\\n↑","9\\nPgUp",{c:"#4d4d4d",t:"#b7b2a6",h:2},"+"],
             [{t:"#8ead53",w:1.75},"Caps Lock",{c:"#d7d6d2",t:"#4d4d4d"},"A","S","D","F","G","H","J","K","L",":\\n;","\\"\\n'",{c:"#4d4d4d",t:"#8ead53",w:2.25},"Enter",{x:3.5,c:"#d7d6d2",t:"#4d4d4d"},"4\\n←","5","6\\n→"],
