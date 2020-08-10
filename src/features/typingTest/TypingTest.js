@@ -27,7 +27,7 @@ const raceTime = 60000;
 store.dispatch(generateWords());
 store.dispatch(resetTimer({time: raceTime / 1000}));
 
-export function TypingTest() {
+function TypingTest() {
   const words = useSelector(selectWords);
   const wordIndex = useSelector(selectWordIndex);
   const timeLeft = useSelector(selectTime);
@@ -145,7 +145,12 @@ export function TypingTest() {
 
   const parseMinute = (time) => {
     // console.log(time - (time));
-    return (time - (time % 60)) / 60;
+    if (time > 0) {
+      return (time - (time % 60)) / 60;
+    }
+    else {
+      return "0";
+    }
   }
 
   return (
@@ -207,3 +212,5 @@ export function TypingTest() {
     </div>
   );
 }
+
+export default TypingTest;

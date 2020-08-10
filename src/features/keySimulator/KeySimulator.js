@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef } from 'react';
+import React, { useState, useEffect, useRef, Suspense } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { Howl, Howler } from 'howler';
 import {
@@ -17,10 +17,10 @@ import { keyPresets } from './../keyModules/keyPresets.js'
 import { keyboardColors } from './../keyModules/keyboardColors.js'
 import { keyCodeOf } from './../keyModules/parseModules.js'
 import { ToastContainer, toast } from './../toast/toast.js';
-import { TypingTest } from './../typingTest/TypingTest.js';
 import Key from './../key/Key.js';
 import store from './../../app/store';
 import styles from './KeySimulator.module.css';
+const TypingTest = React.lazy(() => import('./../typingTest/TypingTest'));
 
 // initially render a keyboard
 store.dispatch(parseKLE(keyPresets[0].kle));
@@ -28,7 +28,7 @@ store.dispatch(parseKLE(keyPresets[0].kle));
 // intially render the keyboard color
 store.dispatch(setKeyboardColor(keyboardColors[0].background));
 
-export function KeySimulator() {
+function KeySimulator() {
   // Layout array of keyboard
   const layout = useSelector(selectLayout);
   // x y indices of legends
@@ -232,7 +232,9 @@ export function KeySimulator() {
         ref={keycontainer}
         tabIndex="0"
       >
-        <TypingTest/>
+        <Suspense fallback={<div className={styles.typingplaceholder}></div>}>
+          <TypingTest/>
+        </Suspense>
 
         <div className={styles.selectcontainer}>
           <div className={styles.selectarea}>
@@ -325,3 +327,5 @@ export function KeySimulator() {
     </div>
   );
 }
+
+export default KeySimulator;
