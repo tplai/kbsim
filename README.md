@@ -1,3 +1,3 @@
-Mechanical Keyboard Simulator
+Mechanical Keyboard Simulator - announcement in the works...
 
 Simulate holy pandas, gateron black inks, creams, mx blacks, box navy, and topre
