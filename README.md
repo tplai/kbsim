@@ -1,6 +1,6 @@
-# kbsim - Mechanical Keyboard Simulator
+# kbsim
 
-kbsim is a Mechanical Keyboard Simulator that simulates typing on a variety of custom keyswitches.
+Mechanical Keyboard Simulator is a web application that simulates typing on a variety of custom keyswitches.
 
 ## Setup
 To run this application locally, use:
