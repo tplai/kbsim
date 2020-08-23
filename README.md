@@ -1,3 +1,14 @@
-Mechanical Keyboard Simulator - announcement in the works...
+# kbsim - Mechanical Keyboard Simulator
 
-Simulate holy pandas, gateron black inks, creams, mx blacks, box navy, and topre
+kbsim is a Mechanical Keyboard Simulator that simulates typing on a variety of custom keyswitches.
+
+## Setup
+To run this application locally, use:
+
+```bash
+npm install
+npm start
+```
+
+## Contributing
+Pull requests are welcome, but please do create an issue to discuss any major changes.
