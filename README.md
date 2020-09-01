@@ -1,4 +1,4 @@
-# kbsim
+# kbsim - [kbs.im](https://kbs.im)
 
 Mechanical Keyboard Simulator is a web application that simulates typing on a variety of custom keyswitches.
 
