@@ -1,0 +1,44 @@
+.imgLoc {
+    margin-left: 30%;
+}
+
+.instagramText {
+    width: 110px;
+    display: block;
+    margin-top: 5px;
+    margin-left: 0px;
+}
+
+.flexImage {
+    display: flex;
+    background-color: white;
+    border-bottom-style: solid;
+    border-bottom-width: 1px;
+    border-bottom-color: lightgray;
+    padding-bottom: 2px;
+    padding-top: 10px;
+    margin-top: -10px;
+    width: 101%;
+    margin-left: -8px;
+}
+
+.exploreLink {
+    margin-left: 368px;
+    margin-right: 5px;
+    margin-top: 15px;
+    text-decoration: none;
+    font-weight: bold;
+    color: black;
+}
+
+.pipeChar {
+    margin-top: 15px;
+}
+
+.awdLink {
+    margin-left: 5px;
+    font-weight: bold;
+    margin-top: 15px;
+    text-decoration: none;
+    color: black;
+}
