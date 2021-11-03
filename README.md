@@ -35,7 +35,7 @@ npm install
 npm start
 ```
 
-## File structure
+## Project structure
     .
     ├── src                                           # Source files
     │   ├── app                                       # Redux store
