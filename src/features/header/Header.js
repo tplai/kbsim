@@ -1,17 +1,13 @@
 import React from 'react'
+import logosvg from './../../assets/images/logo.svg'
 import styles from './Header.module.css';
 
 const Header = () => (
-  <div className={styles.flexImage}>
-    ye
-</div>
+  <div className={styles.headerContainer}>
+    <div className={styles.logo}>
+      <img src={logosvg} className={styles.logosvg} height="32" width="32"/> kbsim
+    </div>
+  </div>
 )
-
-// <a className={styles.imgLoc} href="/">
-//     <img alt="instagramText" className={styles.instagramText} src=""/>
-// </a>
-// <a href="/explore/" className={styles.exploreLink}>explore</a>
-// <p className={styles.pipeChar}>|</p>
-// <a href="/" className={styles.awdLink}>{{loguser}}</a>
 
 export default Header

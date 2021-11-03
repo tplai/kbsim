@@ -1,4 +1,4 @@
-.imgLoc {
+/* .imgLoc {
     margin-left: 30%;
 }
 
@@ -41,4 +41,29 @@
     margin-top: 15px;
     text-decoration: none;
     color: black;
+} */
+
+.headerContainer {
+  min-height: 5vh;
+  display: flex;
+  text-align: center;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  font-family: roboto;
+}
+
+.logo {
+  font-weight: 500;
+  font-family: roboto;
+  /* font-stretch: condensed; */
+  font-size:2rem;
+}
+
+.logosvg {
+  vertical-align: text-top;
+}
+
+.header {
+  width: 1242px;
 }
