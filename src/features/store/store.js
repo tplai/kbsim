@@ -1,6 +1,6 @@
 import { configureStore } from '@reduxjs/toolkit';
-import keySimulatorReducer from '../features/keySimulator/keySimulatorSlice';
-import typingTestReducer from '../features/typingTest/typingTestSlice';
+import keySimulatorReducer from '../keySimulator/keySimulatorSlice';
+import typingTestReducer from '../typingTest/typingTestSlice';
 
 export default configureStore({
   reducer: {

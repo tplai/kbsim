@@ -19,13 +19,13 @@ import {
   selectStats
 } from './typingTestSlice.js';
 import Word from './../word/Word.js';
-import store from './../../app/store';
+import store from '../store/store';
 import styles from './TypingTest.module.css';
 
 const raceTime = 60000;
 
 store.dispatch(generateWords());
-store.dispatch(resetTimer({time: raceTime / 1000}));
+store.dispatch(resetTimer({ time: raceTime / 1000 }));
 
 function TypingTest() {
   const words = useSelector(selectWords);
@@ -44,7 +44,7 @@ function TypingTest() {
   const [ticker, setTicker] = useState(null);
 
   let wordObject = words.map((word, index) => {
-    return(
+    return (
       <Word
         key={index}
         focused={word.focused}
@@ -63,19 +63,19 @@ function TypingTest() {
       if (wordObject[wordIndex].ref && wordObject[wordIndex].ref.current.offsetTop > 0) {
         dispatch(shiftWords());
       }
-      dispatch(spellCheck({input: inputVal}));
+      dispatch(spellCheck({ input: inputVal }));
     }
   }, [inputVal]);
 
   // intended behavior: go to next word when space is pressed & time is left
   // if the cursor is in the middle of the word, still clear the input and go next word
   // additionally, start the timer if it's not space and it hasn't already
-  const handleKeyPress =  (e) => {
+  const handleKeyPress = (e) => {
     if (timeLeft > 0) {
       if (e.key === ' ') {
         if (inputVal) {
           // inputVal is one character behind, so we don't have to trim inputVal
-          dispatch(classifyWord({index: wordIndex, input: inputVal}));
+          dispatch(classifyWord({ index: wordIndex, input: inputVal }));
           dispatch(incrementWord());
         }
         // console.log("whos");
@@ -108,7 +108,7 @@ function TypingTest() {
     clearInterval(ticker);
     inputRef.current.focus();
     setInputVal("");
-    dispatch(resetTimer({ time: raceTime / 1000}));
+    dispatch(resetTimer({ time: raceTime / 1000 }));
     dispatch(generateWords());
   }
 
@@ -131,10 +131,10 @@ function TypingTest() {
     if (seconds >= 10) {
       return seconds;
     }
-    else if (seconds < 10 && seconds > 0){
+    else if (seconds < 10 && seconds > 0) {
       // if (toString(seconds).length == 1) {
-        // console.log(`0${seconds}`);
-        return `0${seconds}`;
+      // console.log(`0${seconds}`);
+      return `0${seconds}`;
       // }
     }
     else {
@@ -159,34 +159,34 @@ function TypingTest() {
         <div className={styles.wordcontainer}>
           {!finished
             ? <div className={styles.wordarea}>
-                <div className={styles.words}>
-                    {wordObject}
-                </div>
+              <div className={styles.words}>
+                {wordObject}
               </div>
+            </div>
             : <div className={styles.resultarea}>
-                <div className={styles.results}>
-                  <div className={styles.resultcol} aria-label="Words per minute">
-                    <div className={styles.wpm}>
-                      {stats.wpm} WPM
-                    </div>
+              <div className={styles.results}>
+                <div className={styles.resultcol} aria-label="Words per minute">
+                  <div className={styles.wpm}>
+                    {stats.wpm} WPM
                   </div>
-                  <div className={styles.resultcol}>
-                    <div className={styles.accuracy}>
-                      {`${stats.accuracy}% accuracy`}
-                    </div>
+                </div>
+                <div className={styles.resultcol}>
+                  <div className={styles.accuracy}>
+                    {`${stats.accuracy}% accuracy`}
                   </div>
-                  <div className={styles.resultcol}>
-                    <div className={styles.keystrokes}>
-                      <span className={styles.correctresult}>{stats.keystrokes.correct}</span> | <span className={styles.incorrectresult}>{stats.keystrokes.incorrect}</span> keystrokes
-                    </div>
+                </div>
+                <div className={styles.resultcol}>
+                  <div className={styles.keystrokes}>
+                    <span className={styles.correctresult}>{stats.keystrokes.correct}</span> | <span className={styles.incorrectresult}>{stats.keystrokes.incorrect}</span> keystrokes
                   </div>
-                  <div className={styles.resultcol}>
-                    <div className={styles.wordresult}>
-                      <span className={styles.correctresult}>{stats.words.correct}</span> | <span className={styles.incorrectresult}>{stats.words.incorrect}</span> words
-                    </div>
+                </div>
+                <div className={styles.resultcol}>
+                  <div className={styles.wordresult}>
+                    <span className={styles.correctresult}>{stats.words.correct}</span> | <span className={styles.incorrectresult}>{stats.words.incorrect}</span> words
                   </div>
                 </div>
               </div>
+            </div>
           }
 
         </div>

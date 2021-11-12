@@ -18,7 +18,7 @@ import { keyboardColors } from './../keyModules/keyboardColors.js'
 import { keyCodeOf } from './../keyModules/parseModules.js'
 import { ToastContainer, toast } from './../toast/toast.js';
 import Key from './../key/Key.js';
-import store from './../../app/store';
+import store from '../store/store';
 import styles from './KeySimulator.module.css';
 const TypingTest = React.lazy(() => import('./../typingTest/TypingTest'));
 
@@ -54,10 +54,10 @@ function KeySimulator() {
   useEffect(() => {
     // preload the sounds
     for (let sound in keySounds[switchValue].press) {
-      new Howl({src: keySounds[switchValue].press[sound], volume: 0}).play();
+      new Howl({ src: keySounds[switchValue].press[sound], volume: 0 }).play();
     }
     for (let sound in keySounds[switchValue].release) {
-      new Howl({src: keySounds[switchValue].release[sound], volume: 0}).play();
+      new Howl({ src: keySounds[switchValue].release[sound], volume: 0 }).play();
     }
   }, [switchValue]);
 
@@ -67,7 +67,7 @@ function KeySimulator() {
     setSwitchValue(e.target.value)
     switchselect.current.blur();
     keycontainer.current.focus();
-    toast.show( `Switch sound changed to ${keySounds[e.target.value].caption} ✔️`, { timeout: 3000, pause: false, delay: 0, position: 'bottom-center' });
+    toast.show(`Switch sound changed to ${keySounds[e.target.value].caption} ✔️`, { timeout: 3000, pause: false, delay: 0, position: 'bottom-center' });
   }
 
   const handleLayoutChange = (e) => {
@@ -93,7 +93,7 @@ function KeySimulator() {
     if (e.keyCode === 18 || e.keyCode === 112 ||
       e.keyCode === 114 || e.keyCode === 116 || e.keyCode === 117 ||
       e.keyCode === 121 || e.keyCode === 122 || e.keyCode === 123) {
-        e.preventDefault();
+      e.preventDefault();
     }
     // get the array X Y coordinates
     for (let coords in keyLocations[keynames[e.keyCode]]) {
@@ -104,37 +104,37 @@ function KeySimulator() {
       };
       dispatch(keyDown(action));
     }
-      // if not muted, valid key on keyboard, not pressed already, and selected switch has sounds
+    // if not muted, valid key on keyboard, not pressed already, and selected switch has sounds
     if (!muted && keyLocations[keynames[e.keyCode]] && !pressedKeys.includes(e.keyCode) && keySounds[switchValue]) {
-        // if the key is a special key (i.e. backspace, space, enter, etc) play a sound
-        if (keynames[e.keyCode] in keySounds[switchValue].press) {
-          new Howl({src: keySounds[switchValue].press[keynames[e.keyCode]]}).play();
-        }
-        // generic key, get the row it's in and play the pitch-adjusted sound
-        else {
-          switch(parseInt(keyLocations[keynames[e.keyCode]][0][0])) {
-            case 0:
-              new Howl({src: [keySounds[switchValue].press.GENERICR0]}).play();
-              break;
-            case 1:
-              new Howl({src: keySounds[switchValue].press.GENERICR1}).play();
-              break;
-            case 2:
-              new Howl({src: keySounds[switchValue].press.GENERICR2}).play();
-              break;
-            case 3:
-              new Howl({src: keySounds[switchValue].press.GENERICR3}).play();
-              break;
-            case 4:
-              new Howl({src: keySounds[switchValue].press.GENERICR4}).play();
-              break;
-            default:
-              new Howl({src: keySounds[switchValue].press.GENERICR4}).play();
-              break;
-          }
+      // if the key is a special key (i.e. backspace, space, enter, etc) play a sound
+      if (keynames[e.keyCode] in keySounds[switchValue].press) {
+        new Howl({ src: keySounds[switchValue].press[keynames[e.keyCode]] }).play();
+      }
+      // generic key, get the row it's in and play the pitch-adjusted sound
+      else {
+        switch (parseInt(keyLocations[keynames[e.keyCode]][0][0])) {
+          case 0:
+            new Howl({ src: [keySounds[switchValue].press.GENERICR0] }).play();
+            break;
+          case 1:
+            new Howl({ src: keySounds[switchValue].press.GENERICR1 }).play();
+            break;
+          case 2:
+            new Howl({ src: keySounds[switchValue].press.GENERICR2 }).play();
+            break;
+          case 3:
+            new Howl({ src: keySounds[switchValue].press.GENERICR3 }).play();
+            break;
+          case 4:
+            new Howl({ src: keySounds[switchValue].press.GENERICR4 }).play();
+            break;
+          default:
+            new Howl({ src: keySounds[switchValue].press.GENERICR4 }).play();
+            break;
         }
       }
     }
+  }
 
   // send an action to the reducer to release the key, then play a sound
   const handleKeyUp = (e) => {
@@ -149,10 +149,10 @@ function KeySimulator() {
     // if a valid switch is selected
     if (!muted && keyLocations[keynames[e.keyCode]] && keySounds[switchValue]) {
       if (keynames[e.keyCode] in keySounds[switchValue].press) {
-        new Howl({src: keySounds[switchValue].release[keynames[e.keyCode]]}).play();
+        new Howl({ src: keySounds[switchValue].release[keynames[e.keyCode]] }).play();
       }
       else {
-        new Howl({src: keySounds[switchValue].release.GENERIC}).play();
+        new Howl({ src: keySounds[switchValue].release.GENERIC }).play();
       }
     }
   }
@@ -169,36 +169,36 @@ function KeySimulator() {
       };
       dispatch(keyDown(action));
     }
-      // if not muted, valid key on keyboard, not pressed already, and selected switch has sounds
+    // if not muted, valid key on keyboard, not pressed already, and selected switch has sounds
     if (!muted && keyLocations[primaryLegend] && !pressedKeys.includes(keyCodeOf(primaryLegend)) && keySounds[switchValue]) {
-        // if the key is a special key (i.e. backspace, space, enter, etc) play a sound
-        if (primaryLegend in keySounds[switchValue].press) {
-          new Howl({src: keySounds[switchValue].press[primaryLegend]}).play();
-        }
-        // generic key, get the row it's in and play the pitch-adjusted sound
-        else {
-          switch(parseInt(keyLocations[primaryLegend][0][0])) {
-            case 0:
-              new Howl({src: [keySounds[switchValue].press.GENERICR0]}).play();
-              break;
-            case 1:
-              new Howl({src: keySounds[switchValue].press.GENERICR1}).play();
-              break;
-            case 2:
-              new Howl({src: keySounds[switchValue].press.GENERICR2}).play();
-              break;
-            case 3:
-              new Howl({src: keySounds[switchValue].press.GENERICR3}).play();
-              break;
-            case 4:
-              new Howl({src: keySounds[switchValue].press.GENERICR4}).play();
-              break;
-            default:
-              new Howl({src: keySounds[switchValue].press.GENERICR4}).play();
-              break;
-          }
+      // if the key is a special key (i.e. backspace, space, enter, etc) play a sound
+      if (primaryLegend in keySounds[switchValue].press) {
+        new Howl({ src: keySounds[switchValue].press[primaryLegend] }).play();
+      }
+      // generic key, get the row it's in and play the pitch-adjusted sound
+      else {
+        switch (parseInt(keyLocations[primaryLegend][0][0])) {
+          case 0:
+            new Howl({ src: [keySounds[switchValue].press.GENERICR0] }).play();
+            break;
+          case 1:
+            new Howl({ src: keySounds[switchValue].press.GENERICR1 }).play();
+            break;
+          case 2:
+            new Howl({ src: keySounds[switchValue].press.GENERICR2 }).play();
+            break;
+          case 3:
+            new Howl({ src: keySounds[switchValue].press.GENERICR3 }).play();
+            break;
+          case 4:
+            new Howl({ src: keySounds[switchValue].press.GENERICR4 }).play();
+            break;
+          default:
+            new Howl({ src: keySounds[switchValue].press.GENERICR4 }).play();
+            break;
         }
       }
+    }
   }
 
   // called when an individual key detects a mouseup event
@@ -214,10 +214,10 @@ function KeySimulator() {
     // if a valid switch is selected
     if (!muted && keyLocations[primaryLegend] && keySounds[switchValue]) {
       if (primaryLegend in keySounds[switchValue].press) {
-        new Howl({src: keySounds[switchValue].release[primaryLegend]}).play();
+        new Howl({ src: keySounds[switchValue].release[primaryLegend] }).play();
       }
       else {
-        new Howl({src: keySounds[switchValue].release.GENERIC}).play();
+        new Howl({ src: keySounds[switchValue].release.GENERIC }).play();
       }
     }
   }
@@ -233,7 +233,7 @@ function KeySimulator() {
         tabIndex="0"
       >
         <Suspense fallback={<div className={styles.typingplaceholder}></div>}>
-          <TypingTest/>
+          <TypingTest />
         </Suspense>
 
         <div className={styles.selectcontainer}>
@@ -247,7 +247,7 @@ function KeySimulator() {
                 defaultValue="0"
               >
                 {keySounds.map((sound, index) => {
-                    return (<option value={index} key={sound.key}>{sound.caption}</option>);
+                  return (<option value={index} key={sound.key}>{sound.caption}</option>);
                 })}
               </select>
             </div>
@@ -261,7 +261,7 @@ function KeySimulator() {
                 defaultValue="0"
               >
                 {keyPresets.map((preset, index) => {
-                    return (<option value={index} key={preset.key}>{preset.caption}</option>);
+                  return (<option value={index} key={preset.key}>{preset.caption}</option>);
                 })}
               </select>
             </div>
@@ -296,10 +296,10 @@ function KeySimulator() {
           style={keyboardStyle}
         >
           {layout.map((row, index) => {
-            return(<div className={styles.keyrow} key={index}>
+            return (<div className={styles.keyrow} key={index}>
               {
                 row.map((key) => {
-                  return(
+                  return (
                     <Key
                       key={key.keyid}
                       className={key.class}
@@ -319,10 +319,10 @@ function KeySimulator() {
                   )
                 })
               }
-              </div>)
-            })}
+            </div>)
+          })}
         </div>
-        <ToastContainer/>
+        <ToastContainer />
       </div>
     </div>
   );
