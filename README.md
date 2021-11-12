@@ -1,6 +1,6 @@
 # Mechanical Keyboard Simulator - [kbs.im](https://kbs.im)
 ![kbs.im picture](https://github.com/tplai/kbsim/blob/master/src/assets/images/demo.PNG)
-Mechanical Keyboard Simulator is a web application that simulates typing on a variety of custom keyswitches.
+Mechanical Keyboard Simulator is website that simulates typing on a variety of custom keyswitches and offers a simple typing test. Currently, we support 10+ switches, keyboard layouts, and colors for an customizable, satisfying typing experience.
 
 ## Currently Supported Switches
 - NovelKeys Creams
