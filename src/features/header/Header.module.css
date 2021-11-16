@@ -43,7 +43,7 @@
     color: black;
 } */
 
-.headerContainer {
+.header {
   min-height: 5vh;
   display: flex;
   text-align: center;
@@ -53,17 +53,31 @@
   font-family: roboto;
 }
 
+.headerContainer {
+  display: flex;
+  max-width: 1024px;
+  /* padding: 1rem; */
+  margin: 10px;
+  width: 100%;
+  justify-content: space-between;
+}
+
+.subnav {
+  display: flex;
+  align-items: center;
+}
+
+.lightswitch {
+  height: 24px;
+  width: 24px;
+}
+
 .logo {
   font-weight: 500;
   font-family: roboto;
-  /* font-stretch: condensed; */
-  font-size:2rem;
+  font-size: 2rem;
 }
 
 .logosvg {
   vertical-align: text-top;
-}
-
-.header {
-  width: 1242px;
 }
