@@ -7,8 +7,8 @@ export const themeProviderSlice = createSlice({
     },
     reducers: {
         toggleTheme: (state) => {
-            // state.theme = (state.theme == "light") ? "dark" : "light"
-            state.theme = "light";
+            state.theme = (state.theme == "light") ? "dark" : "light"
+            // state.theme = "light";
         },
     },
 });

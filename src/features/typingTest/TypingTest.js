@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useRef } from 'react';
-import { useSelector, useDispatch } from 'react-redux';
+import { useSelector, useDispatch, connect } from 'react-redux';
 import {
   generateWords,
   incrementWord,
@@ -27,7 +27,7 @@ const raceTime = 60000;
 store.dispatch(generateWords());
 store.dispatch(resetTimer({ time: raceTime / 1000 }));
 
-function TypingTest() {
+function TypingTest({ theme }) {
   const words = useSelector(selectWords);
   const wordIndex = useSelector(selectWordIndex);
   const timeLeft = useSelector(selectTime);
@@ -213,4 +213,11 @@ function TypingTest() {
   );
 }
 
-export default TypingTest;
+// console.log(store.getState);
+const mapStateToProps = (state) => {
+  return {
+      theme: state.themeProvider.theme
+  }
+}
+
+export default connect(mapStateToProps)(TypingTest);

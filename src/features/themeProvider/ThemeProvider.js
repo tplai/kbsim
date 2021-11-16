@@ -19,10 +19,4 @@ function ThemeProvider({ children }) {
     );
 }
 
-// function mapStateToProps(state) {
-    // return { theme }
-//   }
-  
-// export default connect(mapStateToProps)(ThemeProvider);
-
 export default ThemeProvider;
