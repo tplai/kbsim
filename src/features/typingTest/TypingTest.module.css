@@ -7,7 +7,7 @@
   border: 3px solid;
   margin-bottom: 2vh;
   width: 832px;
-  transition: background 0.2s linear, border-color 0.2s ease;
+  transition: background 0.2s linear, border-color 0.2s linear;
 }
 
 .wordcontainer {
