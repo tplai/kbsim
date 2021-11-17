@@ -1,49 +1,4 @@
-/* .imgLoc {
-    margin-left: 30%;
-}
-
-.instagramText {
-    width: 110px;
-    display: block;
-    margin-top: 5px;
-    margin-left: 0px;
-}
-
-.flexImage {
-    display: flex;
-    background-color: white;
-    border-bottom-style: solid;
-    border-bottom-width: 1px;
-    border-bottom-color: lightgray;
-    padding-bottom: 2px;
-    padding-top: 10px;
-    margin-top: -10px;
-    width: 101%;
-    margin-left: -8px;
-}
-
-.exploreLink {
-    margin-left: 368px;
-    margin-right: 5px;
-    margin-top: 15px;
-    text-decoration: none;
-    font-weight: bold;
-    color: black;
-}
-
-.pipeChar {
-    margin-top: 15px;
-}
-
-.awdLink {
-    margin-left: 5px;
-    font-weight: bold;
-    margin-top: 15px;
-    text-decoration: none;
-    color: black;
-} */
-
-.headerContainer {
+.header {
   min-height: 5vh;
   display: flex;
   text-align: center;
@@ -51,19 +6,35 @@
   align-items: center;
   justify-content: center;
   font-family: roboto;
+  transition: background 0.2s linear;
+}
+
+.headerContainer {
+  display: flex;
+  max-width: 1024px;
+  /* padding: 1rem; */
+  margin: 10px;
+  width: 100%;
+  justify-content: space-between;
+}
+
+.subnav {
+  display: flex;
+  align-items: center;
+}
+
+.lightswitch {
+  height: 20px;
+  width: 20px;
 }
 
 .logo {
   font-weight: 500;
   font-family: roboto;
-  /* font-stretch: condensed; */
-  font-size:2rem;
+  font-size: 2rem;
+  transition: color 0.2s linear;
 }
 
 .logosvg {
   vertical-align: text-top;
-}
-
-.header {
-  width: 1242px;
 }

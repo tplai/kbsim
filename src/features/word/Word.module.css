@@ -1,11 +1,17 @@
 .word {
-  padding: .5rem;
+  padding: 0.5rem;
   display: inline-block;
   font-size: 1.5rem;
   border-radius: 5px;
+  /* transition: color 0.2s linear; */
 }
 
-.word.default {
+.word.dark {
+  color: #fff;
+}
+
+.word.light {
+  color: #000;
 }
 
 .word.correct {
@@ -16,6 +22,10 @@
   color: #fe0000;
 }
 
-.word.active {
+.word.active.light {
   background: #e0e0e0;
+}
+
+.word.active.dark {
+  background: #454545;
 }

@@ -59,8 +59,8 @@
   background-color: #dc3545;
 }
 .toast-item-default {
-  background-color: #6c757d;
-  color: #f8f9fa;
+  background-color: #444;
+  color: #fff;
 }
 .toast-item-warning {
   background-color: #ffc107;

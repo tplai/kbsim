@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useRef } from 'react';
-import { useSelector, useDispatch } from 'react-redux';
+import { useSelector, useDispatch, connect } from 'react-redux';
 import {
   generateWords,
   incrementWord,
@@ -19,15 +19,15 @@ import {
   selectStats
 } from './typingTestSlice.js';
 import Word from './../word/Word.js';
-import store from './../../app/store';
+import store from '../store/store';
 import styles from './TypingTest.module.css';
 
 const raceTime = 60000;
 
 store.dispatch(generateWords());
-store.dispatch(resetTimer({time: raceTime / 1000}));
+store.dispatch(resetTimer({ time: raceTime / 1000 }));
 
-function TypingTest() {
+function TypingTest({ currentTheme, theme }) {
   const words = useSelector(selectWords);
   const wordIndex = useSelector(selectWordIndex);
   const timeLeft = useSelector(selectTime);
@@ -42,14 +42,15 @@ function TypingTest() {
   const [inputVal, setInputVal] = useState("");
 
   const [ticker, setTicker] = useState(null);
-
+  
   let wordObject = words.map((word, index) => {
-    return(
+    return (
       <Word
         key={index}
         focused={word.focused}
         status={word.status}
         text={word.text}
+        theme={currentTheme}
         ref={word.focused ? useRef() : null}
       />
     )
@@ -63,19 +64,19 @@ function TypingTest() {
       if (wordObject[wordIndex].ref && wordObject[wordIndex].ref.current.offsetTop > 0) {
         dispatch(shiftWords());
       }
-      dispatch(spellCheck({input: inputVal}));
+      dispatch(spellCheck({ input: inputVal }));
     }
   }, [inputVal]);
 
   // intended behavior: go to next word when space is pressed & time is left
   // if the cursor is in the middle of the word, still clear the input and go next word
   // additionally, start the timer if it's not space and it hasn't already
-  const handleKeyPress =  (e) => {
+  const handleKeyPress = (e) => {
     if (timeLeft > 0) {
       if (e.key === ' ') {
         if (inputVal) {
           // inputVal is one character behind, so we don't have to trim inputVal
-          dispatch(classifyWord({index: wordIndex, input: inputVal}));
+          dispatch(classifyWord({ index: wordIndex, input: inputVal }));
           dispatch(incrementWord());
         }
         // console.log("whos");
@@ -108,7 +109,7 @@ function TypingTest() {
     clearInterval(ticker);
     inputRef.current.focus();
     setInputVal("");
-    dispatch(resetTimer({ time: raceTime / 1000}));
+    dispatch(resetTimer({ time: raceTime / 1000 }));
     dispatch(generateWords());
   }
 
@@ -131,10 +132,10 @@ function TypingTest() {
     if (seconds >= 10) {
       return seconds;
     }
-    else if (seconds < 10 && seconds > 0){
+    else if (seconds < 10 && seconds > 0) {
       // if (toString(seconds).length == 1) {
-        // console.log(`0${seconds}`);
-        return `0${seconds}`;
+      // console.log(`0${seconds}`);
+      return `0${seconds}`;
       // }
     }
     else {
@@ -154,16 +155,29 @@ function TypingTest() {
   }
 
   return (
-    <div className={styles.typingcontainer}>
+    <div 
+      className={styles.typingcontainer}
+      style={{
+        backgroundColor: theme.background,
+        borderColor: theme.boxBorder        
+      }}
+    >
       <div>
-        <div className={styles.wordcontainer}>
+        <div 
+          className={styles.wordcontainer}
+        >
           {!finished
             ? <div className={styles.wordarea}>
                 <div className={styles.words}>
-                    {wordObject}
+                  {wordObject}
                 </div>
               </div>
-            : <div className={styles.resultarea}>
+            : <div
+                className={styles.resultarea}
+                style={{
+                  color: theme.text
+                }}
+              >
                 <div className={styles.results}>
                   <div className={styles.resultcol} aria-label="Words per minute">
                     <div className={styles.wpm}>
@@ -190,9 +204,13 @@ function TypingTest() {
           }
 
         </div>
-        <div className={styles.inputbar}>
+        <div className={`${styles.inputbar} ${currentTheme == "light" ? styles.light : styles.dark}`}>
           <input
             className={styles.typinginput}
+            style={{
+              backgroundColor: theme.background,
+              color: theme.text
+            }}
             value={inputVal}
             onChange={handleChange}
             onKeyPress={handleKeyPress}
@@ -204,8 +222,25 @@ function TypingTest() {
             ref={inputRef}
           />
           <span className={styles.toolbar}>
-            <span className={styles.time}>{parseMinute(timeLeft)}:{parseSecond(timeLeft)}</span>
-            <button className={styles.redo} onClick={() => redo()}>Redo</button>
+            <span 
+              className={styles.time}
+              style={{
+                backgroundColor: theme.timer,
+                color: theme.timerText
+              }}
+            >
+              {parseMinute(timeLeft)}:{parseSecond(timeLeft)}
+            </span>
+            <button 
+              className={`${styles.redo} ${currentTheme == "light" ? styles.light : styles.dark}`} 
+              onClick={() => redo()}
+              style={{
+                backgroundColor: theme.background,
+                color: theme.text
+              }}
+            >
+              Redo
+            </button>
           </span>
         </div>
       </div>
@@ -213,4 +248,11 @@ function TypingTest() {
   );
 }
 
-export default TypingTest;
+const mapStateToProps = (state) => {
+  return {
+      currentTheme: state.themeProvider.current,
+      theme: state.themeProvider.theme
+  }
+}
+
+export default connect(mapStateToProps)(TypingTest);

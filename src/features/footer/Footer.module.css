@@ -1,30 +1,33 @@
 .footerContainer {
   height: 3vh;
-  margin-top: 2vh;
-  /* margin-bottom: 2vh; */
   display: flex;
   text-align: center;
   flex-direction: row;
   align-items: center;
   justify-content: center;
   font-family: roboto;
+  transition: background 0.2s linear;
 }
 
 .link {
   text-decoration: none;
   padding-left: 16px;
   padding-right: 16px;
-  color: #444;
-}
-
-.linkColor {
   transition: color 0.2s linear;
 }
 
-.linkColor:hover{
+.link.light {
+  color: #444;
+}
+
+.link.dark {
+  color: #bbb;
+}
+
+.link.light:hover {
   color: #000;
 }
 
-.link div svg path {
-  fill: #fff;
+.link.dark:hover {
+  color: #fff;
 }
