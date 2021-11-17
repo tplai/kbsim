@@ -3,8 +3,6 @@ export const palette = {
         background: "#ffffff",
         text: "#000000",
         boxBorder: "#eeeeee",
-        itemBorder: "#9e9e9e",
-        itemBorderFocus: "#212121",
         highlight: "#e0e0e0",
         timer: "#000000",
         timerText: "#ffffff",
@@ -13,6 +11,7 @@ export const palette = {
     dark: {
         background: "#121212",
         text: "#ffffff",
+        boxBorder: "#323232",
         hightlight: "#272727",
         timer: "#ffffff",
         timerText: "#000000",
