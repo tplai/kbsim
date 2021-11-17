@@ -9,10 +9,10 @@ export const palette = {
         dropText: "#444444",
     },
     dark: {
-        background: "#121212",
+        background: "#212121",
         text: "#ffffff",
         boxBorder: "#323232",
-        hightlight: "#272727",
+        highlight: "#272727",
         timer: "#ffffff",
         timerText: "#000000",
         dropText: "#bbbbbb",
