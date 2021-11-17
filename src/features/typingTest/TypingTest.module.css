@@ -7,7 +7,7 @@
   border: 3px solid;
   margin-bottom: 2vh;
   width: 832px;
-  transition: background 0.1s linear, border-color 0.1s ease;
+  transition: background 0.2s linear, border-color 0.2s ease;
 }
 
 .wordcontainer {
@@ -87,7 +87,7 @@
 
 .inputbar > input {
   font-size: 16px;
-  transition: border 0.2s linear, background 0.1s linear;
+  transition: border 0.2s linear, background 0.2s linear;
   outline: none;
   padding: 10px;
   flex-grow: 1;
@@ -119,6 +119,7 @@
   display: flex;
   align-items: center;
   font-size: 16px;
+  transition: background 0.2s linear, color 0.2s linear;
 }
 
 .typinginput {
@@ -129,7 +130,7 @@
 }
 
 .redo {
-  transition: border 0.2s linear, background 0.1s linear;
+  transition: border 0.2s linear, background 0.2s linear, color 0.2s linear;
   text-align: center;
   text-decoration: none;
   font-size: 16px;

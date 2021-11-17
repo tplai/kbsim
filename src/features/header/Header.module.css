@@ -6,7 +6,7 @@
   align-items: center;
   justify-content: center;
   font-family: roboto;
-  transition: background 0.1s linear;
+  transition: background 0.2s linear;
 }
 
 .headerContainer {
@@ -32,6 +32,7 @@
   font-weight: 500;
   font-family: roboto;
   font-size: 2rem;
+  transition: color 0.2s linear;
 }
 
 .logosvg {
