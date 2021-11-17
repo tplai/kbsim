@@ -1,6 +1,6 @@
 import React from 'react'
 import logosvg from './../../assets/images/logo.svg'
-import { BsMoonStarsFill as Moon, BsFillBrightnessAltHighFill as Sun } from "react-icons/bs"
+import { BsMoonFill as Moon, BsFillBrightnessAltHighFill as Sun } from "react-icons/bs"
 import { toggleTheme } from '../themeProvider/themeProviderSlice';
 import { connect } from 'react-redux';
 import styles from './Header.module.css';
