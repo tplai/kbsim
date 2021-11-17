@@ -165,34 +165,39 @@ function TypingTest({ currentTheme, theme }) {
         <div className={styles.wordcontainer}>
           {!finished
             ? <div className={styles.wordarea}>
-              <div className={styles.words}>
-                {wordObject}
-              </div>
-            </div>
-            : <div className={styles.resultarea}>
-              <div className={styles.results}>
-                <div className={styles.resultcol} aria-label="Words per minute">
-                  <div className={styles.wpm}>
-                    {stats.wpm} WPM
-                  </div>
-                </div>
-                <div className={styles.resultcol}>
-                  <div className={styles.accuracy}>
-                    {`${stats.accuracy}% accuracy`}
-                  </div>
-                </div>
-                <div className={styles.resultcol}>
-                  <div className={styles.keystrokes}>
-                    <span className={styles.correctresult}>{stats.keystrokes.correct}</span> | <span className={styles.incorrectresult}>{stats.keystrokes.incorrect}</span> keystrokes
-                  </div>
-                </div>
-                <div className={styles.resultcol}>
-                  <div className={styles.wordresult}>
-                    <span className={styles.correctresult}>{stats.words.correct}</span> | <span className={styles.incorrectresult}>{stats.words.incorrect}</span> words
-                  </div>
+                <div className={styles.words}>
+                  {wordObject}
                 </div>
               </div>
-            </div>
+            : <div
+                className={styles.resultarea}
+                style={{
+                  color: theme.text
+                }}
+              >
+                <div className={styles.results}>
+                  <div className={styles.resultcol} aria-label="Words per minute">
+                    <div className={styles.wpm}>
+                      {stats.wpm} WPM
+                    </div>
+                  </div>
+                  <div className={styles.resultcol}>
+                    <div className={styles.accuracy}>
+                      {`${stats.accuracy}% accuracy`}
+                    </div>
+                  </div>
+                  <div className={styles.resultcol}>
+                    <div className={styles.keystrokes}>
+                      <span className={styles.correctresult}>{stats.keystrokes.correct}</span> | <span className={styles.incorrectresult}>{stats.keystrokes.incorrect}</span> keystrokes
+                    </div>
+                  </div>
+                  <div className={styles.resultcol}>
+                    <div className={styles.wordresult}>
+                      <span className={styles.correctresult}>{stats.words.correct}</span> | <span className={styles.incorrectresult}>{stats.words.incorrect}</span> words
+                    </div>
+                  </div>
+                </div>
+              </div>
           }
 
         </div>
