@@ -1,14 +1,16 @@
 import { createSlice } from '@reduxjs/toolkit';
+import { palette } from "../theme/theme";
 
 export const themeProviderSlice = createSlice({
     name: 'themeProvider',
     initialState: {
-        theme: "dark",
+        theme: palette.light,
+        current: "light",
     },
     reducers: {
         toggleTheme: (state) => {
-            state.theme = (state.theme == "light") ? "dark" : "light"
-            // state.theme = "light";
+            state.current = (state.current == "light") ? "dark" : "light";
+            state.theme = palette[state.current];
         },
     },
 });

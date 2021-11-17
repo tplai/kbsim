@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useRef, Suspense } from 'react';
-import { useSelector, useDispatch } from 'react-redux';
+import { connect, useSelector, useDispatch } from 'react-redux';
 import { Howl, Howler } from 'howler';
 import {
   parseKLE,
@@ -28,7 +28,7 @@ store.dispatch(parseKLE(keyPresets[0].kle));
 // intially render the keyboard color
 store.dispatch(setKeyboardColor(keyboardColors[0].background));
 
-function KeySimulator() {
+function KeySimulator({ theme }) {
   // Layout array of keyboard
   const layout = useSelector(selectLayout);
   // x y indices of legends
@@ -231,6 +231,9 @@ function KeySimulator() {
         onKeyUp={handleKeyUp}
         ref={keycontainer}
         tabIndex="0"
+        style={{
+          backgroundColor: theme.background
+        }}
       >
         <Suspense fallback={<div className={styles.typingplaceholder}></div>}>
           <TypingTest />
@@ -245,6 +248,10 @@ function KeySimulator() {
                 aria-label="Switch Type"
                 onChange={handleSwitchChange}
                 defaultValue="0"
+                style={{
+                  backgroundColor: theme.background,
+                  color: theme.dropText
+                }}
               >
                 {keySounds.map((sound, index) => {
                   return (<option value={index} key={sound.key}>{sound.caption}</option>);
@@ -259,6 +266,10 @@ function KeySimulator() {
                 aria-label="Keyboard Layout"
                 onChange={handleLayoutChange}
                 defaultValue="0"
+                style={{
+                  backgroundColor: theme.background,
+                  color: theme.dropText
+                }}
               >
                 {keyPresets.map((preset, index) => {
                   return (<option value={index} key={preset.key}>{preset.caption}</option>);
@@ -272,13 +283,22 @@ function KeySimulator() {
                 aria-label="Case Color"
                 onChange={handleCaseChange}
                 defaultValue="gray"
+                style={{
+                  backgroundColor: theme.background,
+                  color: theme.dropText
+                }}
               >
                 {keyboardColors.map((color, index) => {
                   return (<option value={index} key={color.color}>{color.caption}</option>);
                 })}
               </select>
             </div>
-            <div className={styles.mutecol}>
+            <div 
+              className={styles.mutecol}
+              style={{
+                color: theme.text
+              }}
+            >
               <label className={styles.mutebox}>
                 <input
                   type="checkbox"
@@ -328,4 +348,11 @@ function KeySimulator() {
   );
 }
 
-export default KeySimulator;
+const mapStateToProps = (state) => {
+  return {
+      currentTheme: state.themeProvider.current,
+      theme: state.themeProvider.theme
+  }
+}
+
+export default connect(mapStateToProps)(KeySimulator);

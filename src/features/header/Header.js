@@ -5,15 +5,21 @@ import { toggleTheme } from '../themeProvider/themeProviderSlice';
 import { connect } from 'react-redux';
 import styles from './Header.module.css';
 
-function Header({ theme, toggle }) {  
+function Header({ currentTheme, theme, toggle }) {  
   return (
-    <div className={styles.header}>
+    <div 
+      className={styles.header}
+      style={{
+        backgroundColor: theme.background,
+        color: theme.text
+      }}
+    >
       <div className={styles.headerContainer}>
         <div className={styles.logo}>
           <img src={logosvg} className={styles.logosvg} height="32" width="32"/> kbsim
         </div>
         <div className={styles.subnav} onClick={toggle}>
-        {theme === "light" ? <Moon className={styles.lightswitch}/> : <Sun className={styles.lightswitch}/>}
+        {currentTheme === "light" ? <Moon className={styles.lightswitch}/> : <Sun className={styles.lightswitch}/>}
         </div>
       </div>
     </div>
@@ -22,9 +28,11 @@ function Header({ theme, toggle }) {
 
 const mapStateToProps = (state) => {
   return {
-      theme: state.themeProvider.theme
+      currentTheme: state.themeProvider.current,
+      theme: state.themeProvider.theme,
   }
 }
+
 
 const mapDispatchToProps = (dispatch) => {
   return {

@@ -6,7 +6,11 @@ import styles from './Word.module.css';
 const Word = React.forwardRef((props, ref) => (
   <span
     ref={ref}
-    className={`${styles.word} ${props.focused ? styles.active : ''} ${styles[props.status]}`}
+    className={`
+      ${styles.word}
+      ${props.focused ? styles.active : ''}
+      ${styles[props.theme]}
+      ${styles[props.status]}`}
   >
     {props.text}
   </span>
@@ -17,6 +21,7 @@ Word.propTypes = {
   focused: PropTypes.bool.isRequired,
   status: PropTypes.string.isRequired,
   text: PropTypes.string.isRequired,
+  theme: PropTypes.string,
 }
 
 export default Word

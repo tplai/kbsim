@@ -27,7 +27,7 @@ const raceTime = 60000;
 store.dispatch(generateWords());
 store.dispatch(resetTimer({ time: raceTime / 1000 }));
 
-function TypingTest({ theme }) {
+function TypingTest({ currentTheme, theme }) {
   const words = useSelector(selectWords);
   const wordIndex = useSelector(selectWordIndex);
   const timeLeft = useSelector(selectTime);
@@ -42,7 +42,7 @@ function TypingTest({ theme }) {
   const [inputVal, setInputVal] = useState("");
 
   const [ticker, setTicker] = useState(null);
-
+  
   let wordObject = words.map((word, index) => {
     return (
       <Word
@@ -50,6 +50,7 @@ function TypingTest({ theme }) {
         focused={word.focused}
         status={word.status}
         text={word.text}
+        theme={currentTheme}
         ref={word.focused ? useRef() : null}
       />
     )
@@ -154,7 +155,12 @@ function TypingTest({ theme }) {
   }
 
   return (
-    <div className={styles.typingcontainer}>
+    <div 
+      className={styles.typingcontainer}
+      style={{
+        backgroundColor: theme.background
+      }}
+    >
       <div>
         <div className={styles.wordcontainer}>
           {!finished
@@ -193,6 +199,10 @@ function TypingTest({ theme }) {
         <div className={styles.inputbar}>
           <input
             className={styles.typinginput}
+            style={{
+              backgroundColor: theme.background,
+              color: theme.text
+            }}
             value={inputVal}
             onChange={handleChange}
             onKeyPress={handleKeyPress}
@@ -204,8 +214,25 @@ function TypingTest({ theme }) {
             ref={inputRef}
           />
           <span className={styles.toolbar}>
-            <span className={styles.time}>{parseMinute(timeLeft)}:{parseSecond(timeLeft)}</span>
-            <button className={styles.redo} onClick={() => redo()}>Redo</button>
+            <span 
+              className={styles.time}
+              style={{
+                backgroundColor: theme.timer,
+                color: theme.timerText
+              }}
+            >
+              {parseMinute(timeLeft)}:{parseSecond(timeLeft)}
+            </span>
+            <button 
+              className={styles.redo} 
+              onClick={() => redo()}
+              style={{
+                backgroundColor: theme.background,
+                color: theme.text
+              }}
+            >
+              Redo
+            </button>
           </span>
         </div>
       </div>
@@ -213,9 +240,9 @@ function TypingTest({ theme }) {
   );
 }
 
-// console.log(store.getState);
 const mapStateToProps = (state) => {
   return {
+      currentTheme: state.themeProvider.current,
       theme: state.themeProvider.theme
   }
 }
