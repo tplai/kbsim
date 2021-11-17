@@ -16,10 +16,12 @@ const Footer = ({ currentTheme, theme }) => (
     <a 
       href="https://github.com/tplai/kbsim" 
       target="_blank" 
+      rel="noopener"
       className={`${styles.link} ${currentTheme == "light" ? styles.light : styles.dark}`}
     >
       <div className={styles.linkColor}>
         <GitHub
+          alt-text="GitHub logo"
           style={{
             height: "15px",
             width: "15px",
@@ -30,16 +32,16 @@ const Footer = ({ currentTheme, theme }) => (
     <a 
       href="https://discord.gg/gSZXeydrQR" 
       target="_blank" 
+      rel="noopener"
       className={`${styles.link} ${currentTheme == "light" ? styles.light : styles.dark}`}
     >
-      {/* <div className={styles.linkColor}> */}
-        <Discord
-            style={{
-              height: "12px",
-              width: "15px",
-            }}
-          /> Discord
-      {/* </div> */}
+      <Discord
+        alt-text="Discord logo"
+        style={{
+          height: "12px",
+          width: "15px",
+        }}
+      /> Discord
     </a>
   </div>
 )
