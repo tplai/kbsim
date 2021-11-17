@@ -16,7 +16,7 @@ function Header({ currentTheme, theme, toggle }) {
     >
       <div className={styles.headerContainer}>
         <div className={styles.logo}>
-          <img src={logosvg} className={styles.logosvg} height="32" width="32"/> kbsim
+          <img src={logosvg} className={styles.logosvg} alt="kbsim logo" height="32" width="32"/> kbsim
         </div>
         <div className={styles.subnav} onClick={toggle}>
         {currentTheme === "light" ? <Moon className={styles.lightswitch}/> : <Sun className={styles.lightswitch}/>}
