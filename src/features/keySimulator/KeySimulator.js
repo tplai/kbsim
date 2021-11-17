@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useRef, Suspense } from 'react';
 import { connect, useSelector, useDispatch } from 'react-redux';
-import { Howl, Howler } from 'howler';
+import { Howl } from 'howler';
 import {
   parseKLE,
   keyDown,
