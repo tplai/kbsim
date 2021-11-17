@@ -11,6 +11,7 @@ export const themeProviderSlice = createSlice({
         toggleTheme: (state) => {
             state.current = (state.current == "light") ? "dark" : "light";
             state.theme = palette[state.current];
+            document.body.style = `background: ${[palette[state.current].background]};`;
         },
     },
 });
