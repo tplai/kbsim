@@ -28,7 +28,7 @@ store.dispatch(parseKLE(keyPresets[0].kle));
 // intially render the keyboard color
 store.dispatch(setKeyboardColor(keyboardColors[0].background));
 
-function KeySimulator({ theme }) {
+function KeySimulator({ currentTheme, theme }) {
   // Layout array of keyboard
   const layout = useSelector(selectLayout);
   // x y indices of legends
@@ -44,7 +44,6 @@ function KeySimulator({ theme }) {
   const switchselect = useRef();
   const layoutselect = useRef();
   const caseselect = useRef();
-
   const [muted, setMute] = useState(false);
   const [kleValue, setKleValue] = useState();
   // set intial switch to first keysound
@@ -67,7 +66,13 @@ function KeySimulator({ theme }) {
     setSwitchValue(e.target.value)
     switchselect.current.blur();
     keycontainer.current.focus();
-    toast.show(`Switch sound changed to ${keySounds[e.target.value].caption} ✔️`, { timeout: 3000, pause: false, delay: 0, position: 'bottom-center' });
+    toast.show(`Switch sound changed to ${keySounds[e.target.value].caption} ✔️`, {
+      timeout: 3000,
+      pause: false,
+      delay: 0,
+      position: 'bottom-center',
+      variant: currentTheme == "light" ? '' : 'default'
+    });
   }
 
   const handleLayoutChange = (e) => {
@@ -239,18 +244,23 @@ function KeySimulator({ theme }) {
           <TypingTest />
         </Suspense>
 
-        <div className={styles.selectcontainer}>
+        <div 
+          className={styles.selectcontainer}
+          style={{
+            borderColor: theme.boxBorder
+          }}
+        >
           <div className={styles.selectarea}>
             <div className={styles.selectcol}>
               <select
-                className={styles.dropdown}
+                className={`${styles.dropdown} ${currentTheme == "light" ? styles.light : styles.dark}`}
                 ref={switchselect}
                 aria-label="Switch Type"
                 onChange={handleSwitchChange}
                 defaultValue="0"
                 style={{
                   backgroundColor: theme.background,
-                  color: theme.dropText
+                  color: theme.dropText,
                 }}
               >
                 {keySounds.map((sound, index) => {
@@ -261,7 +271,7 @@ function KeySimulator({ theme }) {
 
             <div className={styles.selectcol}>
               <select
-                className={styles.dropdown}
+                className={`${styles.dropdown} ${currentTheme == "light" ? styles.light : styles.dark}`}
                 ref={layoutselect}
                 aria-label="Keyboard Layout"
                 onChange={handleLayoutChange}
@@ -278,7 +288,7 @@ function KeySimulator({ theme }) {
             </div>
             <div className={styles.selectcol}>
               <select
-                className={styles.dropdown}
+                className={`${styles.dropdown} ${currentTheme == "light" ? styles.light : styles.dark}`}
                 ref={caseselect}
                 aria-label="Case Color"
                 onChange={handleCaseChange}
