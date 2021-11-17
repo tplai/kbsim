@@ -158,11 +158,14 @@ function TypingTest({ currentTheme, theme }) {
     <div 
       className={styles.typingcontainer}
       style={{
-        backgroundColor: theme.background
+        backgroundColor: theme.background,
+        borderColor: theme.boxBorder        
       }}
     >
       <div>
-        <div className={styles.wordcontainer}>
+        <div 
+          className={styles.wordcontainer}
+        >
           {!finished
             ? <div className={styles.wordarea}>
                 <div className={styles.words}>
@@ -201,7 +204,7 @@ function TypingTest({ currentTheme, theme }) {
           }
 
         </div>
-        <div className={styles.inputbar}>
+        <div className={`${styles.inputbar} ${currentTheme == "light" ? styles.light : styles.dark}`}>
           <input
             className={styles.typinginput}
             style={{
@@ -229,7 +232,7 @@ function TypingTest({ currentTheme, theme }) {
               {parseMinute(timeLeft)}:{parseSecond(timeLeft)}
             </span>
             <button 
-              className={styles.redo} 
+              className={`${styles.redo} ${currentTheme == "light" ? styles.light : styles.dark}`} 
               onClick={() => redo()}
               style={{
                 backgroundColor: theme.background,
