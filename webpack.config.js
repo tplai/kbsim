@@ -27,7 +27,7 @@ module.exports = {
         },
         {
             test: /\.svg$/,
-            loader: 'file-loader'
+            use: ['@svgr/webpack', 'file-loader'],
         },
         {
             test: /\.ico$/,
