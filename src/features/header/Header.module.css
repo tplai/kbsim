@@ -1,5 +1,5 @@
 .header {
-  min-height: 5vh;
+  min-height: 6vh;
   display: flex;
   text-align: center;
   flex-direction: column;
@@ -11,8 +11,7 @@
 
 .headerContainer {
   display: flex;
-  max-width: 1024px;
-  /* padding: 1rem; */
+  max-width: 1048px;
   margin: 10px;
   width: 100%;
   justify-content: space-between;
@@ -21,6 +20,8 @@
 .subnav {
   display: flex;
   align-items: center;
+  padding-left: 24px;
+  padding-right: 24px;
 }
 
 .lightswitch {
@@ -33,6 +34,8 @@
   font-family: roboto;
   font-size: 2rem;
   transition: color 0.2s linear;
+  padding-left: 24px;
+  padding-right: 24px;
 }
 
 .logosvg {
