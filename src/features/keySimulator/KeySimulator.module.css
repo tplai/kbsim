@@ -8,15 +8,15 @@
   transition: background 0.2s linear;
 }
 
+.keywrapper:focus {
+  outline: none;
+}
+
 .keycontainer {
   display: flex;
   text-align: center;
   flex-direction: column;
   align-items: center;
-}
-
-.keycontainer:focus {
-  outline: none;
 }
 
 .keyboard {

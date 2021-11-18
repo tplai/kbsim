@@ -231,30 +231,25 @@ function KeySimulator({ currentTheme, theme }) {
   return (
     <div 
       className={styles.keywrapper}
+      onKeyDown={handleKeyDown}
+      onKeyUp={handleKeyUp}
+      ref={keycontainer}
+      tabIndex="0"
       style={{
         backgroundColor: theme.background
       }}
     >
-      <div
-        className={styles.keycontainer}
-        onKeyDown={handleKeyDown}
-        onKeyUp={handleKeyUp}
-        ref={keycontainer}
-        tabIndex="0"
-      >
-        <Suspense 
-          fallback={
-            <div 
-              className={styles.typingplaceholder}
-              style={{
-                borderColor: theme.boxBorder
-              }}
-            />
-          }
-        >
+      <div className={styles.keycontainer}>
+        <Suspense fallback={
+          <div 
+            className={styles.typingplaceholder}
+            style={{
+              borderColor: theme.boxBorder
+            }}
+          />
+        }>
           <TypingTest />
         </Suspense>
-
         <div 
           className={styles.selectcontainer}
           style={{
