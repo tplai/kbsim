@@ -1,13 +1,18 @@
-.keycontainer {
-  min-height: 79vh;
-  margin-top: 4vh;
+.keywrapper {
+  min-height: 83vh;
+  /* margin-top: 2vh; */
   margin-bottom: 6vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  transition: background 0.2s linear;
+}
+
+.keycontainer {
   display: flex;
   text-align: center;
   flex-direction: column;
   align-items: center;
-  justify-content: center;
-  transition: background 0.2s linear;
 }
 
 .keycontainer:focus {
@@ -88,7 +93,7 @@
 
 .selectarea {
   display: flex;
-  flex-direction: wrap;
+  /* flex-direction: wrap; */
 }
 
 .selectcol {
@@ -106,7 +111,6 @@
   justify-content: center;
   width: 10%;
   transition: color 0.2s linear;
-  flex: 1;
 }
 
 .mutebox {

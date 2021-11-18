@@ -229,16 +229,18 @@ function KeySimulator({ currentTheme, theme }) {
 
 
   return (
-    <div>
+    <div 
+      className={styles.keywrapper}
+      style={{
+        backgroundColor: theme.background
+      }}
+    >
       <div
         className={styles.keycontainer}
         onKeyDown={handleKeyDown}
         onKeyUp={handleKeyUp}
         ref={keycontainer}
         tabIndex="0"
-        style={{
-          backgroundColor: theme.background
-        }}
       >
         <Suspense fallback={<div className={styles.typingplaceholder}></div>}>
           <TypingTest />
