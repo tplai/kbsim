@@ -6,7 +6,7 @@ import styles from './ThemeProvider.module.css';
 function ThemeProvider({ children }) {
     document.body.style = `background: ${[palette[store.getState().themeProvider.current].background]};`;
     return (
-        <div class={styles.themeProvider}>
+        <div className={styles.themeProvider}>
             {children}
         </div>
     );
