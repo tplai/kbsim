@@ -1,6 +1,13 @@
 # Mechanical Keyboard Simulator - [kbs.im](https://kbs.im)
 ![kbs.im picture](https://github.com/tplai/kbsim/blob/master/src/assets/images/demo.PNG)
-Mechanical Keyboard Simulator is website that simulates typing on a variety of custom keyswitches and offers a simple typing test. Currently, we support 10+ switches, keyboard layouts, and colors for an customizable, satisfying typing experience.
+
+Mechanical Keyboard Simulator is website that simulates typing on a variety of custom keyswitches and offers a simple typing test. Currently, it supports 10+ switches, keyboard layouts, and colors for an customizable, satisfying typing experience.
+
+## Features
+- Unique sounds for specific keys
+- 1 minute English typing test
+- Wide selection of case colors and layouts
+- Dark mode
 
 ## Currently Supported Switches
 - NovelKeys Creams
@@ -38,14 +45,15 @@ npm start
 ## Project structure
     .
     ├── src                                           # Source files
-    │   ├── app                                       # Redux store
-    |   |   └── store.js
     │   ├── assets                                    # audio and image assets
     |   |   ├── audio  
     |   |   └── images
     │   ├── features                                  # components and modules
-    |   |   └── sampleComponent
+    │   |   ├── Store                                 # Redux store
+    |   |   |   └── store.js
+    |   |   └── sampleComponent                       # component structure
     |   |       ├── SampleComponent.js
+    |   |       ├── SampleComponentSlice.js
     |   |       └── SampleComponent.module.css
     │   ├── public                                    # robots.txt
     |   |   └── robots.txt
