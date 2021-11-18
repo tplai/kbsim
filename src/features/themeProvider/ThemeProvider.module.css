@@ -1,0 +1,4 @@
+.themeProvider {
+  height: 100vh;
+  transition: background 0.2s linear;
+}

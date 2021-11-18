@@ -1,12 +1,10 @@
 .typingcontainer {
-  /* margin-top: 10vh; */
   display: inline-block;
   text-align: left;
-  /* box-shadow: rgba(0, 0, 0, 0.17) 1px 1px 4px; */
-  /* border-radius: 5px; */
   border: 3px solid;
-  margin-bottom: 2vh;
+  margin-bottom: 24px;
   width: 832px;
+  max-width: 80vw;
   transition: background 0.2s linear, border-color 0.2s linear;
 }
 
@@ -16,7 +14,6 @@
 }
 
 .wordarea {
-  /* display: inline-block; */
   height: 6rem;
   overflow: hidden;
 }

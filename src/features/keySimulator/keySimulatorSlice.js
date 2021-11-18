@@ -247,12 +247,12 @@ export const keySimulatorSlice = createSlice({
         ...state.keyboardStyle,
         width: (keyboardWidth + borderWidth * 2) * keySize,
         minWidth: (keyboardWidth + borderWidth * 2) * keySize,
-        height: (keyboardHeight + borderHeight * 3.25) * keySize,
+        minHeight: (keyboardHeight + borderHeight * 3.25) * keySize,
         paddingTop: borderHeight * keySize * 1.75,
         paddingBottom: borderHeight * keySize,
         paddingLeft: borderWidth * keySize,
         paddingRight: borderWidth * keySize,
-        marginBottom: keySize * 2,
+        // marginBottom: keySize * 2,
       }
 
       // successfully parsed layout, update state with the new layout

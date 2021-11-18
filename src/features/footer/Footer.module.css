@@ -1,5 +1,6 @@
 .footerContainer {
-  height: 3vh;
+  min-height: 3vh;
+  padding-bottom: 1vh;
   display: flex;
   text-align: center;
   flex-direction: row;

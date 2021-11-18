@@ -1,15 +1,22 @@
+.keywrapper {
+  min-height: 83vh;
+  /* margin-top: 2vh; */
+  margin-bottom: 6vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  transition: background 0.2s linear;
+}
+
+.keywrapper:focus {
+  outline: none;
+}
+
 .keycontainer {
-  min-height: 92vh;
   display: flex;
   text-align: center;
   flex-direction: column;
   align-items: center;
-  justify-content: center;
-  transition: background 0.2s linear;
-}
-
-.keycontainer:focus {
-  outline: none;
 }
 
 .keyboard {
@@ -81,10 +88,12 @@
   /* background: #fff; */
   margin-bottom: 2vh;
   width: 832px;
+  max-width: 80vw;
 }
 
 .selectarea {
   display: flex;
+  /* flex-direction: wrap; */
 }
 
 .selectcol {
@@ -93,6 +102,20 @@
   align-items: center;
   justify-content: center;
   width: 30%;
+}
+
+.mutecol {
+  padding: 1rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 10%;
+  transition: color 0.2s linear;
+}
+
+.mutebox {
+  align-items: center;
+  font-size: 16px;
 }
 
 .dropdown {
@@ -150,26 +173,12 @@
   padding: 0.6em 0.8em 0.5em 1.4em;
 }
 
-.mutecol {
-  padding: 1rem;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  width: 10%;
-  transition: color 0.2s linear;
-}
-
-.mutebox {
-  align-items: center;
-  font-size: 16px;
-}
-
 .typingplaceholder {
   display: inline-block;
   text-align: left;
   border: 3px solid;
-  border-color: #eee;
   height: 11.72rem;
-  margin-bottom: 2vh;
+  margin-bottom: 24px;
   width: 832px;
+  max-width: 80vw;
 }
