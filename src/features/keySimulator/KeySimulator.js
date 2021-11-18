@@ -242,7 +242,16 @@ function KeySimulator({ currentTheme, theme }) {
         ref={keycontainer}
         tabIndex="0"
       >
-        <Suspense fallback={<div className={styles.typingplaceholder}></div>}>
+        <Suspense 
+          fallback={
+            <div 
+              className={styles.typingplaceholder}
+              style={{
+                borderColor: theme.boxBorder
+              }}
+            />
+          }
+        >
           <TypingTest />
         </Suspense>
 

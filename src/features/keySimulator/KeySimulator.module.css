@@ -177,8 +177,8 @@
   display: inline-block;
   text-align: left;
   border: 3px solid;
-  border-color: #eee;
   height: 11.72rem;
-  margin-bottom: 2vh;
+  margin-bottom: 24px;
   width: 832px;
+  max-width: 80vw;
 }
