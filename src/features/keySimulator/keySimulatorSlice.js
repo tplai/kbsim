@@ -25,13 +25,13 @@ export const keySimulatorSlice = createSlice({
     // changes the highlight to red if there is incorrect formatting in the kle layout
     parseKLE: (state, action) => {
       if (!action.payload) {
-        state.highlight = {borderColor:"#ff0033"};
+        state.highlight = { borderColor: "#ff0033" };
         return;
       }
       // split the input into rows by newline
       let inputLayout = action.payload.split(/\r\n|\r|\n/);
       if (inputLayout.length === 0) {
-        state.highlight = {borderColor:"#ff0033"};
+        state.highlight = { borderColor: "#ff0033" };
         return;
       }
       // split the rows into an array
@@ -44,7 +44,7 @@ export const keySimulatorSlice = createSlice({
         // regex match text within "" and {}
         inputLayout[i] = inputLayout[i].match(/(["'])(?:(?=(\\?))\2.)*?\1|([{])(?:(?=(\\?))\2.)*?([}])/g);
         if (!inputLayout[i]) {
-          state.highlight = {borderColor:"#ff0033"};
+          state.highlight = { borderColor: "#ff0033" };
           return;
         }
       }
@@ -105,7 +105,7 @@ export const keySimulatorSlice = createSlice({
           }
           // if the current item is formatting, parse the comma separated values
           if (inputLayout[x][y].charAt(0) === "{" &&
-              inputLayout[x][y].charAt(inputLayout[x][y].length - 1) === "}") {
+            inputLayout[x][y].charAt(inputLayout[x][y].length - 1) === "}") {
             // remove whitespace and trim the brackets
             let keyFormat = inputLayout[x][y].substring(1, inputLayout[x][y].length - 1).replace(/\s/g, '');
             // split multiple formatting information into an array
@@ -135,7 +135,7 @@ export const keySimulatorSlice = createSlice({
                     case 'c':
                       // trim quotes
                       if (formatTuple[1].charAt(0) === '"' &&
-                          formatTuple[1].charAt(formatTuple[1].length - 1) === '"') {
+                        formatTuple[1].charAt(formatTuple[1].length - 1) === '"') {
                         formatTuple[1] = formatTuple[1].substring(1, formatTuple[1].length - 1);
                       }
                       keyInfo.keybordercolor = formatTuple[1];
@@ -145,7 +145,7 @@ export const keySimulatorSlice = createSlice({
                     case 't':
                       // trim quotes
                       if (formatTuple[1].charAt(0) === '"' &&
-                          formatTuple[1].charAt(formatTuple[1].length - 1) === '"') {
+                        formatTuple[1].charAt(formatTuple[1].length - 1) === '"') {
                         formatTuple[1] = formatTuple[1].substring(1, formatTuple[1].length - 1);
                       }
                       keyInfo.textcolor = formatTuple[1];
@@ -154,7 +154,7 @@ export const keySimulatorSlice = createSlice({
                   }
                 }
                 else {
-                  state.highlight = {borderColor:"#ff0033"};
+                  state.highlight = { borderColor: "#ff0033" };
                   return;
                 }
               }
@@ -163,7 +163,7 @@ export const keySimulatorSlice = createSlice({
           }
           // if the current item is a key, parse the legends
           else if (inputLayout[x][y].charAt(0) === '"' &&
-                   inputLayout[x][y].charAt(inputLayout[x][y].length - 1) === '"') {
+            inputLayout[x][y].charAt(inputLayout[x][y].length - 1) === '"') {
             // trim quotes
             let legends = inputLayout[x][y].substring(1, inputLayout[x][y].length - 1)
             // split into by newline
@@ -181,7 +181,7 @@ export const keySimulatorSlice = createSlice({
             inputLayout[x][y] = keyInfo;
           }
           else {
-            state.highlight = {borderColor:"#ff0033"};
+            state.highlight = { borderColor: "#ff0033" };
             return;
           }
         }
@@ -189,9 +189,9 @@ export const keySimulatorSlice = createSlice({
       // remove formatting data from layout array
       for (let x in inputLayout) {
         for (let y in inputLayout[x]) {
-          if (typeof(inputLayout[x][y]) === 'string' &&
-              inputLayout[x][y].charAt(0) === "{" &&
-              inputLayout[x][y].charAt(inputLayout[x][y].length - 1) === "}") {
+          if (typeof (inputLayout[x][y]) === 'string' &&
+            inputLayout[x][y].charAt(0) === "{" &&
+            inputLayout[x][y].charAt(inputLayout[x][y].length - 1) === "}") {
             inputLayout[x].splice(y, 1);
           }
         }
