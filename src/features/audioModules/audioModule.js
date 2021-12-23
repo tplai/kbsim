@@ -1,11 +1,11 @@
-// import { alpaca } from './alpaca';
+import { alpaca } from './alpaca';
 import { alpsblue } from './alpsblue';
 import { boxnavy } from './boxnavy';
 import { buckling } from './buckling';
 import { cream } from './cream';
 import { holypanda } from './holypanda';
 import { inkblack } from './inkblack';
-// import { inkred } from './inkred';
+import { inkred } from './inkred';
 import { mxblack } from './mxblack';
 import { mxblue } from './mxblue';
 import { mxbrown } from './mxbrown';
@@ -15,10 +15,10 @@ import { turquoise } from './turquoise';
 export const keySounds = [
   cream,
   holypanda,
-  // alpaca,
+  alpaca,
   turquoise,
   inkblack,
-  // inkred,
+  inkred,
   mxblack,
   mxbrown,
   mxblue,
